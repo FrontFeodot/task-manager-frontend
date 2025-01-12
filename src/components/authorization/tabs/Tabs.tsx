@@ -8,7 +8,6 @@ const Tabs = <T,>({
   setCurrentTab,
   tabs,
 }: ITabsProps<T>): JSX.Element => {
-  console.log(tabs)
   return (
     <S.Wrapper>
       {map(tabs, (tab) => (

@@ -11,8 +11,10 @@ export interface ITheme {
   shadow: string; //board ???
   flexbox: string;
   focusRing: string; // Цвет обводки при фокусе
-  hoverBg: string;  // Цвет кнопки при наведении
+  hoverBg: string; // Цвет кнопки при наведении
   activeBg: string; // Цвет кнопки при нажатии
+  errorBg: string; // Фон тултипа ошибки
+  errorText: string; // Текст ошибки
 }
 
 const theme: ITheme = {
@@ -31,6 +33,9 @@ const theme: ITheme = {
   focusRing: '#FF7F50',
   hoverBg: '#AB63E5',
   activeBg: '#7A34B3',
+
+  errorBg: '#FF4D4F',
+  errorText: '#FFFFFF',
 };
 
 export default theme;

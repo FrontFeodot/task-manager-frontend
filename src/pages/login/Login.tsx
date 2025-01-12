@@ -10,9 +10,9 @@ import * as S from './Login.styled';
 
 const Login = (): JSX.Element => {
   const [currentTab, setCurrentTab] = useState<IAuthTabs>(
-    IAuthTabs.LOGIN
+    IAuthTabs.REGISTRATION
   );
-console.log(currentTab)
+  console.log(currentTab);
   return (
     <S.Wrapper>
       <S.LoginContainer>

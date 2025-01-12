@@ -7,11 +7,18 @@ const TextInput = ({
   value,
   onChange,
   type = 'text',
+  config,
   ...inputProps
 }: ITextInput): JSX.Element => {
   return (
     <S.Wrapper>
-      <S.TextInput value={value} onChange={onChange} type={type} {...inputProps} />
+      <S.TextInput
+        value={value}
+        onChange={onChange}
+        type={type}
+        {...config}
+        {...inputProps}
+      />
     </S.Wrapper>
   );
 };

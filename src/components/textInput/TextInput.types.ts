@@ -1,6 +1,7 @@
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes } from 'react';
 
 export interface ITextInput extends InputHTMLAttributes<HTMLInputElement> {
-  value: string;
+  value?: string;
   onChange?: (e: React.FormEvent<HTMLInputElement>) => void;
+  config?: any;
 }
