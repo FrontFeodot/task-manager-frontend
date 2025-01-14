@@ -1,39 +1,36 @@
+import { useState } from 'react';
+import get from 'lodash/get';
+import { useForm } from 'react-hook-form';
+
 import TextInput from '@components/textInput/TextInput';
-import * as S from './LoginForm.styled';
-import { useEffect, useState } from 'react';
-import apiHandler from 'common/api/apiHandler';
-import { IApiMethod } from 'common/interfaces/IApiHandler';
 import StyledButton from '@components/styledButton/StyledButton';
+
+import CustomError from '@common/api/error';
+import { setLoginUser } from '@common/providers/userProvider/useUserState';
+import { postLogin } from '@common/api/auth';
+
 import { ErrorTooltip, Form, Item, Label } from '../Authorization.styled';
-import { auth } from 'common/api/auth';
-import { emailRegex } from 'common/utils/regex';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import {
-  getEmailConfig,
-  getPasswordConfig,
-} from '../registerForm/registerConfig';
-import { get } from 'lodash';
-import CustomError from 'common/api/error';
+import * as S from './LoginForm.styled';
+import { IPostLogin } from '@common/interfaces/IAuth';
 
 const LoginForm = (): JSX.Element => {
   const [error, setError] = useState<string | null>(null);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     clearErrors,
-  } = useForm({
+  } = useForm<IPostLogin>({
     mode: 'onChange',
   });
-  const onSubmit = async (data: Record<string, any>) => {
+  const onSubmit = async (data: IPostLogin) => {
     setError(null);
-    const { email, password } = data;
-    const response = await auth(email, password);
-    console.log(response);
+    const response = await postLogin(data);
+
     if (response instanceof CustomError) {
-      setError(response.message);
+      return setError(response.message);
     }
+    setLoginUser(true);
   };
   const emailConfig = register('email', {
     required: 'Email is required',
@@ -53,7 +50,7 @@ const LoginForm = (): JSX.Element => {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Item>
           <Label>Enter your E-Mail</Label>
-          <TextInput config={emailConfig} />
+          <TextInput config={emailConfig} type="email" />
           {errors.email && (
             <ErrorTooltip>{`${get(errors, 'email.message')}`}</ErrorTooltip>
           )}

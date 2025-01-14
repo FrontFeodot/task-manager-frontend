@@ -6,15 +6,18 @@ export const Form = styled.form`
   height: 100%;
   flex-direction: column;
   gap: 30px;
+  transition: all ease-in 1s;
 `;
 
 export const Item = styled.div`
   position: relative;
   width: 100%;
+  transition: all ease-in 1s;
 `;
 
 export const Label = styled.p`
   padding: 10px 0;
+  transition: all ease-in 1s;
 `;
 
 export const ErrorTooltip = styled.div<{ isGlobal?: boolean }>`
@@ -27,6 +30,7 @@ export const ErrorTooltip = styled.div<{ isGlobal?: boolean }>`
   font-size: 14px;
   white-space: nowrap;
   width: ${({ isGlobal }) => (isGlobal ? '100%' : 'auto')};
+  transition: all ease-in 1s;
 
   & p {
     color: ${({ theme }) => theme.errorText}; /* Акцентный цвет текста */

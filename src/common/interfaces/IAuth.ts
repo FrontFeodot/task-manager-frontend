@@ -3,3 +3,8 @@ export interface IPostRegister {
   password: string;
   confirmPassword: string;
 }
+
+export interface IPostLogin {
+  email: string;
+  password: string;
+}

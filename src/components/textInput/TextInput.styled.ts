@@ -4,6 +4,7 @@ export const Wrapper = styled.div`
   display: flex;
   width: 100%;
   height: 56px;
+  align-items: center;
 `;
 
 export const TextInput = styled.input`
@@ -27,5 +28,18 @@ export const TextInput = styled.input`
 
   &::placeholder {
     color: rgba(245, 246, 247, 0.6);
+  }
+`;
+
+export const ToggleIcon = styled.span`
+  position: absolute;
+  right: 16px;
+  cursor: pointer;
+  color: ${({ theme }) => theme.textPrimary};
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: ${({ theme }) => theme.textAccent};
   }
 `;

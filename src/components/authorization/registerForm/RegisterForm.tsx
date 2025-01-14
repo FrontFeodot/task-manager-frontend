@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { get } from 'lodash';
-import Cookies from 'js-cookie';
 
 import TextInput from '@components/textInput/TextInput';
-import apiHandler from 'common/api/apiHandler';
-import { IApiMethod } from 'common/interfaces/IApiHandler';
 import StyledButton from '@components/styledButton/StyledButton';
+
+import CustomError from '@common/api/error';
+import postRegister from '@common/api/register';
+import { IPostRegister } from '@common/interfaces/IAuth';
+import { setLoginUser } from '@common/providers/userProvider/useUserState';
 
 import { ErrorTooltip, Form, Item, Label } from '../Authorization.styled';
 import {
@@ -15,10 +18,6 @@ import {
 } from './registerConfig';
 
 import * as S from './RegisterForm.styled';
-import { useState } from 'react';
-import CustomError from 'common/api/error';
-import postRegister from 'common/api/register';
-import { IPostRegister } from 'common/interfaces/IAuth';
 
 const RegisterForm = (): JSX.Element => {
   const [error, setError] = useState<string | null>(null);
@@ -41,8 +40,9 @@ const RegisterForm = (): JSX.Element => {
 
     if (error instanceof CustomError) {
       console.log('error instanceof CustomError', error);
-      setError(error.message);
+      return setError(error.message);
     }
+    setLoginUser(true);
   };
 
   const emailConfig = getEmailConfig(register, clearErrors);
@@ -57,7 +57,6 @@ const RegisterForm = (): JSX.Element => {
           <TextInput
             onChange={() => {
               clearErrors();
-              console.log('herererer');
             }}
             config={emailConfig}
           />
@@ -71,7 +70,7 @@ const RegisterForm = (): JSX.Element => {
         </Item>
         <Item>
           <Label>Enter your password</Label>
-          <TextInput config={passwordConfig} />
+          <TextInput config={passwordConfig} type="password" />
           {errors.password && (
             <ErrorTooltip
               dangerouslySetInnerHTML={{
@@ -82,7 +81,7 @@ const RegisterForm = (): JSX.Element => {
         </Item>
         <Item>
           <Label>Confirm your password</Label>
-          <TextInput config={confirmPasswordConfig} />
+          <TextInput config={confirmPasswordConfig} type="password" />
           {errors.confirmPassword && (
             <ErrorTooltip
               dangerouslySetInnerHTML={{

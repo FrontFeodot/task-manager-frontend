@@ -4,6 +4,7 @@ import { IApiMethod } from 'common/interfaces/IApiHandler';
 import apiHandler from './apiHandler';
 import CustomError from './error';
 import { IPostRegister } from 'common/interfaces/IAuth';
+import { AUTH_TOKEN } from '@common/utils/cookies';
 
 const postRegister = async ({
   email,
@@ -21,17 +22,14 @@ const postRegister = async ({
       },
     });
     if (response instanceof CustomError) {
-      console.log('register submit', response);
       throw response;
     }
-    if (response.token) {
-      console.log('registerSucces');
-      Cookies.set('authToken', response.token, {
-        expires: 24 * 3600 * 1000, // expired time
-      });
-    }
+    console.log('registerSucces');
+    Cookies.set(AUTH_TOKEN, response.token, {
+      expires: 24 * 3600 * 1000, // expired time
+    });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return error as CustomError;
   }
 };

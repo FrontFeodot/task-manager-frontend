@@ -37,5 +37,6 @@ const theme: ITheme = {
   errorBg: '#FF4D4F',
   errorText: '#FFFFFF',
 };
+export type ThemeType = typeof theme;
 
 export default theme;

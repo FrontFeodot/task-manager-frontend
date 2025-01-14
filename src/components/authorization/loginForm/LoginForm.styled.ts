@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import { lighten, darken } from 'polished';
-
 export const Wrapper = styled.div`
   ${(props) => props.theme.flexbox};
   width: 540px;
