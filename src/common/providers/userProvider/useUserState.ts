@@ -1,12 +1,6 @@
 import { create } from 'zustand';
-
-interface IUser {
-  isLoggedIn: boolean;
-}
-
-const defaultState: IUser = {
-  isLoggedIn: false,
-};
+import { IUser } from './types';
+import defaultState from './state';
 
 export const useUserState = create<IUser>(() => defaultState);
 

@@ -33,14 +33,10 @@ const RegisterForm = (): JSX.Element => {
   });
   const onSubmit = async (data: IPostRegister) => {
     setError(null);
-    console.log('email, password', data);
+    const response = await postRegister(data);
 
-    const error = await postRegister(data);
-    console.log('await postRegister(data)', error);
-
-    if (error instanceof CustomError) {
-      console.log('error instanceof CustomError', error);
-      return setError(error.message);
+    if (response instanceof CustomError) {
+      return setError(response.message);
     }
     setLoginUser(true);
   };

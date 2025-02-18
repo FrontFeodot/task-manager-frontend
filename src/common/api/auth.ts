@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 
-import { IApiMethod } from '@common/interfaces/IApiHandler';
+import { ApiCalls, IApiMethod } from '@common/interfaces/IApiHandler';
 import { AUTH_TOKEN } from '@common/utils/cookies';
 
 import apiHandler from './apiHandler';
@@ -15,9 +15,9 @@ export const postLogin = async ({
   password,
 }: IPostLogin): Promise<CustomError | void> => {
   try {
-    const response = await apiHandler({
+    const response = await apiHandler<Record<string, string>>({
       method: IApiMethod.POST,
-      url: '/auth/login',
+      url: ApiCalls.AUTH,
       payload: {
         email,
         password,
@@ -26,7 +26,6 @@ export const postLogin = async ({
     if (response instanceof CustomError) {
       throw response;
     }
-    console.log('auth success');
     Cookies.set(AUTH_TOKEN, response.token, {
       expires: 24 * 3600 * 1000, // expired time
     });
@@ -40,9 +39,9 @@ export const getProtected = async (): Promise<void | CustomError> => {
   const token = Cookies.get(AUTH_TOKEN);
   if (token) {
     try {
-      const response = await apiHandler({
+      const response = await apiHandler<Record<string, string>>({
         method: IApiMethod.POST,
-        url: '/auth/protected',
+        url: ApiCalls.PROTECTED,
         payload: {
           token,
         },

@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 
-import { IApiMethod } from 'common/interfaces/IApiHandler';
+import { ApiCalls, IApiMethod } from 'common/interfaces/IApiHandler';
 import apiHandler from './apiHandler';
 import CustomError from './error';
 import { IPostRegister } from 'common/interfaces/IAuth';
@@ -12,9 +12,9 @@ const postRegister = async ({
   confirmPassword,
 }: IPostRegister): Promise<void | CustomError> => {
   try {
-    const response = await apiHandler({
+    const response = await apiHandler<Record<string, string>>({
       method: IApiMethod.POST,
-      url: '/auth/signup',
+      url: ApiCalls.REGISTER,
       payload: {
         email,
         password,
@@ -24,7 +24,6 @@ const postRegister = async ({
     if (response instanceof CustomError) {
       throw response;
     }
-    console.log('registerSucces');
     Cookies.set(AUTH_TOKEN, response.token, {
       expires: 24 * 3600 * 1000, // expired time
     });

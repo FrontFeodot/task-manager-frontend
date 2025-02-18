@@ -20,7 +20,7 @@ const Login = (): JSX.Element => {
       navigate('/board');
     }
   }, [isLoggedIn]);
-  console.log(currentTab);
+
   return (
     <S.Wrapper>
       <S.LoginContainer>

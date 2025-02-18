@@ -6,10 +6,4 @@ export const AppWrapper = styled.div`
   width: 100%;
   height: 100vh;
   background-color: ${(props) => props.theme.bgPrimary};
-
-  p {
-    font-size: 0.875rem;
-    margin: 0;
-    color: ${(props) => props.theme.textPrimary};
-  }
 `;

@@ -13,6 +13,7 @@ import initialize from '@common/helpers/initialize';
 const App = (): JSX.Element => {
   useEffect(() => {
     initialize();
+    console.log(' initialize');
   }, []);
 
   return (

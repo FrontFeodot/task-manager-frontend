@@ -27,6 +27,7 @@ const LoginForm = (): JSX.Element => {
     setError(null);
     const response = await postLogin(data);
 
+    console.log(response);
     if (response instanceof CustomError) {
       return setError(response.message);
     }
