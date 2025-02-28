@@ -1,10 +1,10 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import * as S from './Nav.styled';
 import { useUserState } from '@common/providers/userProvider/useUserState';
 import StyledButton from '@components/styledButton/StyledButton';
-import { useNavigate } from 'react-router-dom';
 import { logout } from '@common/api/auth';
+
+import * as S from './Nav.styled';
 
 const NavMenu = (): JSX.Element => {
   const isLoggedIn = useUserState((s) => s.isLoggedIn);

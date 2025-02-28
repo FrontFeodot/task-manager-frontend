@@ -1,26 +1,27 @@
 import React, { useEffect } from 'react';
 
 import NavMenu from '@components/nav/Nav';
-import Main from '@components/main/Main';
+import ModalManager from '@components/modalManager/ModalManager';
+
+import AppRouter from 'common/routes/Routes';
+import initialize from '@common/helpers/initialize';
+import useAppParams from '@common/hooks/useAppParams';
 
 import * as S from './App.styled';
-import AppRouter from 'common/routes/Routes';
-
 import './App.css';
-import { useUserState } from '@common/providers/userProvider/useUserState';
-import initialize from '@common/helpers/initialize';
 
 const App = (): JSX.Element => {
+  useAppParams();
+
   useEffect(() => {
     initialize();
-    console.log(' initialize');
   }, []);
 
   return (
     <S.AppWrapper>
       <NavMenu />
       <AppRouter />
-      {/*  <Main /> */}
+      <ModalManager />
     </S.AppWrapper>
   );
 };

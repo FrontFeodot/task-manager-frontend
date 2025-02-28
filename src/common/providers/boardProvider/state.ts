@@ -1,7 +1,7 @@
 const defaultState = {
   boardList: null,
   loading: true,
-  error: null,
+  isError: 0,
   currentTask: null,
 };
 export default defaultState;

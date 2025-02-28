@@ -4,7 +4,7 @@ import { darken, lighten } from 'polished';
 export const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 42px;
+  height: 100%;
 `;
 
 export const Button = styled.button`

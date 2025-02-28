@@ -37,10 +37,6 @@ export const ProgressBarContainer = styled.div`
     background: #34d399;
     animation: gradient-flow 5s ease infinite;
   }
-  &.${ITaskStatus.DEFAULT}::before {
-    content: '';
-    background: transparent;
-  }
 
   @keyframes gradient-slide {
     0% {

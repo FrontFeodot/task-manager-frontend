@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'; // Используем библиотеку react-icons
+import { useState } from 'react';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
-import * as S from './TextInput.styled';
-import { ITextInput } from './TextInput.types';
+import * as S from './AuthInput.styled';
+import { ITextInput } from './AuthInput.types';
 
-const TextInput = ({
+const AuthInput = ({
   value,
   onChange,
   type = 'text',
@@ -17,16 +17,9 @@ const TextInput = ({
   const passwordType = isPassword && (showPassword ? 'text' : 'password');
 
   const togglePassword = () => setShowPassword(!showPassword);
-
   return (
     <S.Wrapper>
-      <S.TextInput
-        value={value}
-        onChange={onChange}
-        type={passwordType || type}
-        {...config}
-        {...inputProps}
-      />
+      <S.TextInput type={passwordType || type} {...config} {...inputProps} />
       {isPassword && (
         <S.ToggleIcon onClick={togglePassword}>
           {showPassword ? (
@@ -40,4 +33,4 @@ const TextInput = ({
   );
 };
 
-export default TextInput;
+export default AuthInput;

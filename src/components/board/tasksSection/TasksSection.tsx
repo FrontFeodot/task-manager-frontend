@@ -1,16 +1,15 @@
-import { filter, map } from 'lodash';
+import map from 'lodash/map';
+
 import * as S from './TasksSection.styled';
 import { ITasksSection } from './TasksSection.types';
-import Task from './tasks/Task';
-import CreateTask from './tasks/CreateTask';
+import TaskCard from './tasks/TaskCard';
 
 const TasksSection = ({ taskSection }: ITasksSection): JSX.Element => {
   return (
     <S.TasksSectionWrapper>
       <S.TaskSection>
         {map(taskSection, (task) => {
-          console.log(task);
-          return <Task {...task} />;
+          return <TaskCard key={task.taskId} {...task} />;
         })}
       </S.TaskSection>
     </S.TasksSectionWrapper>

@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+
 import { IUser } from './types';
 import defaultState from './state';
 

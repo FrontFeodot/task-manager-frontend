@@ -4,6 +4,10 @@ export interface IPostRegister {
   confirmPassword: string;
 }
 
+export interface IPostRegisterResponse {
+  token: string;
+}
+
 export interface IPostLogin {
   email: string;
   password: string;

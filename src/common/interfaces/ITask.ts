@@ -1,8 +1,16 @@
+import { InputHTMLAttributes } from 'react';
+import {
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from 'react-hook-form';
+
 export interface ITask {
+  taskId: number;
   name: string;
   userId: string;
-  status?: ITaskStatus;
-  priority?: ITaskPriority;
+  status: ITaskStatus;
+  priority: ITaskPriority;
   description?: string;
   customFields?: Record<string, string>;
   type?: ITaskType;
@@ -17,7 +25,6 @@ export enum ITaskStatus {
   TO_DO = 'to-do',
   IN_PROGRESS = 'in-progress',
   DONE = 'done',
-  DEFAULT = 'default',
 }
 
 export enum ITaskPriority {
@@ -29,4 +36,10 @@ export enum ITaskPriority {
 export enum ITaskType {
   TASK = 'task',
   STORY = 'story',
+}
+
+export interface ITaskFormItem<T> extends InputHTMLAttributes<T> {
+  setValue: UseFormSetValue<Partial<ITask>>;
+  register: UseFormRegister<Partial<ITask>>;
+  watch: UseFormWatch<Partial<ITask>>;
 }

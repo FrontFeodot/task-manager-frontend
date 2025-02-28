@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { get } from 'lodash';
+import get from 'lodash/get';
 
-import TextInput from '@components/textInput/TextInput';
+import AuthInput from '@components/inputs/authInput/AuthInput';
 import StyledButton from '@components/styledButton/StyledButton';
 
-import CustomError from '@common/api/error';
 import postRegister from '@common/api/register';
 import { IPostRegister } from '@common/interfaces/IAuth';
 import { setLoginUser } from '@common/providers/userProvider/useUserState';
@@ -35,7 +34,7 @@ const RegisterForm = (): JSX.Element => {
     setError(null);
     const response = await postRegister(data);
 
-    if (response instanceof CustomError) {
+    if (response?.isError) {
       return setError(response.message);
     }
     setLoginUser(true);
@@ -50,7 +49,7 @@ const RegisterForm = (): JSX.Element => {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Item>
           <Label>Enter your E-mail</Label>
-          <TextInput
+          <AuthInput
             onChange={() => {
               clearErrors();
             }}
@@ -66,7 +65,7 @@ const RegisterForm = (): JSX.Element => {
         </Item>
         <Item>
           <Label>Enter your password</Label>
-          <TextInput config={passwordConfig} type="password" />
+          <AuthInput config={passwordConfig} type="password" />
           {errors.password && (
             <ErrorTooltip
               dangerouslySetInnerHTML={{
@@ -77,7 +76,7 @@ const RegisterForm = (): JSX.Element => {
         </Item>
         <Item>
           <Label>Confirm your password</Label>
-          <TextInput config={confirmPasswordConfig} type="password" />
+          <AuthInput config={confirmPasswordConfig} type="password" />
           {errors.confirmPassword && (
             <ErrorTooltip
               dangerouslySetInnerHTML={{

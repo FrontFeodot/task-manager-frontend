@@ -50,3 +50,71 @@ input:-webkit-autofill {
   -webkit-text-fill-color: #f5f6f7 !important; /* Цвет текста внутри инпута */
   transition: background-color 5000s ease-in-out 0s; /* Убирает мигание */
 }
+
+/* Общая стилизация скролла для всей страницы */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1f2128; /* Тёмный фон трека */
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4e4e50; /* Сероватый оттенок для ползунка */
+  border-radius: 3px;
+  border: 1px solid #1f2128; /* Контур, подчеркивающий форму */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #6e6e70; /* Небольшое осветление при наведении */
+}
+
+/* Стилизация для textarea */
+textarea::-webkit-scrollbar {
+  right: 6px;
+  width: 6px;
+}
+
+textarea::-webkit-scrollbar-track {
+  background: #1f2128;
+  border-radius: 3px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background-color: #4e4e50;
+  border-radius: 3px;
+  border: 1px solid #1f2128;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+  background-color: #6e6e70;
+}
+
+/* Стилизация для select */
+select::-webkit-scrollbar {
+  width: 6px;
+}
+
+select::-webkit-scrollbar-track {
+  background: #1f2128;
+  border-radius: 3px;
+}
+
+select::-webkit-scrollbar-thumb {
+  background-color: #4e4e50;
+  border-radius: 3px;
+  border: 1px solid #1f2128;
+}
+
+select::-webkit-scrollbar-thumb:hover {
+  background-color: #6e6e70;
+}
+
+/* Отключаем возможность изменения размера textarea вручную */
+textarea {
+  resize: none;
+  overflow-y: auto;
+}

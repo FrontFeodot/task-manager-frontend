@@ -1,17 +1,15 @@
-import CustomError from '@common/api/error';
 import { ITask } from '@common/interfaces/ITask';
 
 export interface IBoardState {
   boardList: Record<string, IBoard> | null;
   loading: boolean;
-  error: CustomError | null;
+  isError: number;
   currentTask: string | null;
 }
 
 export interface IBoard {
-  items: string[];
+  columns: string[];
   name: string;
   tasks: ITask[];
   createdAt: Date;
-  _id: string;
 }

@@ -1,5 +1,6 @@
-import { Text } from '@components/text/TextCommon.styled';
 import styled from 'styled-components';
+
+import { Text } from '@components/text/TextCommon.styled';
 
 export const TasksSectionWrapper = styled.div``;
 
@@ -8,7 +9,6 @@ export const TaskSection = styled.div`
   flex-direction: column;
   background-color: #202124;
   gap: 16px;
-  cursor: pointer;
 `;
 
 export const TaskWrapper = styled.div``;

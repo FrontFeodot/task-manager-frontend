@@ -1,5 +1,6 @@
-import { Text } from '@components/text/TextCommon.styled';
 import styled from 'styled-components';
+
+import { Text } from '@components/text/TextCommon.styled';
 
 export const TaskWrapper = styled.div`
   display: flex;
@@ -11,6 +12,7 @@ export const TaskWrapper = styled.div`
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 `;
 
 export const TaskTitle = styled(Text)`
@@ -33,5 +35,4 @@ export const PriorityIconWrapper = styled.div`
 
 export const CreateNewTaskText = styled(Text)`
   align-self: center;
-  cursor: pointer;
 `;

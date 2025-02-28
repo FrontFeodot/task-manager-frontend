@@ -15,6 +15,13 @@ export enum ApiCalls {
   REGISTER = '/auth/signup',
   PROTECTED = '/auth/protected',
   BOARD = '/board/all',
+  BOARD_CREATE = '/board/create',
   TASK_CREATE = '/task/create',
-  COLUMN_CREATE = '/column/create',
+}
+
+export interface ICustomResponse<T = undefined> {
+  isSuccess: number;
+  isError: number;
+  message: string;
+  payload?: T;
 }

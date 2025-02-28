@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import map from 'lodash/map';
+
 import * as S from './Tabs.styled';
 import { ITabsProps } from './Tabs.types';
-import { map } from 'lodash';
 
 const Tabs = <T,>({
   currentTab,

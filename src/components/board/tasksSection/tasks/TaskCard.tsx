@@ -1,18 +1,28 @@
-import { ITask, ITaskStatus } from '@common/interfaces/ITask';
-import * as S from './Task.styled';
-import { ITaskProps } from './Task.types';
+import { useSearchParams } from 'react-router-dom';
+
 import ProgressBar from '@components/progressBar/ProgressBar';
-import { FcLowPriority } from 'react-icons/fc';
+
+import { ITask, ITaskStatus } from '@common/interfaces/ITask';
 import { getPriorityIcon } from '@common/helpers/taskHelper';
 
-const Task = ({
+import * as S from './TaskCard.styled';
+
+const TaskCard = ({
   name,
   description,
-  status = ITaskStatus.DEFAULT,
+  status = ITaskStatus.TO_DO,
   priority,
+  taskId,
 }: ITask): JSX.Element => {
+  const [_, setSearchParams] = useSearchParams();
+  const newSearchParams = new URLSearchParams();
+
+  const handleOpenTask = () => {
+    newSearchParams.set('taskId', String(taskId));
+    setSearchParams(newSearchParams);
+  };
   return (
-    <S.TaskWrapper>
+    <S.TaskWrapper onClick={(): void => handleOpenTask()}>
       <S.TaskTitle>{name}</S.TaskTitle>
       <S.PriorityIconWrapper>
         {getPriorityIcon(priority, 22)}
@@ -26,4 +36,4 @@ const Task = ({
   );
 };
 
-export default Task;
+export default TaskCard;

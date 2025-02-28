@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { Text } from '@components/text/TextCommon.styled';
+
 export const Form = styled.form`
   ${(props) => props.theme.flexbox};
   width: 100%;
@@ -15,15 +17,15 @@ export const Item = styled.div`
   transition: all ease-in 1s;
 `;
 
-export const Label = styled.p`
+export const Label = styled(Text)`
   padding: 10px 0;
   transition: all ease-in 1s;
 `;
 
 export const ErrorTooltip = styled.div<{ isGlobal?: boolean }>`
   position: relative;
-  background: ${({ theme }) => theme.errorBg}; /* Вторичный фон */
-  color: ${({ theme }) => theme.errorText}; /* Акцентный цвет текста */
+  background: ${({ theme }) => theme.errorBg};
+  color: ${({ theme }) => theme.errorText};
   padding: 8px 12px;
   border-radius: 8px;
   box-shadow: ${({ theme }) => theme.shadow};
@@ -33,20 +35,16 @@ export const ErrorTooltip = styled.div<{ isGlobal?: boolean }>`
   transition: all ease-in 1s;
 
   & p {
-    color: ${({ theme }) => theme.errorText}; /* Акцентный цвет текста */
+    color: ${({ theme }) => theme.errorText};
   }
-  /* Анимация появления */
   opacity: 1;
   transform: translateY(10px);
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;
 
-  /* Активный стиль */
   &.active {
     opacity: 1;
     transform: translateY(0);
   }
-
-  /* Стрелка для тултипа */
 `;

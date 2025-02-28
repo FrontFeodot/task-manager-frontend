@@ -1,14 +1,17 @@
-import { filter, map, toUpper } from 'lodash';
+import filter from 'lodash/filter';
+import map from 'lodash/map';
+import toUpper from 'lodash/toUpper';
+
 import * as S from './Board.styled';
 import { IBoardProps } from './Board.types';
 import TasksSection from './tasksSection/TasksSection';
-import CreateTask from './tasksSection/tasks/CreateTask';
+import CreateTask from './tasksSection/tasks/CreateTaskCard';
 
 const Board = ({ boardData }: IBoardProps): JSX.Element => {
   return (
     <S.BoardWrapper>
       <S.ColumnWrapper>
-        {map(boardData.items, (columnName, index) => {
+        {map(boardData.columns, (columnName, index) => {
           const currentTaskSection = filter(boardData.tasks, [
             'column',
             columnName,

@@ -1,22 +1,18 @@
-import axios from 'common/api/axios';
-import { IApiHandler } from 'common/interfaces/IApiHandler';
-import CustomError from './error';
 import Cookies from 'js-cookie';
-import { AUTH_TOKEN } from '@common/utils/cookies';
-import { AxiosError } from 'axios';
+import { AxiosResponse } from 'axios';
 
-interface IError {
-  response: { data: CustomError };
-}
+import axios from 'common/api/axios';
+import { IApiHandler, ICustomResponse } from 'common/interfaces/IApiHandler';
+import { AUTH_TOKEN } from '@common/utils/cookies';
 
 const apiHandler = async <T>({
   method,
   url,
   payload,
   withAuth,
-}: IApiHandler): Promise<CustomError | T> => {
+}: IApiHandler): Promise<ICustomResponse<T>> => {
   try {
-    const response = await axios({
+    const response: AxiosResponse = await axios({
       method,
       url,
       data: payload,
@@ -24,17 +20,23 @@ const apiHandler = async <T>({
         ? { headers: { Authorization: Cookies.get(AUTH_TOKEN) } }
         : {}),
     });
-    return response.data;
-  } catch (err: any) {
-    console.log(err);
-    if (err.response) {
-      const customError = new CustomError(
-        (err as IError).response.data.message,
-        ...(err as IError).response.data.message
-      );
-      return customError;
+    console.log('apiHandler response', response);
+
+    const { data } = response;
+
+    if (!data || response instanceof Error) {
+      throw { isError: 1, message: 'Server side issue' } as ICustomResponse;
     }
-    return new CustomError(err.message);
+
+    if (data?.isError) {
+      throw data;
+    }
+
+    return data as ICustomResponse<T>;
+  } catch (err) {
+    console.log(err);
+
+    return err as ICustomResponse<T>;
   }
 };
 

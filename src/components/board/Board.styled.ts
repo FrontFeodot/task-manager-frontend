@@ -1,5 +1,6 @@
-import { Text } from '@components/text/TextCommon.styled';
 import styled from 'styled-components';
+
+import { Text } from '@components/text/TextCommon.styled';
 
 export const BoardWrapper = styled.div`
   display: flex;
