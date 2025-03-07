@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from 'react';
+import { InputHTMLAttributes, SyntheticEvent } from 'react';
 import {
   UseFormRegister,
   UseFormSetValue,
@@ -7,14 +7,14 @@ import {
 
 export interface ITask {
   taskId: number;
-  name: string;
+  title: string;
   userId: string;
   status: ITaskStatus;
   priority: ITaskPriority;
   description?: string;
   customFields?: Record<string, string>;
   type?: ITaskType;
-  parentTask?: string;
+  parentTask?: number;
   board: string;
   column: string;
   createdAt: Date;
@@ -22,8 +22,8 @@ export interface ITask {
 }
 
 export enum ITaskStatus {
-  TO_DO = 'to-do',
-  IN_PROGRESS = 'in-progress',
+  TO_DO = 'to do',
+  IN_PROGRESS = 'in progress',
   DONE = 'done',
 }
 
@@ -39,7 +39,8 @@ export enum ITaskType {
 }
 
 export interface ITaskFormItem<T> extends InputHTMLAttributes<T> {
-  setValue: UseFormSetValue<Partial<ITask>>;
+  setValue?: UseFormSetValue<Partial<ITask>>;
   register: UseFormRegister<Partial<ITask>>;
-  watch: UseFormWatch<Partial<ITask>>;
+  watch?: UseFormWatch<Partial<ITask>>;
+  handleChange?: (e: SyntheticEvent) => void;
 }

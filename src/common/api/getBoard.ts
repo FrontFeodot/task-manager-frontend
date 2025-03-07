@@ -21,7 +21,6 @@ export const getBoard = async (): Promise<ICustomResponse<
       url: ApiCalls.BOARD,
       withAuth: true,
     });
-    console.log('boardList', response);
     if (response.isError || !response.payload) {
       throw response;
     }

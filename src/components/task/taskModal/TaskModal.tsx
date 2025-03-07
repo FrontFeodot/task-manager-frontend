@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import find from 'lodash/find';
 
@@ -7,6 +7,7 @@ import { getCurrentBoard } from '@common/helpers/boardHelper';
 import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 
 import * as S from './TaskModal.styled';
+import TaskComponent from '../taskComponent/TaskComponent';
 
 const TaskModal = (): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
@@ -31,7 +32,25 @@ const TaskModal = (): JSX.Element => {
 
   useOutSideClick(ref, handleClose);
 
-  return <S.TaskModalWrapper ref={ref}>{/* Task */}</S.TaskModalWrapper>;
+  /*   useEffect(() => {
+    return () => {
+      handleClose()
+    }
+  }, [])
+ */
+  if (!currentTask || !selectedBoard) {
+    return <>Task not exist</>;
+  }
+
+  return (
+    <S.TaskModalWrapper ref={ref}>
+      <TaskComponent
+        closeTask={handleClose}
+        task={currentTask}
+        columnList={selectedBoard.columns}
+      />
+    </S.TaskModalWrapper>
+  );
 };
 
 export default TaskModal;

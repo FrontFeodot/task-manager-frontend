@@ -6,9 +6,10 @@ import { ITask, ITaskStatus } from '@common/interfaces/ITask';
 import { getPriorityIcon } from '@common/helpers/taskHelper';
 
 import * as S from './TaskCard.styled';
+import { SyntheticEvent } from 'react';
 
 const TaskCard = ({
-  name,
+  title,
   description,
   status = ITaskStatus.TO_DO,
   priority,
@@ -17,13 +18,15 @@ const TaskCard = ({
   const [_, setSearchParams] = useSearchParams();
   const newSearchParams = new URLSearchParams();
 
-  const handleOpenTask = () => {
+  const handleOpenTask = (event: SyntheticEvent) => {
     newSearchParams.set('taskId', String(taskId));
     setSearchParams(newSearchParams);
   };
   return (
-    <S.TaskWrapper onClick={(): void => handleOpenTask()}>
-      <S.TaskTitle>{name}</S.TaskTitle>
+    <S.TaskWrapper
+      onClick={(event: SyntheticEvent): void => handleOpenTask(event)}
+    >
+      <S.TaskTitle>{title}</S.TaskTitle>
       <S.PriorityIconWrapper>
         {getPriorityIcon(priority, 22)}
       </S.PriorityIconWrapper>

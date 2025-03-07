@@ -1,8 +1,14 @@
 import { useForm } from 'react-hook-form';
+import { useSearchParams } from 'react-router-dom';
 
 import TaskInput from '@components/inputs/taskInput/TaskInput';
 
-import { ITask, ITaskType } from '@common/interfaces/ITask';
+import {
+  ITask,
+  ITaskPriority,
+  ITaskStatus,
+  ITaskType,
+} from '@common/interfaces/ITask';
 import { getColumns } from '@common/helpers/taskHelper';
 
 import {
@@ -12,61 +18,67 @@ import {
   taskTypesSchema,
 } from '@common/utils/tasdDetailsConfig';
 import { closeModal } from '@common/providers/appProvider/useAppState';
-import createTask from '@common/api/postCreateTask';
+import { createTask } from '@common/api/taskApi';
 import { getBoard } from '@common/api/getBoard';
 
 import * as S from './CreateTaskForm.styled';
 import CustomSelect from '@components/select/Select';
 import StyledButton from '@components/styledButton/StyledButton';
+import { assign } from 'lodash';
 
 const CreateTaskForm = (): JSX.Element => {
+  const [searchParams] = useSearchParams();
+  const columns = getColumns();
+  const column = searchParams.get('columnName') || columns[0];
+  const defaultValues = {
+    title: '',
+    description: '',
+    type: ITaskType.TASK,
+    parentTask: 0,
+    column,
+    status: ITaskStatus.TO_DO,
+    priority: ITaskPriority.LOW,
+  };
+
   const {
     register,
     handleSubmit,
     watch,
     setValue,
     formState: { errors },
-  } = useForm<Partial<ITask>>({});
+  } = useForm<Partial<ITask>>({
+    defaultValues,
+  });
   const isStoryType = watch('type') === ITaskType.STORY;
   const storiesSchema = getStorySchema();
 
-  const columns = getColumns();
-
   const onSubmit = async (data: Partial<ITask>) => {
+    console.log(defaultValues, data);
+    console.log(assign(defaultValues, data));
     const response = await createTask(data);
-    console.log(response);
     if (response?.message) {
       closeModal();
       getBoard();
     }
   };
 
+  const formProps = { setValue, register, watch, isCreateTask: true };
+
   return (
     <S.DetailsContainer>
       <S.TaskForm onSubmit={handleSubmit(onSubmit)}>
         <S.FormItem>
-          <TaskInput
-            fieldName="name"
-            setValue={setValue}
-            register={register}
-            watch={watch}
-          />
+          <TaskInput {...formProps} fieldName="title" />
         </S.FormItem>
         <S.FormItem>
-          <TaskInput
-            setValue={setValue}
-            fieldName="description"
-            register={register}
-            watch={watch}
-          />
+          <TaskInput fieldName="description" {...formProps} />
         </S.FormItem>
         <S.FormItem>
           <CustomSelect
             name="type"
+            label="Type"
             items={taskTypesSchema}
-            setValue={setValue}
-            register={register}
-            watch={watch}
+            {...formProps}
           />
         </S.FormItem>
         {!isStoryType ? (
@@ -75,9 +87,7 @@ const CreateTaskForm = (): JSX.Element => {
               name="parentTask"
               label="Parent task (story)"
               items={storiesSchema}
-              setValue={setValue}
-              register={register}
-              watch={watch}
+              {...formProps}
             />
           </S.FormItem>
         ) : null}
@@ -86,30 +96,26 @@ const CreateTaskForm = (): JSX.Element => {
             name="column"
             label="Column"
             items={columns}
-            setValue={setValue}
-            register={register}
-            watch={watch}
+            defaultVal={column}
+            {...formProps}
           />
         </S.FormItem>
         <S.FormItem>
           <CustomSelect
             name="status"
+            label="Status"
             items={taskStatusSchema}
-            setValue={setValue}
-            register={register}
-            watch={watch}
+            {...formProps}
           />
         </S.FormItem>
         <S.FormItem>
           <CustomSelect
             name="priority"
+            label="Priority"
             items={taskPrioritySchema}
-            setValue={setValue}
-            register={register}
-            watch={watch}
+            {...formProps}
           />
         </S.FormItem>
-        <S.FormItem></S.FormItem>
         <S.ButtonContainer>
           <StyledButton label="Save" />
           <StyledButton label="Cancel" onClick={closeModal} />

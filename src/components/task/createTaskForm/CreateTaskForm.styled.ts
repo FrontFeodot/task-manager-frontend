@@ -43,15 +43,3 @@ export const ButtonContainer = styled.div`
   display: flex;
   gap: 16px;
 `;
-
-export const LayoutItem = styled.div`
-  padding: 20px;
-  border-radius: 16px;
-
-  background-color: #18191a;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-`;
-
-export const TopLeft = styled(LayoutItem)``;
-export const TopRight = styled(LayoutItem)``;
-export const Bottom = styled(LayoutItem)``;

@@ -25,7 +25,7 @@ const Board = ({ boardData }: IBoardProps): JSX.Element => {
               {currentTaskSection.length ? (
                 <TasksSection taskSection={currentTaskSection} />
               ) : null}
-              <CreateTask />
+              <CreateTask columnName={columnName} />
             </S.Column>
           );
         })}

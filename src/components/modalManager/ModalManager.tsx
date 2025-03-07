@@ -5,9 +5,12 @@ import { useAppState } from '@common/providers/appProvider/useAppState';
 import { IModal } from '@common/providers/appProvider/types';
 
 import * as S from './ModalManager.styled';
+import { useEffect } from 'react';
 
 const ModalManager = (): JSX.Element | null => {
   const currentModal = useAppState((s) => s.currentModal);
+
+  useEffect(() => {}, []);
 
   if (!currentModal) {
     return null;

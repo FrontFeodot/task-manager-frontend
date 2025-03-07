@@ -11,10 +11,11 @@ const TaskInput = ({
   watch,
   register,
   setValue,
+  isCreateTask,
 }: ITaskInput): JSX.Element => {
-  const [isEditField, setIsEditField] = useState(true);
+  const [isEditField, setIsEditField] = useState(isCreateTask);
   const [fieldValue, setFieldValue] = useState(watch(fieldName) || '');
-  const isTitleView = fieldName === 'name';
+  const isTitleView = fieldName === 'title';
 
   const TitleComponent = isTitleView ? S.TitleValue : S.DescriptionValue;
   const inputRef = useRef(null);
@@ -29,7 +30,7 @@ const TaskInput = ({
   useOutsideClick<HTMLInputElement>(inputRef, toggleInput);
 
   return (
-    <S.TaskInputContainer>
+    <S.TaskInputContainer isTitleView={isTitleView}>
       <S.Label>{upperFirst(fieldName)}</S.Label>
       {isEditField ? (
         <>
@@ -43,7 +44,7 @@ const TaskInput = ({
                 },
               })}
               ref={inputRef}
-              autoFocus={!!fieldValue}
+              autoFocus={isEditField && !!fieldValue}
             />
           ) : (
             <S.StyledTextArea
@@ -54,7 +55,7 @@ const TaskInput = ({
                 },
               })}
               ref={inputRef}
-              autoFocus={!!fieldValue}
+              autoFocus={isEditField && !!fieldValue}
             />
           )}
           {/*           <S.ButtonContainer>
@@ -62,7 +63,10 @@ const TaskInput = ({
           </S.ButtonContainer> */}
         </>
       ) : (
-        <TitleComponent onClick={() => setIsEditField(true)}>
+        <TitleComponent
+          className={isTitleView ? 'input-title' : ''}
+          onClick={() => setIsEditField(true)}
+        >
           {watch(fieldName)}
         </TitleComponent>
       )}

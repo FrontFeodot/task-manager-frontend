@@ -20,7 +20,6 @@ const apiHandler = async <T>({
         ? { headers: { Authorization: Cookies.get(AUTH_TOKEN) } }
         : {}),
     });
-    console.log('apiHandler response', response);
 
     const { data } = response;
 
@@ -34,7 +33,7 @@ const apiHandler = async <T>({
 
     return data as ICustomResponse<T>;
   } catch (err) {
-    console.log(err);
+    console.error(err);
 
     return err as ICustomResponse<T>;
   }

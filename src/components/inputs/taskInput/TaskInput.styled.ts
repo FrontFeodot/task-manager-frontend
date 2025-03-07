@@ -2,10 +2,11 @@ import styled from 'styled-components';
 
 import { Text } from '@components/text/TextCommon.styled';
 
-export const TaskInputContainer = styled.div`
+export const TaskInputContainer = styled.div<{ isTitleView: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  height: ${({ isTitleView }) => (isTitleView ? 'auto' : '69%')};
 `;
 
 export const Label = styled(Text)`
@@ -18,6 +19,7 @@ export const TitleValue = styled(Text)`
   font-weight: bold;
   cursor: pointer;
   transition: color 0.2s;
+
   &:hover {
     color: #00bfa6;
   }
@@ -30,11 +32,18 @@ export const DescriptionValue = styled(Text)`
   padding: 8px;
   border-radius: 8px;
   font-size: 1rem;
+  min-height: 120px;
+  cursor: pointer;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow: auto;
+  height: 100%;
+
   transition:
+    color 0.2s,
     border-color 0.2s,
     box-shadow 0.2s;
-  cursor: pointer;
-  transition: color 0.2s;
+
   &:hover {
     color: #00bfa6;
   }
@@ -66,7 +75,7 @@ export const StyledTextArea = styled.textarea`
   border-radius: 8px;
   font-size: 1em;
   min-height: 120px;
-  height: auto;
+  height: 100%;
   transition:
     border-color 0.2s,
     box-shadow 0.2s;

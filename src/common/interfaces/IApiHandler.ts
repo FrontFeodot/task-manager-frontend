@@ -1,11 +1,12 @@
 export enum IApiMethod {
   GET = 'get',
   POST = 'post',
+  PUT = 'put',
 }
 
 export interface IApiHandler {
   method: IApiMethod;
-  url: string;
+  url: ApiCalls;
   payload?: Record<string, any>;
   withAuth?: boolean;
 }
@@ -17,6 +18,7 @@ export enum ApiCalls {
   BOARD = '/board/all',
   BOARD_CREATE = '/board/create',
   TASK_CREATE = '/task/create',
+  TASK_UPDATE = '/task/update',
 }
 
 export interface ICustomResponse<T = undefined> {

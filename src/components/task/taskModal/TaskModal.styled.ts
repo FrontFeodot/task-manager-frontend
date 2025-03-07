@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const TaskModalWrapper = styled.div`
   width: 60%;
-  height: auto;
+  height: 60%;
+  min-height: 500px;
   z-index: 101;
   background-color: #2f303d;
   padding: 20px;

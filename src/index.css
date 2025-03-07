@@ -1,5 +1,7 @@
 body,
-button {
+button,
+textarea,
+input {
   margin: 0;
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;

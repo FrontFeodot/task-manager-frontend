@@ -1,3 +1,4 @@
+import { parseValueToClassName } from '@common/helpers/appHelper';
 import { ITaskStatus } from '@common/interfaces/ITask';
 import styled from 'styled-components';
 
@@ -15,7 +16,7 @@ export const ProgressBarContainer = styled.div`
     width: 100%;
   }
 
-  &.${ITaskStatus.TO_DO}::before {
+  &.${parseValueToClassName(ITaskStatus.TO_DO)}::before {
     content: '';
     background: linear-gradient(90deg, #4f93ff, #1c3db3);
 
@@ -23,7 +24,7 @@ export const ProgressBarContainer = styled.div`
     animation: gradient-flow 5s ease infinite;
   }
 
-  &.${ITaskStatus.IN_PROGRESS}::before {
+  &.${parseValueToClassName(ITaskStatus.IN_PROGRESS)}::before {
     content: '';
     background: linear-gradient(90deg, #3abf9a, #fbbf24);
     background-size: 200% 100%;
@@ -32,7 +33,7 @@ export const ProgressBarContainer = styled.div`
       gradient-slide 5s ease-in-out infinite;
   }
 
-  &.${ITaskStatus.DONE}::before {
+  &.${parseValueToClassName(ITaskStatus.DONE)}::before {
     content: '';
     background: #34d399;
     animation: gradient-flow 5s ease infinite;

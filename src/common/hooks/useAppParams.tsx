@@ -16,7 +16,8 @@ const useAppParams = (): void => {
   useEffect(() => {
     if (hasSelectedTask && !isTaskOpened) {
       openModal(IModal.TASK_MODAL);
-    } else {
+    }
+    if (!hasSelectedTask && isTaskOpened) {
       closeModal();
     }
   }, [searchParams]);

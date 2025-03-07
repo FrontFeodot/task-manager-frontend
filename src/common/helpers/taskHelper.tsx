@@ -14,6 +14,7 @@ import {
 import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 
 import { getCurrentBoard } from './boardHelper';
+import { find } from 'lodash';
 
 export const getPriorityIcon = (
   priority?: ITaskPriority,
@@ -54,4 +55,9 @@ export const getStoriesList = (): ITask[] => {
 export const getColumns = (): string[] => {
   const currentBoard = getCurrentBoard();
   return useBoardState.getState().boardList?.[currentBoard].columns as string[];
+};
+
+export const getParentTask = (parentTaskId?: number): ITask | undefined => {
+  const stories = getStoriesList();
+  return find(stories, (story) => story.taskId === parentTaskId);
 };
