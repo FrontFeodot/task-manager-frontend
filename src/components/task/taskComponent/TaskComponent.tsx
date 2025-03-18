@@ -1,6 +1,6 @@
 import TaskInput from '@components/inputs/taskInput/TaskInput';
 import * as S from './TaskComponent.styled';
-import { ITaskComponent } from './TaskComponent.types';
+import { ITaskComponent, ITaskFormValues } from './TaskComponent.types';
 import { useForm } from 'react-hook-form';
 import { ITask } from '@common/interfaces/ITask';
 import { getParentTask } from '@common/helpers/taskHelper';
@@ -18,6 +18,8 @@ import { DATE_UP_TO_MINUTES } from '@common/utils/dateFormats';
 import { formatDate } from '@common/helpers/dateHelper';
 import { updateTask } from '@common/api/taskApi';
 import { getBoard } from '@common/api/getBoard';
+import { getColumn } from '@common/helpers/columnHelper';
+import { IColumn } from '@common/providers/boardProvider/types';
 
 const TaskComponent = ({
   task,
@@ -30,7 +32,7 @@ const TaskComponent = ({
     type,
     priority,
     status,
-    column,
+    columnId,
     customFields,
     createdAt,
     updatedAt,
@@ -38,18 +40,18 @@ const TaskComponent = ({
     parentTask,
   } = task;
 
-  const defaultValues: Partial<ITask> = {
+  const defaultValues: ITaskFormValues = {
     title,
     description,
     type,
     priority,
     status,
-    column,
+    column: (getColumn({ columnId }) as IColumn).title,
     customFields,
     parentTask,
   };
 
-  const { register, handleSubmit, watch, setValue } = useForm<Partial<ITask>>({
+  const { register, handleSubmit, watch, setValue } = useForm<ITaskFormValues>({
     defaultValues,
   });
   const storiesSchema = getStorySchema();
@@ -59,13 +61,13 @@ const TaskComponent = ({
 
   const isFormChanged = Object.keys(defaultValues).some(
     (key) =>
-      currentValues[key as keyof Partial<ITask>] !==
-      defaultValues[key as keyof Partial<ITask>]
+      currentValues[key as keyof ITaskFormValues] !==
+      defaultValues[key as keyof ITaskFormValues]
   );
 
-  const onSubmit = async (data: Partial<ITask>) => {
+  const onSubmit = async (data: ITaskFormValues) => {
     const fullyfiledTaskData = assign(task, data);
-    const response = await updateTask(fullyfiledTaskData);
+    const response = await updateTask(task, data);
     if (response?.isSuccess) {
       getBoard();
       closeTask();

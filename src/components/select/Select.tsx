@@ -7,6 +7,7 @@ import * as S from './Select.styled';
 import { ISelect } from './Select.types';
 import { ITask } from '@common/interfaces/ITask';
 import { SyntheticEvent, useEffect } from 'react';
+import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';
 
 const CustomSelect = ({
   items,
@@ -28,7 +29,6 @@ const CustomSelect = ({
   useEffect(() => {
     if (setValue) {
       setValue(name, defaultValue);
-      console.log('setValue');
     }
   }, []);
 
@@ -37,7 +37,7 @@ const CustomSelect = ({
       {isCreateTask && <S.Label htmlFor={name}>{upperFirst(label)}</S.Label>}
       <S.StyledSelect
         defaultValue={defaultValue}
-        {...register(name as keyof Partial<ITask>, {
+        {...register(name as keyof ITaskFormValues, {
           onChange: (e: SyntheticEvent<HTMLSelectElement>) => {
             if (handleChange) {
               return handleChange(e);

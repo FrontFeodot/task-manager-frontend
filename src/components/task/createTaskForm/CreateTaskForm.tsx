@@ -9,7 +9,6 @@ import {
   ITaskStatus,
   ITaskType,
 } from '@common/interfaces/ITask';
-import { getColumns } from '@common/helpers/taskHelper';
 
 import {
   getStorySchema,
@@ -18,17 +17,19 @@ import {
   taskTypesSchema,
 } from '@common/utils/tasdDetailsConfig';
 import { closeModal } from '@common/providers/appProvider/useAppState';
-import { createTask } from '@common/api/taskApi';
+import { createTaskHandler } from '@common/helpers/createTaskHelper';
+import { getColumnTitles } from '@common/helpers/columnHelper';
 import { getBoard } from '@common/api/getBoard';
 
 import * as S from './CreateTaskForm.styled';
 import CustomSelect from '@components/select/Select';
 import StyledButton from '@components/styledButton/StyledButton';
-import { assign } from 'lodash';
+
+import { ITaskFormValues } from '../taskComponent/TaskComponent.types';
 
 const CreateTaskForm = (): JSX.Element => {
   const [searchParams] = useSearchParams();
-  const columns = getColumns();
+  const columns = getColumnTitles();
   const column = searchParams.get('columnName') || columns[0];
   const defaultValues = {
     title: '',
@@ -46,16 +47,14 @@ const CreateTaskForm = (): JSX.Element => {
     watch,
     setValue,
     formState: { errors },
-  } = useForm<Partial<ITask>>({
+  } = useForm<ITaskFormValues>({
     defaultValues,
   });
   const isStoryType = watch('type') === ITaskType.STORY;
   const storiesSchema = getStorySchema();
 
-  const onSubmit = async (data: Partial<ITask>) => {
-    console.log(defaultValues, data);
-    console.log(assign(defaultValues, data));
-    const response = await createTask(data);
+  const onSubmit = async (data: ITaskFormValues) => {
+    const response = await createTaskHandler(data);
     if (response?.message) {
       closeModal();
       getBoard();

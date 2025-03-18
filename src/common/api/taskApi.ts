@@ -4,15 +4,22 @@ import {
   ICustomResponse,
 } from '@common/interfaces/IApiHandler';
 import { ITask } from '@common/interfaces/ITask';
-import { getCurrentBoard } from '@common/helpers/boardHelper';
+import {
+  getCurrentBoardTitle,
+  getCurrentBoardId,
+} from '@common/helpers/boardHelper';
 
 import apiHandler from './apiHandler';
+import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';
+import { assign, omit } from 'lodash';
+import { getColumn } from '@common/helpers/columnHelper';
+import { getLastOrderByType } from '@common/helpers/taskHelper';
 
 interface ICreateTask {
   message: string;
 }
 
-export const createTask = async (
+export const createTaskApi = async (
   task: Partial<ITask>
 ): Promise<ICustomResponse> => {
   try {
@@ -21,7 +28,6 @@ export const createTask = async (
       url: ApiCalls.TASK_CREATE,
       payload: {
         ...task,
-        board: getCurrentBoard(),
       },
       withAuth: true,
     });
@@ -37,15 +43,25 @@ export const createTask = async (
 };
 
 export const updateTask = async (
-  task: Partial<ITask>
+  oldTask: Partial<ITask>,
+  formValues: ITaskFormValues
 ): Promise<ICustomResponse> => {
+  const columnId = getColumn({ columnTitle: formValues.column })?.columnId;
+  const parsedFormFields = omit(formValues, ['column', 'board']);
+  const boardId = getCurrentBoardId();
+  const order = getLastOrderByType('tasks', columnId as string);
+  const updatedTask = {
+    ...assign(oldTask, parsedFormFields),
+    order,
+    boardId,
+    columnId,
+  };
   try {
     const response = await apiHandler({
       method: IApiMethod.PUT,
       url: ApiCalls.TASK_UPDATE,
       payload: {
-        ...task,
-        board: getCurrentBoard(),
+        ...updatedTask,
       },
       withAuth: true,
     });

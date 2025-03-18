@@ -10,13 +10,14 @@ import {
   IApiMethod,
   ICustomResponse,
 } from '@common/interfaces/IApiHandler';
-import { getCurrentBoard } from '@common/helpers/boardHelper';
+import { getCurrentBoardTitle } from '@common/helpers/boardHelper';
+import { IBoardList } from '@common/interfaces/IBoard';
 
 export const getBoard = async (): Promise<ICustomResponse<
-  Record<string, IBoard> | undefined
+  IBoardList | undefined
 > | void> => {
   try {
-    const response = await apiHandler<Record<string, IBoard>>({
+    const response = await apiHandler<IBoardList>({
       method: IApiMethod.GET,
       url: ApiCalls.BOARD,
       withAuth: true,
@@ -29,9 +30,9 @@ export const getBoard = async (): Promise<ICustomResponse<
 
     setBoardsList(boardList);
 
-    const currentBoard = getCurrentBoard();
+    const currentBoard = getCurrentBoardTitle();
     if (!currentBoard) {
-      const firstBoardName = boardList[keys(boardList)[0]].name;
+      const firstBoardName = boardList[keys(boardList)[0]].title;
       Cookies.set(SELECTED_BOARD, firstBoardName);
     }
   } catch (error) {

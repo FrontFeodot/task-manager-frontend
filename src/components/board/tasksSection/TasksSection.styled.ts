@@ -9,6 +9,7 @@ export const TaskSection = styled.div`
   flex-direction: column;
   background-color: #202124;
   gap: 16px;
+  min-height: 1px;
 `;
 
 export const TaskWrapper = styled.div``;

@@ -1,4 +1,5 @@
 import { ITask, ITaskFormItem } from '@common/interfaces/ITask';
+import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';
 import {
   UseFormRegister,
   UseFormSetValue,
@@ -7,8 +8,8 @@ import {
 
 export interface ITaskInput extends ITaskFormItem<HTMLInputElement> {
   fieldName: 'title' | 'description';
-  setValue: UseFormSetValue<Partial<ITask>>;
-  register: UseFormRegister<Partial<ITask>>;
-  watch: UseFormWatch<Partial<ITask>>;
+  setValue: UseFormSetValue<ITaskFormValues>;
+  register: UseFormRegister<ITaskFormValues>;
+  watch: UseFormWatch<ITaskFormValues>;
   isCreateTask?: boolean;
 }

@@ -6,6 +6,7 @@ import Board from '@components/board/Board';
 import { getBoard } from '@common/api/getBoard';
 import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 import { SELECTED_BOARD } from '@common/utils/cookies';
+import { isEmpty } from 'lodash';
 
 const BoardPage = (): JSX.Element => {
   const boardList = useBoardState((s) => s.boardList);
@@ -15,7 +16,7 @@ const BoardPage = (): JSX.Element => {
     getBoard();
   }, []);
 
-  if (!boardList || !selectedBoardName) {
+  if (isEmpty(boardList) || !selectedBoardName) {
     return <>Empty</>;
   }
 

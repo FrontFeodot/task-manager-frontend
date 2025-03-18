@@ -17,6 +17,8 @@ export enum ApiCalls {
   PROTECTED = '/auth/protected',
   BOARD = '/board/all',
   BOARD_CREATE = '/board/create',
+  UPDATE_TASKS_ORDER = '/board/update/tasks',
+  UPDATE_COLUMNS_ORDER = '/board/update/columns',
   TASK_CREATE = '/task/create',
   TASK_UPDATE = '/task/update',
 }

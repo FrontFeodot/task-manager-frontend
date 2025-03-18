@@ -1,3 +1,5 @@
+import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';
+import { UniqueIdentifier } from '@dnd-kit/core';
 import { InputHTMLAttributes, SyntheticEvent } from 'react';
 import {
   UseFormRegister,
@@ -15,10 +17,12 @@ export interface ITask {
   customFields?: Record<string, string>;
   type?: ITaskType;
   parentTask?: number;
-  board: string;
-  column: string;
+  boardId: string;
+  columnId: string;
   createdAt: Date;
   updatedAt: Date;
+  order: number;
+  id?: UniqueIdentifier; // for dnd
 }
 
 export enum ITaskStatus {
@@ -39,8 +43,8 @@ export enum ITaskType {
 }
 
 export interface ITaskFormItem<T> extends InputHTMLAttributes<T> {
-  setValue?: UseFormSetValue<Partial<ITask>>;
-  register: UseFormRegister<Partial<ITask>>;
-  watch?: UseFormWatch<Partial<ITask>>;
+  setValue?: UseFormSetValue<ITaskFormValues>;
+  register: UseFormRegister<ITaskFormValues>;
+  watch?: UseFormWatch<ITaskFormValues>;
   handleChange?: (e: SyntheticEvent) => void;
 }

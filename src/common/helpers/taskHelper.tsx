@@ -13,8 +13,9 @@ import {
 } from '@common/interfaces/ITask';
 import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 
-import { getCurrentBoard } from './boardHelper';
-import { find } from 'lodash';
+import { getCurrentBoardTitle } from './boardHelper';
+import { find, map, maxBy } from 'lodash';
+import { IColumn } from '@common/providers/boardProvider/types';
 
 export const getPriorityIcon = (
   priority?: ITaskPriority,
@@ -46,18 +47,45 @@ export const getStatusLabel = (status: ITaskStatus): string => {
 };
 
 export const getStoriesList = (): ITask[] => {
-  const currentBoard = getCurrentBoard();
+  const currentBoard = getCurrentBoardTitle();
   const allTasks = useBoardState.getState().boardList?.[currentBoard].tasks;
 
   return filter(allTasks, (task) => task.type === ITaskType.STORY);
 };
 
-export const getColumns = (): string[] => {
-  const currentBoard = getCurrentBoard();
-  return useBoardState.getState().boardList?.[currentBoard].columns as string[];
-};
-
 export const getParentTask = (parentTaskId?: number): ITask | undefined => {
   const stories = getStoriesList();
   return find(stories, (story) => story.taskId === parentTaskId);
+};
+
+export const getTasksForColumn = (columnId: string, tasks: ITask[]) =>
+  filter(tasks, ['columnId', columnId]).sort((a, b) => a.order - b.order);
+
+export const getLastOrderByType = (
+  type: 'columns' | 'tasks',
+  columnId: string
+): number => {
+  const currentBoard = getCurrentBoardTitle();
+  const columns = useBoardState.getState().boardList?.[currentBoard]
+    .columns as IColumn[];
+  if (type === 'columns') {
+    const lastOrderItem = maxBy(columns, 'order');
+    return lastOrderItem?.order || 0;
+  }
+  const tasks = useBoardState.getState().boardList?.[currentBoard]
+    .tasks as ITask[];
+  const currentColumn = find(
+    columns,
+    (column) => column.columnId === columnId
+  ) as IColumn;
+  const taskList = getTasksForColumn(currentColumn?.columnId, tasks);
+  const lastOrderItem = maxBy(taskList, 'order');
+  return lastOrderItem ? lastOrderItem.order + 1 : 1;
+};
+
+export const getTaskById = (taskId: number): ITask | undefined => {
+  const currentBoard = getCurrentBoardTitle();
+  const allTasks = useBoardState.getState().boardList?.[currentBoard].tasks;
+
+  return find(allTasks, (task) => task.taskId === taskId);
 };

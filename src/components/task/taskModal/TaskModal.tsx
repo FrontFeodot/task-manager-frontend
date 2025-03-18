@@ -3,20 +3,24 @@ import { useSearchParams } from 'react-router-dom';
 import find from 'lodash/find';
 
 import useOutSideClick from '@common/hooks/useOutSideClick';
-import { getCurrentBoard } from '@common/helpers/boardHelper';
+import { getCurrentBoardTitle } from '@common/helpers/boardHelper';
 import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 
 import * as S from './TaskModal.styled';
 import TaskComponent from '../taskComponent/TaskComponent';
+import { filter, map } from 'lodash';
+import { getColumnTitles } from '@common/helpers/columnHelper';
 
 const TaskModal = (): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const taskId = Number(searchParams.get('taskId'));
-  const selectedBoardName = getCurrentBoard();
+  const selectedBoardName = getCurrentBoardTitle();
   const boardList = useBoardState((s) => s.boardList);
 
   const selectedBoard = boardList?.[selectedBoardName];
+
+  const columnListTitles = getColumnTitles();
 
   const currentTask = find(
     selectedBoard?.tasks,
@@ -47,7 +51,7 @@ const TaskModal = (): JSX.Element => {
       <TaskComponent
         closeTask={handleClose}
         task={currentTask}
-        columnList={selectedBoard.columns}
+        columnList={columnListTitles}
       />
     </S.TaskModalWrapper>
   );
