@@ -1,25 +1,29 @@
-import TaskInput from '@components/inputs/taskInput/TaskInput';
-import * as S from './TaskComponent.styled';
-import { ITaskComponent, ITaskFormValues } from './TaskComponent.types';
+import upperFirst from 'lodash/upperFirst';
 import { useForm } from 'react-hook-form';
-import { ITask } from '@common/interfaces/ITask';
-import { getParentTask } from '@common/helpers/taskHelper';
+
+import TaskInput from '@components/inputs/taskInput/TaskInput';
 import TaskFormSelect from '@components/select/taskFormSelect/TaskFormSelect';
 import StyledButton from '@components/styledButton/StyledButton';
+
 import {
   getStorySchema,
   taskPrioritySchema,
   taskStatusSchema,
   taskTypesSchema,
 } from '@common/utils/tasdDetailsConfig';
-import { assign, upperFirst } from 'lodash';
-import { format } from 'date-fns';
 import { DATE_UP_TO_MINUTES } from '@common/utils/dateFormats';
 import { formatDate } from '@common/helpers/dateHelper';
-import { updateTask } from '@common/api/taskApi';
+import { deleteTask, updateTask } from '@common/api/taskApi';
 import { getBoard } from '@common/api/getBoard';
 import { getColumn } from '@common/helpers/columnHelper';
 import { IColumn } from '@common/providers/boardProvider/types';
+import { getParentTask } from '@common/helpers/taskHelper';
+
+import * as S from './TaskComponent.styled';
+import { ITaskComponent, ITaskFormValues } from './TaskComponent.types';
+import { IButtonColor } from '@components/styledButton/StyledButton.types';
+import { pick } from 'lodash';
+import { useSearchParams } from 'react-router-dom';
 
 const TaskComponent = ({
   task,
@@ -51,6 +55,8 @@ const TaskComponent = ({
     parentTask,
   };
 
+  const [_, setSearchParams] = useSearchParams()
+
   const { register, handleSubmit, watch, setValue } = useForm<ITaskFormValues>({
     defaultValues,
   });
@@ -66,13 +72,21 @@ const TaskComponent = ({
   );
 
   const onSubmit = async (data: ITaskFormValues) => {
-    const fullyfiledTaskData = assign(task, data);
     const response = await updateTask(task, data);
     if (response?.isSuccess) {
       getBoard();
       closeTask();
     }
   };
+
+  const onTaskDelete = async () => {
+    const response = await deleteTask(pick(task, ['taskId', 'boardId']))
+    if (response?.isSuccess) {
+      getBoard();
+      closeTask()
+    }
+  }
+
   return (
     <S.TaskFormWrapper onSubmit={handleSubmit(onSubmit)}>
       <S.TopLeft>
@@ -142,13 +156,18 @@ const TaskComponent = ({
         />
       </S.TopRight>
       <S.Bottom>
-        <S.SaveButtonWrapper>
+        <S.ButtonWrapper>
           {isFormChanged ? <StyledButton type="submit" label="save" /> : null}
-        </S.SaveButtonWrapper>
+        </S.ButtonWrapper>
+        <S.BottomRightSection>
         <S.MetaInfo>
           <S.MetaInfoRow>{`Created at: ${formatDate(createdAt, DATE_UP_TO_MINUTES)}`}</S.MetaInfoRow>
           <S.MetaInfoRow>{`Updated at: ${formatDate(updatedAt, DATE_UP_TO_MINUTES)}`}</S.MetaInfoRow>
         </S.MetaInfo>
+        <S.ButtonWrapper>
+          <StyledButton type='button' label='delete' buttonColor={IButtonColor.RED} onClick={onTaskDelete} />
+        </S.ButtonWrapper>
+        </S.BottomRightSection>
       </S.Bottom>
     </S.TaskFormWrapper>
   );

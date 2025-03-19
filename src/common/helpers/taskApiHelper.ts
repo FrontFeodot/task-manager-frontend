@@ -1,4 +1,4 @@
-import { createTaskApi } from '@common/api/taskApi';
+import { createTaskApi, deleteTask } from '@common/api/taskApi';
 import { ITask } from '@common/interfaces/ITask';
 import { getLastOrderByType } from './taskHelper';
 import { ICustomResponse } from '@common/interfaces/IApiHandler';
@@ -6,6 +6,7 @@ import { getColumn } from './columnHelper';
 import { getCurrentBoardId } from './boardHelper';
 import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';
 import { omit } from 'lodash';
+import { getBoard } from '@common/api/getBoard';
 
 export const createTaskHandler = async (
   data: ITaskFormValues
@@ -29,3 +30,21 @@ export const createTaskHandler = async (
     return err as ICustomResponse;
   }
 };
+
+export const deleteTaskHandler = async (
+  data: Pick<ITask, 'taskId' | 'boardId'>
+): Promise<ICustomResponse> => {
+  try {
+    const response = await deleteTask(data)
+    if (response.isError) {
+      throw response
+    }
+    if (response.isSuccess) {
+      getBoard();
+
+    }
+    return response as ICustomResponse
+  } catch (err) {
+    return err as ICustomResponse
+  }
+}

@@ -21,6 +21,7 @@ export enum ApiCalls {
   UPDATE_COLUMNS_ORDER = '/board/update/columns',
   TASK_CREATE = '/task/create',
   TASK_UPDATE = '/task/update',
+  TASK_DELETE = '/task/delete',
 }
 
 export interface ICustomResponse<T = undefined> {

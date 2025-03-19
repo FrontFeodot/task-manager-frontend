@@ -10,6 +10,7 @@ import * as S from './TaskModal.styled';
 import TaskComponent from '../taskComponent/TaskComponent';
 import { filter, map } from 'lodash';
 import { getColumnTitles } from '@common/helpers/columnHelper';
+import { closeTaskModal } from '@common/helpers/taskHelper';
 
 const TaskModal = (): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
@@ -30,8 +31,7 @@ const TaskModal = (): JSX.Element => {
   const newSearchParams = new URLSearchParams();
 
   const handleClose = () => {
-    newSearchParams.delete('taskId');
-    setSearchParams(newSearchParams);
+    closeTaskModal(setSearchParams)
   };
 
   useOutSideClick(ref, handleClose);

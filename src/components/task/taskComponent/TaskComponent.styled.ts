@@ -65,6 +65,15 @@ export const Bottom = styled(LayoutItem)`
   justify-content: space-between;
 `;
 
+export const BottomRightSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  height: 100%;
+  padding-right: 8px;
+  gap: 16px;
+`
+
 export const MetaInfo = styled.div`
   display: flex;
   flex-direction: column;
@@ -78,7 +87,7 @@ export const MetaInfoRow = styled(TextInline)`
   color: #a0a0a0;
 `;
 
-export const SaveButtonWrapper = styled.div`
+export const ButtonWrapper = styled.div`
   display: flex;
   width: 124px;
   height: 100%;

@@ -14,6 +14,7 @@ import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.ty
 import { assign, omit } from 'lodash';
 import { getColumn } from '@common/helpers/columnHelper';
 import { getLastOrderByType } from '@common/helpers/taskHelper';
+import { getBoard } from './getBoard';
 
 interface ICreateTask {
   message: string;
@@ -74,3 +75,22 @@ export const updateTask = async (
     return err as ICustomResponse;
   }
 };
+
+export const deleteTask = async (payload: Pick<ITask, 'taskId' | 'boardId'>) => {
+  try {
+    const response = await apiHandler({
+      method: IApiMethod.PUT,
+      url: ApiCalls.TASK_DELETE,
+      payload,
+      withAuth: true,
+    });
+    if (response.isError) {
+      throw response;
+    }
+
+    return response as ICustomResponse;
+  } catch (err) {
+    console.error(err);
+    return err as ICustomResponse;
+  }
+}

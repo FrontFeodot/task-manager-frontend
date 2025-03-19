@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { darken, lighten } from 'polished';
+import { IButtonColor } from './StyledButton.types';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -7,9 +8,9 @@ export const Wrapper = styled.div`
   height: 100%;
 `;
 
-export const Button = styled.button`
+export const Button = styled.button<{buttonColor: IButtonColor}>`
   width: 100%;
-  background: ${({ theme }) => theme.buttonBg};
+  background: ${({ buttonColor }) => buttonColor};
   color: ${({ theme }) => theme.textButton};
   border: none;
   border-radius: 8px;
@@ -23,16 +24,16 @@ export const Button = styled.button`
   ${({ theme }) => theme.shadow};
 
   &:hover {
-    background: ${({ theme }) => lighten(0.1, theme.buttonBg)};
+    background: ${({ buttonColor }) => lighten(0.1, buttonColor)};
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 10px ${({ theme }) => theme.link};
+    box-shadow: 0 0 10px ${({ buttonColor }) => buttonColor};
   }
 
   &:active {
     transform: scale(0.95);
-    background: ${({ theme }) => darken(0.1, theme.buttonBg)};
+    background: ${({ buttonColor }) => darken(0.1, buttonColor)};
   }
 `;

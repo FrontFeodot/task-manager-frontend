@@ -16,6 +16,7 @@ import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 import { getCurrentBoardTitle } from './boardHelper';
 import { find, map, maxBy } from 'lodash';
 import { IColumn } from '@common/providers/boardProvider/types';
+import { SetURLSearchParams } from 'react-router-dom';
 
 export const getPriorityIcon = (
   priority?: ITaskPriority,
@@ -89,3 +90,9 @@ export const getTaskById = (taskId: number): ITask | undefined => {
 
   return find(allTasks, (task) => task.taskId === taskId);
 };
+
+export const closeTaskModal = (setSearchParams: SetURLSearchParams): void => {
+  const newSearchParams = new URLSearchParams();
+  newSearchParams.delete('taskId');
+  setSearchParams(newSearchParams);
+}

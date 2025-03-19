@@ -17,7 +17,7 @@ import {
   taskTypesSchema,
 } from '@common/utils/tasdDetailsConfig';
 import { closeModal } from '@common/providers/appProvider/useAppState';
-import { createTaskHandler } from '@common/helpers/createTaskHelper';
+import { createTaskHandler } from '@common/helpers/taskApiHelper';
 import { getColumnTitles } from '@common/helpers/columnHelper';
 import { getBoard } from '@common/api/getBoard';
 
