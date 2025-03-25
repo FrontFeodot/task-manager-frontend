@@ -88,7 +88,7 @@ const RegisterForm = (): JSX.Element => {
         <Item>
           <StyledButton label="sign up" type="submit" />
         </Item>
-        {error && <ErrorTooltip isGlobal>{error}</ErrorTooltip>}
+        {error && <ErrorTooltip $isGlobal>{error}</ErrorTooltip>}
       </Form>
     </S.Wrapper>
   );

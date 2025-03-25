@@ -4,21 +4,13 @@ import {
   ICustomResponse,
 } from '@common/interfaces/IApiHandler';
 import { ITask } from '@common/interfaces/ITask';
-import {
-  getCurrentBoardTitle,
-  getCurrentBoardId,
-} from '@common/helpers/boardHelper';
+import { getCurrentBoardId } from '@common/helpers/boardHelper';
 
 import apiHandler from './apiHandler';
 import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';
 import { assign, omit } from 'lodash';
 import { getColumn } from '@common/helpers/columnHelper';
 import { getLastOrderByType } from '@common/helpers/taskHelper';
-import { getBoard } from './getBoard';
-
-interface ICreateTask {
-  message: string;
-}
 
 export const createTaskApi = async (
   task: Partial<ITask>
@@ -50,7 +42,7 @@ export const updateTask = async (
   const columnId = getColumn({ columnTitle: formValues.column })?.columnId;
   const parsedFormFields = omit(formValues, ['column', 'board']);
   const boardId = getCurrentBoardId();
-  const order = getLastOrderByType('tasks', columnId as string);
+  const order = getLastOrderByType({ type: 'tasks', columnId, boardId });
   const updatedTask = {
     ...assign(oldTask, parsedFormFields),
     order,
@@ -76,7 +68,9 @@ export const updateTask = async (
   }
 };
 
-export const deleteTask = async (payload: Pick<ITask, 'taskId' | 'boardId'>) => {
+export const deleteTask = async (
+  payload: Pick<ITask, 'taskId' | 'boardId'>
+) => {
   try {
     const response = await apiHandler({
       method: IApiMethod.PUT,
@@ -93,4 +87,4 @@ export const deleteTask = async (payload: Pick<ITask, 'taskId' | 'boardId'>) => 
     console.error(err);
     return err as ICustomResponse;
   }
-}
+};

@@ -1,4 +1,4 @@
-import { ITask, ITaskFormItem } from '@common/interfaces/ITask';
+import { IFormItem } from '@common/interfaces/ITask';
 import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';
 import {
   UseFormRegister,
@@ -6,10 +6,12 @@ import {
   UseFormWatch,
 } from 'react-hook-form';
 
-export interface ITaskInput extends ITaskFormItem<HTMLInputElement> {
+export interface ITaskInput
+  extends IFormItem<HTMLInputElement, ITaskFormValues> {
   fieldName: 'title' | 'description';
+  isCreateTask?: boolean;
   setValue: UseFormSetValue<ITaskFormValues>;
   register: UseFormRegister<ITaskFormValues>;
+
   watch: UseFormWatch<ITaskFormValues>;
-  isCreateTask?: boolean;
 }

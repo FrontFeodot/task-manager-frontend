@@ -45,11 +45,10 @@ const Column = ({
       style={style}
       ref={setNodeRef}
       id={columnId}
-      key={columnId}
       className="column"
     >
       <S.DnDAnchor fill="#F5F6F7" {...attributes} {...listeners} />
-      <S.ColumnLabel hasItems={!!taskSection.length}>
+      <S.ColumnLabel $hasItems={!!taskSection.length}>
         <S.ColumnText>{toUpper(title)}</S.ColumnText>
       </S.ColumnLabel>
 

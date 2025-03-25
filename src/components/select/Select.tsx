@@ -16,10 +16,10 @@ const CustomSelect = ({
   setValue,
   handleChange,
   register,
-  watch,
   selectRef,
   isCreateTask,
   defaultVal,
+  ...props
 }: ISelect): JSX.Element => {
   const defaultValue =
     defaultVal || (isArray(items) ? items[0] : keys(items)[0]);
@@ -33,21 +33,27 @@ const CustomSelect = ({
   }, []);
 
   return (
-    <div>
+    <>
       {isCreateTask && <S.Label htmlFor={name}>{upperFirst(label)}</S.Label>}
       <S.StyledSelect
+        {...props}
         defaultValue={defaultValue}
-        {...register(name as keyof ITaskFormValues, {
-          onChange: (e: SyntheticEvent<HTMLSelectElement>) => {
-            if (handleChange) {
-              return handleChange(e);
+        {...(register
+          ? {
+              ...register(name as keyof ITaskFormValues, {
+                onChange: (e: SyntheticEvent<HTMLSelectElement>) => {
+                  if (handleChange) {
+                    return handleChange(e);
+                  }
+                  if (setValue) {
+                    return setValue(name, e.currentTarget.value);
+                  }
+                },
+              }),
             }
-            if (setValue) {
-              return setValue(name, e.currentTarget.value);
-            }
-          },
-        })}
+          : {})}
         ref={selectRef}
+        onChange={!register && handleChange ? handleChange : undefined}
       >
         {isArray(items)
           ? map(items, (item, i) => {
@@ -69,7 +75,7 @@ const CustomSelect = ({
               );
             })}
       </S.StyledSelect>
-    </div>
+    </>
   );
 };
 

@@ -14,7 +14,7 @@ import {
 import { DATE_UP_TO_MINUTES } from '@common/utils/dateFormats';
 import { formatDate } from '@common/helpers/dateHelper';
 import { deleteTask, updateTask } from '@common/api/taskApi';
-import { getBoard } from '@common/api/getBoard';
+import { getBoards } from '@common/api/boardApi';
 import { getColumn } from '@common/helpers/columnHelper';
 import { IColumn } from '@common/providers/boardProvider/types';
 import { getParentTask } from '@common/helpers/taskHelper';
@@ -55,7 +55,7 @@ const TaskComponent = ({
     parentTask,
   };
 
-  const [_, setSearchParams] = useSearchParams()
+  const [_, setSearchParams] = useSearchParams();
 
   const { register, handleSubmit, watch, setValue } = useForm<ITaskFormValues>({
     defaultValues,
@@ -74,18 +74,18 @@ const TaskComponent = ({
   const onSubmit = async (data: ITaskFormValues) => {
     const response = await updateTask(task, data);
     if (response?.isSuccess) {
-      getBoard();
+      getBoards();
       closeTask();
     }
   };
 
   const onTaskDelete = async () => {
-    const response = await deleteTask(pick(task, ['taskId', 'boardId']))
+    const response = await deleteTask(pick(task, ['taskId', 'boardId']));
     if (response?.isSuccess) {
-      getBoard();
-      closeTask()
+      getBoards();
+      closeTask();
     }
-  }
+  };
 
   return (
     <S.TaskFormWrapper onSubmit={handleSubmit(onSubmit)}>
@@ -160,13 +160,18 @@ const TaskComponent = ({
           {isFormChanged ? <StyledButton type="submit" label="save" /> : null}
         </S.ButtonWrapper>
         <S.BottomRightSection>
-        <S.MetaInfo>
-          <S.MetaInfoRow>{`Created at: ${formatDate(createdAt, DATE_UP_TO_MINUTES)}`}</S.MetaInfoRow>
-          <S.MetaInfoRow>{`Updated at: ${formatDate(updatedAt, DATE_UP_TO_MINUTES)}`}</S.MetaInfoRow>
-        </S.MetaInfo>
-        <S.ButtonWrapper>
-          <StyledButton type='button' label='delete' buttonColor={IButtonColor.RED} onClick={onTaskDelete} />
-        </S.ButtonWrapper>
+          <S.MetaInfo>
+            <S.MetaInfoRow>{`Created at: ${formatDate(createdAt, DATE_UP_TO_MINUTES)}`}</S.MetaInfoRow>
+            <S.MetaInfoRow>{`Updated at: ${formatDate(updatedAt, DATE_UP_TO_MINUTES)}`}</S.MetaInfoRow>
+          </S.MetaInfo>
+          <S.ButtonWrapper>
+            <StyledButton
+              type="button"
+              label="delete"
+              buttonColor={IButtonColor.RED}
+              onClick={onTaskDelete}
+            />
+          </S.ButtonWrapper>
         </S.BottomRightSection>
       </S.Bottom>
     </S.TaskFormWrapper>

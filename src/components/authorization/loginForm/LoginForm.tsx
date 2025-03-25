@@ -66,7 +66,7 @@ const LoginForm = (): JSX.Element => {
         <Item>
           <StyledButton label="sign in" type="submit" />
         </Item>
-        {error && <ErrorTooltip isGlobal>{error}</ErrorTooltip>}
+        {error && <ErrorTooltip $isGlobal>{error}</ErrorTooltip>}
       </Form>
     </S.Wrapper>
   );

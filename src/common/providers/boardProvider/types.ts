@@ -5,7 +5,8 @@ export interface IBoardState {
   boardList: IBoardList | null;
   loading: boolean;
   isError: number;
-  currentTask: string | null;
+  currentBoardTitle: string | null;
+  openedEditor: IBoard | null;
 }
 
 export interface IBoard {

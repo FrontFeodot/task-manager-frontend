@@ -10,3 +10,20 @@ export const setBoardsList = (boardList: Record<string, IBoard>): void => {
     boardList,
   }));
 };
+
+export const setCurrentBoard = (currentBoardTitle: string | null): void => {
+  useBoardState.setState(() => ({
+    currentBoardTitle,
+  }));
+};
+
+export const openEditor = (openedEditor: IBoard): void => {
+  useBoardState.setState(() => ({
+    openedEditor,
+  }));
+};
+export const closeEditor = (): void => {
+  useBoardState.setState(() => ({
+    openedEditor: null,
+  }));
+};

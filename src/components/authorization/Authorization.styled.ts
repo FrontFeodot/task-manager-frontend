@@ -22,7 +22,7 @@ export const Label = styled(Text)`
   transition: all ease-in 1s;
 `;
 
-export const ErrorTooltip = styled.div<{ isGlobal?: boolean }>`
+export const ErrorTooltip = styled.div<{ $isGlobal?: boolean }>`
   position: relative;
   background: ${({ theme }) => theme.errorBg};
   color: ${({ theme }) => theme.errorText};
@@ -31,7 +31,7 @@ export const ErrorTooltip = styled.div<{ isGlobal?: boolean }>`
   box-shadow: ${({ theme }) => theme.shadow};
   font-size: 14px;
   white-space: nowrap;
-  width: ${({ isGlobal }) => (isGlobal ? '100%' : 'auto')};
+  width: ${({ $isGlobal }) => ($isGlobal ? '100%' : 'auto')};
   transition: all ease-in 1s;
 
   & p {

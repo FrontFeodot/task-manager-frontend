@@ -6,14 +6,14 @@ import { getColumn } from './columnHelper';
 import { getCurrentBoardId } from './boardHelper';
 import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';
 import { omit } from 'lodash';
-import { getBoard } from '@common/api/getBoard';
+import { getBoards } from '@common/api/boardApi';
 
 export const createTaskHandler = async (
   data: ITaskFormValues
 ): Promise<ICustomResponse> => {
   const columnId = getColumn({ columnTitle: data.column })?.columnId;
   const boardId = getCurrentBoardId();
-  const order = getLastOrderByType('tasks', columnId as string);
+  const order = getLastOrderByType({ type: 'tasks', columnId, boardId });
   try {
     const response = await createTaskApi({
       ...omit(data, 'column'),
@@ -35,16 +35,15 @@ export const deleteTaskHandler = async (
   data: Pick<ITask, 'taskId' | 'boardId'>
 ): Promise<ICustomResponse> => {
   try {
-    const response = await deleteTask(data)
+    const response = await deleteTask(data);
     if (response.isError) {
-      throw response
+      throw response;
     }
     if (response.isSuccess) {
-      getBoard();
-
+      getBoards();
     }
-    return response as ICustomResponse
+    return response as ICustomResponse;
   } catch (err) {
-    return err as ICustomResponse
+    return err as ICustomResponse;
   }
-}
+};

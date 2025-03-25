@@ -7,7 +7,7 @@ import { getCurrentBoardTitle } from '@common/helpers/boardHelper';
 import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 
 import * as S from './TaskModal.styled';
-import TaskComponent from '../taskComponent/TaskComponent';
+import TaskComponent from '../../task/taskComponent/TaskComponent';
 import { filter, map } from 'lodash';
 import { getColumnTitles } from '@common/helpers/columnHelper';
 import { closeTaskModal } from '@common/helpers/taskHelper';
@@ -19,7 +19,7 @@ const TaskModal = (): JSX.Element => {
   const selectedBoardName = getCurrentBoardTitle();
   const boardList = useBoardState((s) => s.boardList);
 
-  const selectedBoard = boardList?.[selectedBoardName];
+  const selectedBoard = boardList?.[selectedBoardName || ''];
 
   const columnListTitles = getColumnTitles();
 
@@ -28,20 +28,12 @@ const TaskModal = (): JSX.Element => {
     (task) => task.taskId === taskId
   );
 
-  const newSearchParams = new URLSearchParams();
-
   const handleClose = () => {
-    closeTaskModal(setSearchParams)
+    closeTaskModal(setSearchParams);
   };
 
   useOutSideClick(ref, handleClose);
 
-  /*   useEffect(() => {
-    return () => {
-      handleClose()
-    }
-  }, [])
- */
   if (!currentTask || !selectedBoard) {
     return <>Task not exist</>;
   }

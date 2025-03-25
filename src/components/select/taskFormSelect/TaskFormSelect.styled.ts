@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { TextInline } from '@components/text/TextCommon.styled';
 
-export const TaskFormSelectWrapper = styled.div<{ isEditField: boolean }>`
+export const TaskFormSelectWrapper = styled.div<{ $isEditField: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -12,8 +12,8 @@ export const TaskFormSelectWrapper = styled.div<{ isEditField: boolean }>`
 
   cursor: pointer;
 
-  ${({ isEditField }) =>
-    !isEditField
+  ${({ $isEditField }) =>
+    !$isEditField
       ? `
     &:hover {
       color: #00bfa6;
@@ -27,6 +27,6 @@ export const TaskFormSelectLabel = styled(TextInline)`
   color: #a0a0a0;
 `;
 
-export const TaskFormSelectValue = styled(TextInline)<{ isEditField: boolean }>`
+export const TaskFormSelectValue = styled(TextInline)`
   margin-left: 12px;
 `;

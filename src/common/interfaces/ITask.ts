@@ -1,7 +1,9 @@
+import { IBoard } from '@common/providers/boardProvider/types';
 import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { InputHTMLAttributes, SyntheticEvent } from 'react';
 import {
+  FieldValues,
   UseFormRegister,
   UseFormSetValue,
   UseFormWatch,
@@ -42,9 +44,10 @@ export enum ITaskType {
   STORY = 'story',
 }
 
-export interface ITaskFormItem<T> extends InputHTMLAttributes<T> {
-  setValue?: UseFormSetValue<ITaskFormValues>;
-  register: UseFormRegister<ITaskFormValues>;
-  watch?: UseFormWatch<ITaskFormValues>;
+export interface IFormItem<T, TFieldValues extends FieldValues>
+  extends InputHTMLAttributes<T> {
+  setValue?: UseFormSetValue<TFieldValues>;
+  register?: UseFormRegister<TFieldValues>;
+  watch?: UseFormWatch<TFieldValues>;
   handleChange?: (e: SyntheticEvent) => void;
 }

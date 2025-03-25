@@ -36,11 +36,18 @@ import { IBoardProps } from './Board.types';
 
 const Board = ({ boardData }: IBoardProps): JSX.Element => {
   const [virtualBoard, setVirtualBoard] = useState(boardData);
-  const { columns, tasks } = virtualBoard;
 
   useEffect(() => {
-    setVirtualBoard(boardData);
+    if (boardData) {
+      setVirtualBoard(boardData);
+    }
   }, [boardData]);
+
+  if (!virtualBoard) {
+    return <>Empty</>;
+  }
+
+  const { columns, tasks } = virtualBoard;
 
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [activeItem, setActiveItem] = useState<'tasks' | 'columns' | null>(
@@ -91,7 +98,7 @@ const Board = ({ boardData }: IBoardProps): JSX.Element => {
     const dataToUpdate: ITask[] | IColumn[] =
       activeItem === 'tasks' ? tasks : columns;
 
-      const updatedData = handleDragOverHelper({
+    const updatedData = handleDragOverHelper({
       active,
       over,
       [activeItem]: dataToUpdate,
@@ -128,7 +135,7 @@ const Board = ({ boardData }: IBoardProps): JSX.Element => {
 
   return (
     <S.BoardWrapper>
-      <S.ColumnWrapper>
+      <S.ColumnsWrapper>
         <DndContext
           sensors={sensors}
           collisionDetection={rectIntersection}
@@ -148,6 +155,7 @@ const Board = ({ boardData }: IBoardProps): JSX.Element => {
                 column={column}
                 activeId={activeId}
                 activeTask={activeTask}
+                key={column.columnId}
               />
             );
           })}
@@ -161,7 +169,7 @@ const Board = ({ boardData }: IBoardProps): JSX.Element => {
             </DragOverlay>
           ) : null}
         </DndContext>
-      </S.ColumnWrapper>
+      </S.ColumnsWrapper>
     </S.BoardWrapper>
   );
 };

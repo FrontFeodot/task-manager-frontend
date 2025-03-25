@@ -46,7 +46,7 @@ const TaskFormSelect = ({
 
   return (
     <S.TaskFormSelectWrapper
-      isEditField={isEditField}
+      $isEditField={isEditField}
       ref={wrapperRef}
       onClick={handleTitleClick}
     >
@@ -62,9 +62,7 @@ const TaskFormSelect = ({
           handleChange={handleChange}
         />
       ) : (
-        <S.TaskFormSelectValue isEditField={isEditField}>
-          {title}
-        </S.TaskFormSelectValue>
+        <S.TaskFormSelectValue>{title}</S.TaskFormSelectValue>
       )}
     </S.TaskFormSelectWrapper>
   );

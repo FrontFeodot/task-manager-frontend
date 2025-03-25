@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 import { Text } from '@components/text/TextCommon.styled';
 
-export const TaskInputContainer = styled.div<{ isTitleView: boolean }>`
+export const TaskInputContainer = styled.div<{ $isTitleView: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: ${({ isTitleView }) => (isTitleView ? 'auto' : '69%')};
+  height: ${({ $isTitleView }) => ($isTitleView ? 'auto' : '69%')};
 `;
 
 export const Label = styled(Text)`
@@ -83,18 +83,5 @@ export const StyledTextArea = styled.textarea`
     outline: none;
     border-color: #1e90ff;
     box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
-  }
-`;
-
-export const ButtonContainer = styled.div`
-  ${(props) => props.theme.flexbox};
-
-  width: 20%;
-  max-width: 120px;
-  height: 30px;
-
-  & button {
-    padding: 0;
-    font-size: 0.75rem;
   }
 `;

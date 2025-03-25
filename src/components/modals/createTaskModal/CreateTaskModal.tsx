@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import useOutsideClick from '@common/hooks/useOutSideClick';
 import { closeModal } from '@common/providers/appProvider/useAppState';
 
-import CreateTaskForm from '../createTaskForm/CreateTaskForm';
+import CreateTaskForm from '../../task/createTaskForm/CreateTaskForm';
 import * as S from './CreateTaskModal.styled';
 import { removeSearchParam } from '@common/helpers/searchParamsHelper';
 

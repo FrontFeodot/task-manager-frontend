@@ -8,9 +8,9 @@ export const Wrapper = styled.div`
   height: 100%;
 `;
 
-export const Button = styled.button<{buttonColor: IButtonColor}>`
+export const Button = styled.button<{ $buttonColor: IButtonColor }>`
   width: 100%;
-  background: ${({ buttonColor }) => buttonColor};
+  background: ${({ $buttonColor }) => $buttonColor};
   color: ${({ theme }) => theme.textButton};
   border: none;
   border-radius: 8px;
@@ -24,16 +24,16 @@ export const Button = styled.button<{buttonColor: IButtonColor}>`
   ${({ theme }) => theme.shadow};
 
   &:hover {
-    background: ${({ buttonColor }) => lighten(0.1, buttonColor)};
+    background: ${({ $buttonColor }) => lighten(0.1, $buttonColor)};
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 10px ${({ buttonColor }) => buttonColor};
+    box-shadow: 0 0 10px ${({ $buttonColor }) => $buttonColor};
   }
 
   &:active {
     transform: scale(0.95);
-    background: ${({ buttonColor }) => darken(0.1, buttonColor)};
+    background: ${({ $buttonColor }) => darken(0.1, $buttonColor)};
   }
 `;

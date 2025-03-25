@@ -11,7 +11,7 @@ const CreateTask = ({ columnName }: { columnName: string }): JSX.Element => {
   const handleClick = () => {
     newSearchParams.set('columnName', columnName);
     setSearchParams(newSearchParams);
-    openModal(IModal.CREATE_TASK);
+    openModal({ name: IModal.CREATE_TASK });
   };
 
   return (

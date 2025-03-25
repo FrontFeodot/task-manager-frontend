@@ -19,7 +19,7 @@ import {
 import { closeModal } from '@common/providers/appProvider/useAppState';
 import { createTaskHandler } from '@common/helpers/taskApiHelper';
 import { getColumnTitles } from '@common/helpers/columnHelper';
-import { getBoard } from '@common/api/getBoard';
+import { getBoards } from '@common/api/boardApi';
 
 import * as S from './CreateTaskForm.styled';
 import CustomSelect from '@components/select/Select';
@@ -57,7 +57,7 @@ const CreateTaskForm = (): JSX.Element => {
     const response = await createTaskHandler(data);
     if (response?.message) {
       closeModal();
-      getBoard();
+      getBoards();
     }
   };
 

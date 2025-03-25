@@ -2,6 +2,7 @@ export enum IApiMethod {
   GET = 'get',
   POST = 'post',
   PUT = 'put',
+  DELETE = 'delete',
 }
 
 export interface IApiHandler {
@@ -17,11 +18,16 @@ export enum ApiCalls {
   PROTECTED = '/auth/protected',
   BOARD = '/board/all',
   BOARD_CREATE = '/board/create',
+  BOARD_DELETE = '/board/delete',
+  BOARD_UPDATE_TITLE = '/board/update/title',
   UPDATE_TASKS_ORDER = '/board/update/tasks',
   UPDATE_COLUMNS_ORDER = '/board/update/columns',
   TASK_CREATE = '/task/create',
   TASK_UPDATE = '/task/update',
   TASK_DELETE = '/task/delete',
+  COLUMN_CREATE = '/column/create',
+  COLUMN_UPDATE = '/column/update',
+  COLUMN_DELETE = '/column/delete',
 }
 
 export interface ICustomResponse<T = undefined> {

@@ -72,7 +72,7 @@ export const BottomRightSection = styled.div`
   height: 100%;
   padding-right: 8px;
   gap: 16px;
-`
+`;
 
 export const MetaInfo = styled.div`
   display: flex;

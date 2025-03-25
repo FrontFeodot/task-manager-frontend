@@ -30,7 +30,7 @@ const TaskInput = ({
   useOutsideClick<HTMLInputElement>(inputRef, toggleInput);
 
   return (
-    <S.TaskInputContainer isTitleView={isTitleView}>
+    <S.TaskInputContainer $isTitleView={isTitleView}>
       <S.Label>{upperFirst(fieldName)}</S.Label>
       {isEditField ? (
         <>
@@ -58,9 +58,6 @@ const TaskInput = ({
               autoFocus={isEditField && !!fieldValue}
             />
           )}
-          {/*           <S.ButtonContainer>
-            <StyledButton label="Save" />
-          </S.ButtonContainer> */}
         </>
       ) : (
         <TitleComponent

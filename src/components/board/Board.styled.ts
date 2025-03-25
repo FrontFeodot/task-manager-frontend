@@ -8,7 +8,7 @@ export const BoardWrapper = styled.div`
   width: 100%;
 `;
 
-export const ColumnWrapper = styled.div`
+export const ColumnsWrapper = styled.div`
   display: flex;
   flex-direction: row;
   min-width: 200px;
@@ -18,24 +18,9 @@ export const ColumnWrapper = styled.div`
   background-color: #18191a;
 `;
 
-export const Column = styled.div`
+export const ColumnLabel = styled.div<{ $hasItems: boolean }>`
   display: flex;
-  flex-direction: column;
-  padding: 16px;
-  gap: 16px;
-
-  background-color: #202124;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  color: #fff;
-  border-radius: 8px;
-
-  width: 100%;
-  height: fit-content;
-`;
-
-export const ColumnLabel = styled.div<{ hasItems: boolean }>`
-  display: flex;
-  padding: 16px 16px ${({ hasItems }) => (hasItems ? '16px' : '0')};
+  padding: 16px 16px ${({ $hasItems }) => ($hasItems ? '16px' : '0')};
   align-items: center;
   justify-content: center;
 `;

@@ -1,11 +1,11 @@
 import { create } from 'zustand';
 
 import defaultState from './state';
-import { IAppState, IModal } from './types';
+import { IAppState, IModal, IModalProps } from './types';
 
 export const useAppState = create<IAppState>(() => defaultState);
 
-export const openModal = (currentModal: IModal): void => {
+export const openModal = <T>(currentModal: IModalProps): void => {
   useAppState.setState(() => ({
     currentModal,
   }));

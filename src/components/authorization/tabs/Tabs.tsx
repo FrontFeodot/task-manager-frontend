@@ -10,10 +10,11 @@ const Tabs = <T,>({
 }: ITabsProps<T>): JSX.Element => {
   return (
     <S.Wrapper>
-      {map(tabs, (tab) => (
+      {map(tabs, (tab, index) => (
         <S.Tab
+          key={index}
           onClick={() => setCurrentTab(tab as T)}
-          isActive={currentTab === tab}
+          $isActive={currentTab === tab}
         >
           {`${tab}`}
         </S.Tab>
