@@ -1,22 +1,20 @@
 import { Text } from '@components/text/TextCommon.styled';
 import styled from 'styled-components';
 
-export const DetailsContainer = styled.div`
-  background-color: #18191a;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  color: #f0f0f0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
+export const DetailsContainer = styled.div``;
 
 export const TaskForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 24px;
   height: 100%;
+  overflow: auto;
+
+  background-color: #18191a;
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  color: #f0f0f0;
 `;
 
 export const FormItem = styled.div`
@@ -35,11 +33,14 @@ export const Button = styled.button`
   align-items: center;
   gap: 8px;
   transition: background-color 0.2s;
-  &:hover {
-  }
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
   gap: 16px;
+  min-height: 36px;
+
+  & > div {
+    height: auto;
+  }
 `;

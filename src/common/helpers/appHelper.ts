@@ -7,3 +7,5 @@ export const parseValueToClassName = (value: string): string =>
 export const getCurrentModal = (): IModalProps | null => {
   return useAppState.getState().currentModal;
 };
+
+export const isDesktopView = () => window.innerWidth >= 1280

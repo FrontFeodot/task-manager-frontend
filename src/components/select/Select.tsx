@@ -33,7 +33,7 @@ const CustomSelect = ({
   }, []);
 
   return (
-    <>
+    <S.SelectWrapper>
       {isCreateTask && <S.Label htmlFor={name}>{upperFirst(label)}</S.Label>}
       <S.StyledSelect
         {...props}
@@ -51,9 +51,10 @@ const CustomSelect = ({
                 },
               }),
             }
-          : {})}
+          : {
+              onChange: handleChange,
+            })}
         ref={selectRef}
-        onChange={!register && handleChange ? handleChange : undefined}
       >
         {isArray(items)
           ? map(items, (item, i) => {
@@ -64,18 +65,16 @@ const CustomSelect = ({
               );
             })
           : map(keys(items), (item) => {
-              const { Icon } = items[item];
               return (
                 <option key={item} value={item}>
                   {isParentTask && !!+item
                     ? `№${item} | ${items[item].value}`
                     : items[item].value}{' '}
-                  {Icon ? <Icon size={20} color="red" /> : null}
                 </option>
               );
             })}
       </S.StyledSelect>
-    </>
+    </S.SelectWrapper>
   );
 };
 

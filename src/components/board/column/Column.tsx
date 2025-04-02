@@ -9,6 +9,9 @@ import CreateTask from '@components/board/tasksSection/tasks/CreateTaskCard';
 
 import * as S from './Column.styled';
 import { IColumnProps } from './Column.types';
+import { openEditor } from '@common/providers/boardProvider/useBoardState';
+import { getCurrentBoardData } from '@common/helpers/boardHelper';
+import { IBoard } from '@common/providers/boardProvider/types';
 
 const Column = ({
   column,
@@ -16,7 +19,6 @@ const Column = ({
   activeId,
   activeTask,
 }: IColumnProps): JSX.Element => {
-  const { columnId, title } = column;
   const {
     attributes,
     listeners,
@@ -25,11 +27,11 @@ const Column = ({
     transition,
     isDragging,
   } = useSortable({
-    id: columnId,
+    id: column?.columnId || 'New column',
     data: {
       type: 'columns',
       column,
-      sortable: { containerId: columnId },
+      sortable: { containerId: column?.columnId },
     },
   });
 
@@ -40,25 +42,37 @@ const Column = ({
     opacity: isDragging ? 0.5 : 1,
   };
 
+  const onCreateColumn = () => {
+    openEditor({ newField: 'column', data: getCurrentBoardData() as IBoard });
+  };
+
   return (
     <S.ColumnWrapper
       style={style}
       ref={setNodeRef}
-      id={columnId}
+      id={column?.columnId}
       className="column"
     >
-      <S.DnDAnchor fill="#F5F6F7" {...attributes} {...listeners} />
-      <S.ColumnLabel $hasItems={!!taskSection.length}>
-        <S.ColumnText>{toUpper(title)}</S.ColumnText>
-      </S.ColumnLabel>
+      {!!taskSection && column !== undefined ? (
+        <>
+          <S.DnDAnchor fill="#F5F6F7" {...attributes} {...listeners} />
+          <S.ColumnLabel $hasItems={!!taskSection.length}>
+            <S.ColumnText>{toUpper(column.title)}</S.ColumnText>
+          </S.ColumnLabel>
 
-      <TasksSection taskSection={taskSection} columnId={columnId} />
-      {activeId && activeTask ? (
-        <DragOverlay>
-          <TaskCard {...activeTask} />
-        </DragOverlay>
-      ) : null}
-      <CreateTask columnName={title} />
+          <TasksSection taskSection={taskSection} columnId={column.columnId} />
+          {activeId && activeTask ? (
+            <DragOverlay>
+              <TaskCard {...activeTask} />
+            </DragOverlay>
+          ) : null}
+          <CreateTask columnName={column.title} />
+        </>
+      ) : (
+        <S.ColumnText onClick={onCreateColumn} $isCreateColumn>
+          Create new column
+        </S.ColumnText>
+      )}
     </S.ColumnWrapper>
   );
 };

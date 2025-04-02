@@ -23,10 +23,11 @@ export const TaskFormSelectWrapper = styled.div<{ $isEditField: boolean }>`
 `;
 
 export const TaskFormSelectLabel = styled(TextInline)`
-  font-size: 0.875rem;
+  font-size: ${(props) => props.theme.fontSM};
   color: #a0a0a0;
 `;
 
 export const TaskFormSelectValue = styled(TextInline)`
+  font-size: ${(props) => props.theme.fontMD};
   margin-left: 12px;
 `;

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { darken, lighten } from 'polished';
 import { IButtonColor } from './StyledButton.types';
+import { Text, TextInline } from '@components/text/TextCommon.styled';
+import { MOBILE } from '@common/utils/mediaHelper';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -9,17 +11,17 @@ export const Wrapper = styled.div`
 `;
 
 export const Button = styled.button<{ $buttonColor: IButtonColor }>`
+  ${(props) => props.theme.flexbox};
+
   width: 100%;
   background: ${({ $buttonColor }) => $buttonColor};
-  color: ${({ theme }) => theme.textButton};
   border: none;
   border-radius: 8px;
-  padding: 12px 20px;
-  font-size: 1rem;
+  padding: 0 16px;
   text-transform: uppercase;
-  font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
+  gap: 4px;
 
   ${({ theme }) => theme.shadow};
 
@@ -36,4 +38,11 @@ export const Button = styled.button<{ $buttonColor: IButtonColor }>`
     transform: scale(0.95);
     background: ${({ $buttonColor }) => darken(0.1, $buttonColor)};
   }
+`;
+
+export const ButtonLabel = styled(Text)`
+  ${(props) => props.theme.flexbox};
+  font-size: ${(props) => props.theme.fontMD};
+  font-weight: bold;
+  color: ${({ theme }) => theme.textButton};
 `;

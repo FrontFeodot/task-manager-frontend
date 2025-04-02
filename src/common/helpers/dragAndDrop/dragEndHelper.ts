@@ -26,11 +26,15 @@ export const taskDragEnd = async (
       ? tasksInInitial
       : [...tasksInInitial, ...tasksInTarget];
 
-  const payload = map(tasksToUpdate, ({ taskId, order, columnId }) => ({
-    taskId,
-    order,
-    columnId,
-  }));
+  const payload = map(
+    tasksToUpdate,
+    ({ taskId, order, columnId, boardId }) => ({
+      taskId,
+      order,
+      columnId,
+      boardId,
+    })
+  );
 
   try {
     const response = await updateTaskOrder(payload as IUpdateTaskOrder[]);

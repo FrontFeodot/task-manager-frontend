@@ -12,6 +12,7 @@ export const Tab = styled.div<{ $isActive: boolean }>`
   height: 100%;
   color: ${(props) => props.theme.textPrimary};
   cursor: pointer;
+  text-transform: uppercase;
 
   ${({ $isActive, theme }) =>
     $isActive && `border-bottom: 2px solid ${theme.link}`};

@@ -9,8 +9,8 @@ export interface IBoardEditorInput {
   fieldName: string;
   currentValue?: string;
   saveButtonHandler: (props: ISaveButtonHandler) => Promise<ICustomResponse>;
-  isCreate?: boolean;
-  isColumn?: boolean;
+  closeEditMode: () => void;
   columnId?: string;
   boardId?: string;
+  autofocus?: boolean;
 }

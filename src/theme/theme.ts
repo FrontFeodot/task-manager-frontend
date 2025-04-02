@@ -1,3 +1,15 @@
+export interface IFontSize {
+  fontH1: string;
+  fontH2: string;
+  fontH3: string;
+  fontXXL: string;
+  fontXL: string;
+  fontLG: string;
+  fontMD: string;
+  fontSM: string;
+  fontXS: string;
+}
+
 export interface ITheme {
   bgPrimary: string; //  (background)
   bgSecondary: string;
@@ -10,14 +22,24 @@ export interface ITheme {
   link: string;
   shadow: string; //board ???
   flexbox: string;
-  focusRing: string; // Цвет обводки при фокусе
-  hoverBg: string; // Цвет кнопки при наведении
-  activeBg: string; // Цвет кнопки при нажатии
   errorBg: string; // Фон тултипа ошибки
   errorText: string; // Текст ошибки
+  collapsedText: string;
 }
 
-const theme: ITheme = {
+const fonts: IFontSize = {
+  fontH1: '5rem',
+  fontH2: '4rem',
+  fontH3: '3rem',
+  fontXXL: '1.5rem',
+  fontXL: '1.25rem',
+  fontLG: '1.125rem',
+  fontMD: '1rem',
+  fontSM: '0.875rem',
+  fontXS: '0.75rem',
+};
+
+const theme: ITheme & IFontSize = {
   bgPrimary: '#18191a',
   bgSecondary: '#000000',
   bgTertiary: '#242526',
@@ -27,15 +49,18 @@ const theme: ITheme = {
   textAccent: '#9B51E0',
   textButton: '#F5F6F7',
   link: '#09d3ac',
-  shadow: 'box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); border-radius: 8px;',
-  flexbox: 'display: flex; justify-content: center; align-items: center;',
-
-  focusRing: '#FF7F50',
-  hoverBg: '#AB63E5',
-  activeBg: '#7A34B3',
-
   errorBg: '#FF4D4F',
   errorText: '#FFFFFF',
+
+  shadow: 'box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); border-radius: 8px;',
+  flexbox: 'display: flex; justify-content: center; align-items: center;',
+  collapsedText: `
+    text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  `,
+
+  ...fonts,
 };
 export type ThemeType = typeof theme;
 

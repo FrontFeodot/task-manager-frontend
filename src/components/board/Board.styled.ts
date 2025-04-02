@@ -1,21 +1,28 @@
 import styled from 'styled-components';
 
 import { Text } from '@components/text/TextCommon.styled';
+import { MOBILE, TABLET_DESKTOP } from '@common/utils/mediaHelper';
 
 export const BoardWrapper = styled.div`
   display: flex;
-  flex-direction: column;
   width: 100%;
-`;
-
-export const ColumnsWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  min-width: 200px;
-  width: auto;
   gap: 16px;
   padding: 16px 16px 0;
   background-color: #18191a;
+
+  overflow-x: auto;
+
+  @media (${TABLET_DESKTOP}) {
+    flex-direction: row;
+    border-right: 4px solid #000000;
+    margin-right: 16px;
+  }
+
+  @media (${MOBILE}) {
+    margin-left: 80px;
+    flex-direction: column;
+    padding-bottom: 48px;
+  }
 `;
 
 export const ColumnLabel = styled.div<{ $hasItems: boolean }>`
@@ -26,7 +33,7 @@ export const ColumnLabel = styled.div<{ $hasItems: boolean }>`
 `;
 
 export const ColumnText = styled(Text)`
-  font-size: 1.25rem;
+  font-size: ${(props) => props.theme.fontXL};
   color: #8ab4f8;
 `;
 

@@ -9,6 +9,10 @@ import {
 import { AUTH_TOKEN } from '@common/utils/cookies';
 import { setLoginUser } from '@common/providers/userProvider/useUserState';
 import { IPostLogin } from '@common/interfaces/IAuth';
+import {
+  resetBoardList,
+  setBoardsList,
+} from '@common/providers/boardProvider/useBoardState';
 
 export const postLogin = async ({
   email,
@@ -65,5 +69,6 @@ export const getProtected = async (): Promise<void> => {
 
 export const logout = (): void => {
   setLoginUser(false);
+  resetBoardList();
   Cookies.remove(AUTH_TOKEN);
 };

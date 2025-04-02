@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { Text } from '@components/text/TextCommon.styled';
+import { MOBILE } from '@common/utils/mediaHelper';
 
 export const TaskWrapper = styled.div`
   display: flex;
@@ -16,10 +17,28 @@ export const TaskWrapper = styled.div`
 `;
 
 export const TaskTitle = styled(Text)`
-  height: 16px;
-  font-size: 1.125rem;
+  ${(props) => props.theme.collapsedText};
+
+  width: calc(100% - 26px);
+  height: auto;
+
+  font-size: ${(props) => props.theme.fontLG};
+
+  @media (${MOBILE}) {
+    font-size: ${(props) => props.theme.fontMD};
+  }
 `;
-export const TaskDescription = styled(Text)``;
+export const TaskDescription = styled(Text)`
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+
+  @media (${MOBILE}) {
+    font-size: ${(props) => props.theme.fontSM};
+  }
+`;
 
 export const TaskBottomSection = styled.div`
   display: flex;

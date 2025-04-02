@@ -9,13 +9,13 @@ import { IUpdateColumnOrder, IUpdateTaskOrder } from '@common/interfaces/IDnd';
 import { IBoardList } from '@common/interfaces/IBoard';
 
 export const updateTaskOrder = async (
-  payload: IUpdateTaskOrder[]
+  tasksToUpdate: IUpdateTaskOrder[]
 ): Promise<ICustomResponse<IBoardList>> => {
   try {
     const response = await apiHandler<IBoardList>({
       method: IApiMethod.PUT,
       url: ApiCalls.UPDATE_TASKS_ORDER,
-      payload,
+      payload: { tasksToUpdate },
       withAuth: true,
     });
     if (response.isError || !response.payload) {

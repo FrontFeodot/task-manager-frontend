@@ -9,14 +9,19 @@ import postRegister from '@common/api/register';
 import { IPostRegister } from '@common/interfaces/IAuth';
 import { setLoginUser } from '@common/providers/userProvider/useUserState';
 
-import { ErrorTooltip, Form, Item, Label } from '../Authorization.styled';
+import {
+  AuthWrapper,
+  ErrorTooltip,
+  Form,
+  Item,
+  Label,
+  SubmitButtonWrapper,
+} from '../Authorization.styled';
 import {
   getConfirmPasswordConfig,
   getEmailConfig,
   getPasswordConfig,
 } from './registerConfig';
-
-import * as S from './RegisterForm.styled';
 
 const RegisterForm = (): JSX.Element => {
   const [error, setError] = useState<string | null>(null);
@@ -45,7 +50,7 @@ const RegisterForm = (): JSX.Element => {
   const confirmPasswordConfig = getConfirmPasswordConfig(register, getValues);
 
   return (
-    <S.Wrapper>
+    <AuthWrapper className="register-container">
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Item>
           <Label>Enter your E-mail</Label>
@@ -86,11 +91,13 @@ const RegisterForm = (): JSX.Element => {
           )}
         </Item>
         <Item>
-          <StyledButton label="sign up" type="submit" />
+          <SubmitButtonWrapper>
+            <StyledButton label="sign up" type="submit" />
+          </SubmitButtonWrapper>
         </Item>
         {error && <ErrorTooltip $isGlobal>{error}</ErrorTooltip>}
       </Form>
-    </S.Wrapper>
+    </AuthWrapper>
   );
 };
 

@@ -11,12 +11,14 @@ export const TextInput = styled.input`
   width: 100%;
   height: 100%;
 
-  background-color: ${(props) => props.theme.bgSecondary};
-  color: ${(props) => props.theme.textPrimary};
   border: 1px solid ${(props) => props.theme.textAccent};
   padding: 10px 14px;
-  font-size: 16px;
+
+  color: ${(props) => props.theme.textPrimary};
+  font-size: ${(props) => props.theme.fontMD};
   outline: none;
+  background-color: ${(props) => props.theme.bgSecondary};
+
   transition: all 0.3s ease;
 
   ${(props) => props.theme.shadow};

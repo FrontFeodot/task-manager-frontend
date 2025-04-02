@@ -6,6 +6,7 @@ export const ModalWrapper = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 101;
 
   ${(props) => props.theme.flexbox};
   width: 100%;

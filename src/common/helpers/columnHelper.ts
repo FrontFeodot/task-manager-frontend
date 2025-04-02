@@ -56,13 +56,12 @@ export const createColumnHelper = async (
   boardId: string
 ): Promise<ICustomResponse> => {
   const lastColumnOrder = getLastOrderByType({ type: 'columns', boardId });
-  console.log('lastColumnOrder', lastColumnOrder);
   const columnPayload = { title, boardId, order: lastColumnOrder + 1 };
   const response = await createColumnApi(columnPayload);
   if (response.isError) {
     return response;
   }
-  getBoards();
+  await getBoards();
   return response;
 };
 
@@ -94,11 +93,9 @@ export const deleteColumnHelper = async ({
       columnId,
       ...(tasksPath ? { tasksPath } : {}),
     });
-    console.log('deleteColumnresposne', resposne);
     if (resposne.isError) {
       throw resposne;
     }
-    console.log('deleteColumn', resposne);
     return resposne;
   } catch (err) {
     return err as ICustomResponse;

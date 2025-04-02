@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 import defaultState from './state';
-import { IBoard, IBoardState } from './types';
+import { IBoard, IBoardState, IOpenedEditor } from './types';
 
 export const useBoardState = create<IBoardState>(() => defaultState);
 
@@ -17,7 +17,7 @@ export const setCurrentBoard = (currentBoardTitle: string | null): void => {
   }));
 };
 
-export const openEditor = (openedEditor: IBoard): void => {
+export const openEditor = (openedEditor: IOpenedEditor): void => {
   useBoardState.setState(() => ({
     openedEditor,
   }));
@@ -25,5 +25,11 @@ export const openEditor = (openedEditor: IBoard): void => {
 export const closeEditor = (): void => {
   useBoardState.setState(() => ({
     openedEditor: null,
+  }));
+};
+
+export const resetBoardList = (): void => {
+  useBoardState.setState(() => ({
+    boardList: null,
   }));
 };

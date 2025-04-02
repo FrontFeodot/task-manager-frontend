@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 
+export const SelectWrapper = styled.div``;
+
 export const StyledSelect = styled.select`
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: ${(props) => props.theme.fontMD};
+
   background-color: #252627;
   border: 1px solid #3a3b3c;
   color: #f0f0f0;
-  padding: 8px;
-  border-radius: 8px;
-  font-size: 1em;
-  width: 100%;
-
   cursor: pointer;
 
   &:hover {
@@ -22,13 +24,14 @@ export const StyledSelect = styled.select`
 
   &:focus {
     outline: none;
+
     border-color: #00bfa6;
     box-shadow: 0 0 5px rgba(0, 191, 166, 0.5);
   }
 `;
 
 export const Label = styled.label`
-  font-size: 0.9em;
+  font-size: ${(props) => props.theme.fontMD};
   color: #a0a0a0;
   margin-bottom: 4px;
   display: block;

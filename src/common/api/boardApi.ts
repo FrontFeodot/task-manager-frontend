@@ -14,6 +14,7 @@ import {
   ICustomResponse,
 } from '@common/interfaces/IApiHandler';
 import {
+  getCurrentBoardId,
   getCurrentBoardTitle,
   setCurrentBoardAction,
 } from '@common/helpers/boardHelper';
@@ -31,7 +32,6 @@ export const getBoards = async (): Promise<ICustomResponse<
     if (response.isError || !response.payload) {
       throw response;
     }
-
     const boardList = response.payload;
 
     setBoardsList(boardList);
@@ -101,8 +101,13 @@ export const deleteBoard = async (
     if (response.isError) {
       throw response;
     }
-    setCurrentBoard(null);
+    const currentBoardId = getCurrentBoardId();
 
+    if (currentBoardId === boardId && !!Cookies.get(SELECTED_BOARD)) {
+      Cookies.remove(SELECTED_BOARD);
+    }
+
+    setCurrentBoard(null);
     await getBoards();
     return response as ICustomResponse;
   } catch (err) {

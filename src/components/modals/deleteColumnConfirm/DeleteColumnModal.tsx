@@ -52,7 +52,6 @@ const DeleteColumnModal = (): JSX.Element => {
   useOutsideClick(ref, closeModal);
 
   const handleRadioChange = (e: SyntheticEvent<HTMLInputElement>): void => {
-    console.log('e.currentTarget', e.currentTarget.id);
     if (e.currentTarget.id) {
       setInputValue(e.currentTarget.id);
     }
@@ -72,7 +71,6 @@ const DeleteColumnModal = (): JSX.Element => {
   };
 
   const handleSubmit = async () => {
-    console.log('inputValue', inputValue);
     if (!!inputValue) {
       const isDelete = inputValue === 'delete';
       const selectedColumnId =
@@ -97,13 +95,11 @@ const DeleteColumnModal = (): JSX.Element => {
 
   const handleClose = (): void => closeModal();
 
-  console.log('inputValue, selectValue', inputValue, selectValue);
-
   return (
     <S.ModalWrapper ref={ref}>
       <S.ModalLabel>What do we do with the tasks in this column?</S.ModalLabel>
       <S.ModalContent>
-        <S.RadioWrapper>
+        {restColumnsTitles.length ? (<S.RadioWrapper>
           <S.HiddenRadio
             name="tasksPath"
             id="moveTo"
@@ -124,13 +120,13 @@ const DeleteColumnModal = (): JSX.Element => {
               />
             </S.RadioLabelContent>
           </S.RadioButtonLabel>
-        </S.RadioWrapper>
+        </S.RadioWrapper>) : null}
         <S.RadioWrapper>
           <S.HiddenRadio
             name="tasksPath"
             id="delete"
             onChange={handleRadioChange}
-            checked={inputValue === 'delete'}
+            checked={inputValue === 'delete' || !restColumnsTitles.length}
           />
           <S.RadioButtonLabel htmlFor="delete">
             <S.StyledRadio />

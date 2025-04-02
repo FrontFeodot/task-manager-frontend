@@ -37,9 +37,32 @@
   }
 }
 
+p,
 div,
-input {
+input,
+form {
   box-sizing: border-box;
+}
+
+body,
+button,
+textarea,
+input {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 1rem;
+}
+
+html,
+body,
+div#root {
+  width: 100vw;
+  height: 100vh;
+}
+html {
+  -webkit-tap-highlight-color: transparent;
 }
 
 input:-webkit-autofill {

@@ -5,6 +5,7 @@ import { closeModal } from '@common/providers/appProvider/useAppState';
 import CreateTaskForm from '../../task/createTaskForm/CreateTaskForm';
 import * as S from './CreateTaskModal.styled';
 import { removeSearchParam } from '@common/helpers/searchParamsHelper';
+import CloseModalIcon from '../closeModalIcon/CloseModalIcon';
 
 const CreateTaskModal = (): JSX.Element => {
   const ref = useRef(null);
@@ -19,6 +20,8 @@ const CreateTaskModal = (): JSX.Element => {
 
   return (
     <S.CreateTaskModal ref={ref}>
+      <CloseModalIcon />
+
       <CreateTaskForm />
     </S.CreateTaskModal>
   );

@@ -16,6 +16,7 @@ import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 import {
   getBoardById,
   getCurrentBoardData,
+  getCurrentBoardId,
   getCurrentBoardTitle,
 } from './boardHelper';
 import { find, map, maxBy } from 'lodash';
@@ -60,9 +61,13 @@ export const getStoriesList = (): ITask[] | undefined => {
   }
 };
 
-export const getParentTask = (parentTaskId?: number): ITask | undefined => {
+export const getParentTask = (parentTaskId: number): ITask | undefined => {
   const stories = getStoriesList();
-  return find(stories, (story) => story.taskId === parentTaskId);
+  const boardId = getCurrentBoardId();
+  return find(
+    stories,
+    (story) => story.taskId === parentTaskId && story.boardId === boardId
+  );
 };
 
 export const getTasksForColumn = (columnId: string, tasks: ITask[]) =>

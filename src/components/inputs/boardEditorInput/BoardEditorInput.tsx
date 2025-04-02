@@ -21,20 +21,24 @@ const BoardEditorInput = ({
   saveButtonHandler,
   columnId,
   boardId,
+  autofocus,
+  closeEditMode,
 }: IBoardEditorInput): JSX.Element => {
   const [fieldValue, setFieldValue] = useState(currentValue);
-
   const isBoardCreate = fieldName === 'title_create';
   const isBoardUpdate = fieldName === 'title_update';
 
   const isColumnUpdate = /\d/.test(fieldName);
   const isColumnCreate = fieldName === 'column_create';
 
-  const [isEdit, setIsEdit] = useState(isBoardCreate);
+  const [isEdit, setIsEdit] = useState<boolean | null>(isBoardCreate);
+  console.log('autofocus, isEdit', autofocus, isEdit);
+
   const [error, setError] = useState<string | null>(null);
   const theme = useTheme();
-
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const hasCancelButton = !isBoardCreate;
 
   useEffect(() => {
     if (currentValue) {
@@ -42,7 +46,11 @@ const BoardEditorInput = ({
     }
   }, [currentValue]);
 
-  const hasCancelButton = !isBoardCreate;
+  useEffect(() => {
+    if (autofocus) {
+      handleCreateColumn();
+    }
+  }, [autofocus]);
 
   const handleCreateColumn = () => {
     if (isColumnCreate) {
@@ -58,9 +66,10 @@ const BoardEditorInput = ({
     setFieldValue(e.currentTarget.value);
   };
 
-  const onCancel = () => {
+  const onCancelHandler = () => {
     setFieldValue(currentValue);
     setIsEdit(false);
+    closeEditMode();
   };
 
   const onSubmit = async (): Promise<void> => {
@@ -79,6 +88,7 @@ const BoardEditorInput = ({
     if (response.isError) {
       return setError(response.message);
     }
+    closeEditMode();
     setIsEdit(false);
   };
 
@@ -109,7 +119,7 @@ const BoardEditorInput = ({
               <StyledButton
                 label="Cancel"
                 buttonColor={IButtonColor.RED}
-                onClick={onCancel}
+                onClick={onCancelHandler}
               />
             ) : null}
           </S.ButtonContainer>

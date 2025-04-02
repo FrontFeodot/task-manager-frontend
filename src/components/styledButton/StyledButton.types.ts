@@ -9,4 +9,6 @@ export enum IButtonColor {
 export interface IStyledButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   buttonColor?: IButtonColor;
+  className?: string;
+  Icon?: JSX.Element;
 }

@@ -74,7 +74,7 @@ const TaskComponent = ({
   const onSubmit = async (data: ITaskFormValues) => {
     const response = await updateTask(task, data);
     if (response?.isSuccess) {
-      getBoards();
+      await getBoards();
       closeTask();
     }
   };
@@ -82,7 +82,7 @@ const TaskComponent = ({
   const onTaskDelete = async () => {
     const response = await deleteTask(pick(task, ['taskId', 'boardId']));
     if (response?.isSuccess) {
-      getBoards();
+      await getBoards();
       closeTask();
     }
   };
@@ -92,6 +92,7 @@ const TaskComponent = ({
       <S.TopLeft>
         <S.TaskSummary>
           <S.TaskSummaryContent>{`Id: ${taskId};`}</S.TaskSummaryContent>
+          <S.TaskSummaryContent>Task details</S.TaskSummaryContent>
           {watch('type') === 'task' ? (
             <TaskFormSelect
               title={parentTaskTitle}
@@ -159,20 +160,15 @@ const TaskComponent = ({
         <S.ButtonWrapper>
           {isFormChanged ? <StyledButton type="submit" label="save" /> : null}
         </S.ButtonWrapper>
-        <S.BottomRightSection>
-          <S.MetaInfo>
-            <S.MetaInfoRow>{`Created at: ${formatDate(createdAt, DATE_UP_TO_MINUTES)}`}</S.MetaInfoRow>
-            <S.MetaInfoRow>{`Updated at: ${formatDate(updatedAt, DATE_UP_TO_MINUTES)}`}</S.MetaInfoRow>
-          </S.MetaInfo>
-          <S.ButtonWrapper>
-            <StyledButton
-              type="button"
-              label="delete"
-              buttonColor={IButtonColor.RED}
-              onClick={onTaskDelete}
-            />
-          </S.ButtonWrapper>
-        </S.BottomRightSection>
+
+        <S.ButtonWrapper>
+          <StyledButton
+            type="button"
+            label="delete"
+            buttonColor={IButtonColor.RED}
+            onClick={onTaskDelete}
+          />
+        </S.ButtonWrapper>
       </S.Bottom>
     </S.TaskFormWrapper>
   );

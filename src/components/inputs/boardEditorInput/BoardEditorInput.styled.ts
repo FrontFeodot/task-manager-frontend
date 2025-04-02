@@ -8,7 +8,7 @@ export const EditorInputWrapper = styled.div`
   height: auto;
 `;
 export const Label = styled(Text)`
-  font-size: 0.875rem;
+  font-size: ${(props) => props.theme.fontSM};
   color: #a0a0a0;
 `;
 
@@ -60,8 +60,10 @@ export const PresentationButtonWrapper = styled.div<{ $isRedButton?: boolean }>`
 `;
 
 export const TitleValue = styled(Text)`
-  font-size: 1.125rem;
+  font-size: ${(props) => props.theme.fontLG};
   font-weight: bold;
+
+  ${(props) => props.theme.collapsedText};
 `;
 
 export const EditSectionWrapper = styled.div`
@@ -92,12 +94,12 @@ export const ButtonContainer = styled.div<{ $hasCancelButton?: boolean }>`
 
   margin: 16px 8px 8px 0;
   gap: 8px;
-  width: ${({ $hasCancelButton }) => ($hasCancelButton ? '50%' : '25%')};
+  width: ${({ $hasCancelButton }) => ($hasCancelButton ? '100%' : '50%')};
+  min-width: 124px;
   height: 30px;
 
-  & button {
-    padding: 0;
-    font-size: 0.75rem;
+  & .button_label {
+    font-size: ${(props) => props.theme.fontXS};
   }
 `;
 

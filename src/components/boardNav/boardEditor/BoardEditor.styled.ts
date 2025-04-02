@@ -1,3 +1,4 @@
+import { MOBILE, TABLET_DESKTOP } from '@common/utils/mediaHelper';
 import { Text } from '@components/text/TextCommon.styled';
 import styled from 'styled-components';
 
@@ -7,21 +8,12 @@ export const BoardEditorWrapper = styled.div`
   background-color: #202124;
   width: 100%;
   height: 100%;
-  padding: 16px 0;
-`;
+  padding: 16px 0 24px;
 
-export const CloseEditorWrapper = styled.div`
-  position: absolute;
-  top: 16px;
-  left: 8px;
-  ${(props) => props.theme.flexbox};
-  align-self: flex-end;
-
-  cursor: pointer;
-  background-color: #202124;
-
-  width: 22px;
-  height: 22px;
+  @media (${MOBILE}) {
+    min-height: 100%;
+    overflow: auto;
+  }
 `;
 
 export const BoardEditorFieldsList = styled.div`
@@ -29,7 +21,10 @@ export const BoardEditorFieldsList = styled.div`
   flex-direction: column;
   margin: 24px 0;
   gap: 36px;
-  height: 100%;
+
+  @media (${TABLET_DESKTOP}) {
+    height: 100%;
+  }
 `;
 
 export const TitleWrapper = styled.div``;
@@ -43,8 +38,9 @@ export const ColumnList = styled.div`
 `;
 
 export const FieldLabel = styled(Text)<{ $isTitle?: boolean }>`
-  font-size: 0.875rem;
+  font-size: ${(props) => props.theme.fontSM};
   color: #a0a0a0;
+
   ${({ $isTitle }) => ($isTitle ? 'margin-bottom: 16px' : '')};
 `;
 
@@ -65,16 +61,19 @@ export const CreateNewColumn = styled.div`
   cursor: pointer;
 `;
 
-export const DeleteBoardButton = styled.div`
-  width: 100%;
-  height: 40px;
-`;
-
 export const CreatedAtBoard = styled(Text)`
   display: flex;
   align-items: center;
   justify-content: flex-end;
 
+  ${(props) => props.theme.collapsedText};
+
   margin-bottom: 16px;
-  height: 30px;
+  min-height: 30px;
+`;
+
+export const DeleteBoardButton = styled.div`
+  width: 100%;
+  min-height: 36px;
+  margin-bottom: 24px;
 `;

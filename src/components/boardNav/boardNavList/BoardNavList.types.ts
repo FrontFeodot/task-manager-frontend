@@ -1,5 +1,6 @@
 import { IBoardList } from '@common/interfaces/IBoard';
 
 export interface IBoardNavList {
-  boardList?: IBoardList;
+  boardList?: IBoardList | null;
+  isExpanded: boolean;
 }

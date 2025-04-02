@@ -21,10 +21,11 @@ import {
 } from '@dnd-kit/core';
 
 import Column from '@components/board/column/Column';
-
+import EmptyLayout from '@components/layouts/emptyLayout/EmptyLayout';
+import { IEmptyLayoutType } from '@components/layouts/emptyLayout/EmptyLayout.types';
 import { getTaskById, getTasksForColumn } from '@common/helpers/taskHelper';
 import { ITask } from '@common/interfaces/ITask';
-import { IColumn } from '@common/providers/boardProvider/types';
+import { IBoard, IColumn } from '@common/providers/boardProvider/types';
 import { handleDragOverHelper } from '@common/helpers/dragAndDrop/dragOverHelper';
 import {
   columnDragEnd,
@@ -35,30 +36,15 @@ import * as S from './Board.styled';
 import { IBoardProps } from './Board.types';
 
 const Board = ({ boardData }: IBoardProps): JSX.Element => {
-  const [virtualBoard, setVirtualBoard] = useState(boardData);
-
-  useEffect(() => {
-    if (boardData) {
-      setVirtualBoard(boardData);
-    }
-  }, [boardData]);
-
-  if (!virtualBoard) {
-    return <>Empty</>;
-  }
-
-  const { columns, tasks } = virtualBoard;
-
+  const [virtualBoard, setVirtualBoard] = useState<IBoard | null | undefined>(
+    boardData
+  );
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [activeItem, setActiveItem] = useState<'tasks' | 'columns' | null>(
     null
   );
   const [hasChanges, setHasChanges] = useState(false);
-  const activeTask = getTaskById(activeId as number);
-  const activeColumn: IColumn | null | undefined =
-    activeItem === 'columns'
-      ? (find(columns, { columnId: activeId }) as IColumn)
-      : null;
+
   const sensors = useSensors(
     useSensor(MouseSensor, {
       activationConstraint: {
@@ -76,13 +62,32 @@ const Board = ({ boardData }: IBoardProps): JSX.Element => {
     })
   );
 
+  useEffect(() => {
+    setVirtualBoard(boardData || null);
+  }, [boardData]);
+
+  if (!virtualBoard) {
+    return <EmptyLayout type={IEmptyLayoutType.BOARD} />;
+  }
+
+  const { columns, tasks } = virtualBoard;
+  const activeTask = getTaskById(activeId as number);
+  const activeColumn: IColumn | null | undefined =
+    activeItem === 'columns'
+      ? (find(columns, { columnId: activeId }) as IColumn)
+      : null;
+
   const updateBoardState = (updatedData: ITask[] | IColumn[]): void => {
-    setVirtualBoard((prev) => ({
-      ...prev,
-      ...(activeItem === 'tasks'
-        ? { tasks: unionBy(updatedData as ITask[], prev.tasks, 'taskId') }
-        : { columns: updatedData as IColumn[] }),
-    }));
+    setVirtualBoard((prev) => {
+      if (prev) {
+        return {
+          ...prev,
+          ...(activeItem === 'tasks'
+            ? { tasks: unionBy(updatedData as ITask[], prev.tasks, 'taskId') }
+            : { columns: updatedData as IColumn[] }),
+        };
+      }
+    });
   };
 
   const handleDragStart = ({ active }: DragStartEvent) => {
@@ -124,8 +129,7 @@ const Board = ({ boardData }: IBoardProps): JSX.Element => {
         taskDragEnd(over, virtualBoard.tasks, initialColumnId);
       }
       if (activeItem === 'columns') {
-        // Handle column reordering
-        await columnDragEnd(boardData.boardId, columns);
+        await columnDragEnd(virtualBoard.boardId, columns);
       }
     }
 
@@ -135,41 +139,37 @@ const Board = ({ boardData }: IBoardProps): JSX.Element => {
 
   return (
     <S.BoardWrapper>
-      <S.ColumnsWrapper>
-        <DndContext
-          sensors={sensors}
-          collisionDetection={rectIntersection}
-          onDragStart={handleDragStart}
-          onDragOver={handleDragOver}
-          onDragEnd={handleDragEnd}
-          modifiers={[restrictToWindowEdges]}
-        >
-          {map(columns, (column) => {
-            const currentTaskSection = getTasksForColumn(
-              column.columnId,
-              tasks
-            );
-            return (
-              <Column
-                taskSection={currentTaskSection}
-                column={column}
-                activeId={activeId}
-                activeTask={activeTask}
-                key={column.columnId}
-              />
-            );
-          })}
-          {activeColumn?.columnId ? (
-            <DragOverlay>
-              <Column
-                taskSection={getTasksForColumn(activeId as string, tasks)}
-                column={activeColumn}
-                activeId={activeId}
-              />
-            </DragOverlay>
-          ) : null}
-        </DndContext>
-      </S.ColumnsWrapper>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={rectIntersection}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+        modifiers={[restrictToWindowEdges]}
+      >
+        {map(columns, (column) => {
+          const currentTaskSection = getTasksForColumn(column.columnId, tasks);
+          return (
+            <Column
+              taskSection={currentTaskSection}
+              column={column}
+              activeId={activeId}
+              activeTask={activeTask}
+              key={column.columnId}
+            />
+          );
+        })}
+        <Column activeId={activeId} activeTask={activeTask} />
+        {activeColumn?.columnId ? (
+          <DragOverlay>
+            <Column
+              taskSection={getTasksForColumn(activeId as string, tasks)}
+              column={activeColumn}
+              activeId={activeId}
+            />
+          </DragOverlay>
+        ) : null}
+      </DndContext>
     </S.BoardWrapper>
   );
 };

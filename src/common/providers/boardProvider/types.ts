@@ -6,7 +6,7 @@ export interface IBoardState {
   loading: boolean;
   isError: number;
   currentBoardTitle: string | null;
-  openedEditor: IBoard | null;
+  openedEditor: IOpenedEditor | null;
 }
 
 export interface IBoard {
@@ -21,4 +21,9 @@ export interface IColumn {
   title: string;
   columnId: string;
   order: number;
+}
+
+export interface IOpenedEditor {
+  newField?: 'board' | 'column';
+  data: IBoard;
 }

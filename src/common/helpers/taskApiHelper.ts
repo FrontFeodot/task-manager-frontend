@@ -24,6 +24,8 @@ export const createTaskHandler = async (
     if (response instanceof Error || response.isError) {
       throw response;
     }
+    await getBoards();
+
     return response;
   } catch (err) {
     console.error('createTaskHandler', err);
@@ -40,7 +42,7 @@ export const deleteTaskHandler = async (
       throw response;
     }
     if (response.isSuccess) {
-      getBoards();
+      await getBoards();
     }
     return response as ICustomResponse;
   } catch (err) {

@@ -57,70 +57,67 @@ const CreateTaskForm = (): JSX.Element => {
     const response = await createTaskHandler(data);
     if (response?.message) {
       closeModal();
-      getBoards();
     }
   };
 
-  const formProps = { setValue, register, watch, isCreateTask: true };
+  const formProps = { setValue, register, isCreateTask: true };
 
   return (
-    <S.DetailsContainer>
-      <S.TaskForm onSubmit={handleSubmit(onSubmit)}>
-        <S.FormItem>
-          <TaskInput {...formProps} fieldName="title" />
-        </S.FormItem>
-        <S.FormItem>
-          <TaskInput fieldName="description" {...formProps} />
-        </S.FormItem>
+    <S.TaskForm onSubmit={handleSubmit(onSubmit)}>
+      <S.FormItem>
+        <TaskInput {...formProps} watch={watch} fieldName="title" />
+      </S.FormItem>
+      <S.FormItem>
+        <TaskInput fieldName="description" watch={watch} {...formProps} />
+      </S.FormItem>
+      <S.FormItem>
+        <CustomSelect
+          name="type"
+          label="Type"
+          items={taskTypesSchema}
+          {...formProps}
+        />
+      </S.FormItem>
+      {!isStoryType ? (
         <S.FormItem>
           <CustomSelect
-            name="type"
-            label="Type"
-            items={taskTypesSchema}
+            name="parentTask"
+            label="Parent task (story)"
+            items={storiesSchema}
             {...formProps}
           />
         </S.FormItem>
-        {!isStoryType ? (
-          <S.FormItem>
-            <CustomSelect
-              name="parentTask"
-              label="Parent task (story)"
-              items={storiesSchema}
-              {...formProps}
-            />
-          </S.FormItem>
-        ) : null}
-        <S.FormItem>
-          <CustomSelect
-            name="column"
-            label="Column"
-            items={columns}
-            defaultVal={column}
-            {...formProps}
-          />
-        </S.FormItem>
-        <S.FormItem>
-          <CustomSelect
-            name="status"
-            label="Status"
-            items={taskStatusSchema}
-            {...formProps}
-          />
-        </S.FormItem>
-        <S.FormItem>
-          <CustomSelect
-            name="priority"
-            label="Priority"
-            items={taskPrioritySchema}
-            {...formProps}
-          />
-        </S.FormItem>
-        <S.ButtonContainer>
-          <StyledButton label="Save" />
-          <StyledButton label="Cancel" onClick={closeModal} />
-        </S.ButtonContainer>
-      </S.TaskForm>
-    </S.DetailsContainer>
+      ) : null}
+      <S.FormItem>
+        <CustomSelect
+          name="column"
+          label="Column"
+          items={columns}
+          defaultVal={column}
+          {...formProps}
+        />
+      </S.FormItem>
+      <S.FormItem>
+        <CustomSelect
+          name="status"
+          label="Status"
+          items={taskStatusSchema}
+          {...formProps}
+        />
+      </S.FormItem>
+      <S.FormItem>
+        <CustomSelect
+          name="priority"
+          label="Priority"
+          items={taskPrioritySchema}
+          {...formProps}
+        />
+      </S.FormItem>
+      <S.ButtonContainer>
+        <StyledButton label="Save" />
+        <StyledButton label="Cancel" onClick={closeModal} />
+      </S.ButtonContainer>
+    </S.TaskForm>
   );
 };
 

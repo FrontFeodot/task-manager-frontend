@@ -1,8 +1,9 @@
-import { IBoard } from '@common/providers/boardProvider/types';
+import { IBoard, IOpenedEditor } from '@common/providers/boardProvider/types';
 import { Dispatch, SetStateAction } from 'react';
 
 export interface IBoardEditor {
-  board: IBoard;
+  editorData: IBoard;
+  newField?: 'board' | 'column';
   setUpdatedData?: Dispatch<SetStateAction<string | null>>;
 }
 

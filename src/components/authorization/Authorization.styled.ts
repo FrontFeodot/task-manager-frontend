@@ -1,6 +1,28 @@
 import styled from 'styled-components';
 
 import { Text } from '@components/text/TextCommon.styled';
+import { MOBILE, TABLET_DESKTOP } from '@common/utils/mediaHelper';
+
+export const AuthWrapper = styled.div`
+  ${(props) => props.theme.flexbox};
+  flex-direction: column;
+
+  width: 100%;
+  height: auto;
+
+  background-color: ${(props) => props.theme.bgTertiary};
+
+  @media (${TABLET_DESKTOP}) {
+    min-width: 485px;
+    max-width: 700px;
+  }
+  &.login-container {
+    max-height: 460px;
+  }
+  &.register-container {
+    max-height: 540px;
+  }
+`;
 
 export const Form = styled.form`
   ${(props) => props.theme.flexbox};
@@ -9,6 +31,13 @@ export const Form = styled.form`
   flex-direction: column;
   gap: 30px;
   transition: all ease-in 1s;
+  
+  @media (${MOBILE}) {
+    padding: 64px 24px;
+  }
+  @media (${TABLET_DESKTOP}) {
+    padding: 64px 40px;
+  }
 `;
 
 export const Item = styled.div`
@@ -29,7 +58,8 @@ export const ErrorTooltip = styled.div<{ $isGlobal?: boolean }>`
   padding: 8px 12px;
   border-radius: 8px;
   box-shadow: ${({ theme }) => theme.shadow};
-  font-size: 14px;
+  font-size: ${(props) => props.theme.fontSM};
+
   white-space: nowrap;
   width: ${({ $isGlobal }) => ($isGlobal ? '100%' : 'auto')};
   transition: all ease-in 1s;
@@ -47,4 +77,9 @@ export const ErrorTooltip = styled.div<{ $isGlobal?: boolean }>`
     opacity: 1;
     transform: translateY(0);
   }
+`;
+
+export const SubmitButtonWrapper = styled.div`
+  width: 100%;
+  height: 36px;
 `;

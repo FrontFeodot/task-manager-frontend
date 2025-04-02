@@ -12,7 +12,9 @@ import ConfirmModal from '../confirmModal/ConfirmModal';
 const ModalManager = (): JSX.Element | null => {
   const currentModal = useAppState((s) => s.currentModal);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log('ModalManager');
+  }, []);
 
   if (!currentModal) {
     return null;
@@ -36,7 +38,7 @@ const ModalManager = (): JSX.Element | null => {
   };
 
   return (
-    <S.ModalWrapper /* onClick={closeModal} */>
+    <S.ModalWrapper>
       <ModalComponent />
     </S.ModalWrapper>
   );

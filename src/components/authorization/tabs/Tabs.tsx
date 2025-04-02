@@ -2,19 +2,16 @@ import map from 'lodash/map';
 
 import * as S from './Tabs.styled';
 import { ITabsProps } from './Tabs.types';
+import { keys } from 'lodash';
 
-const Tabs = <T,>({
-  currentTab,
-  setCurrentTab,
-  tabs,
-}: ITabsProps<T>): JSX.Element => {
+const Tabs = ({ currentTab, setCurrentTab, tabs }: ITabsProps): JSX.Element => {
   return (
     <S.Wrapper>
-      {map(tabs, (tab, index) => (
+      {map(keys(tabs), (tab, index) => (
         <S.Tab
           key={index}
-          onClick={() => setCurrentTab(tab as T)}
-          $isActive={currentTab === tab}
+          onClick={() => setCurrentTab(tabs[tab])}
+          $isActive={currentTab === tabs[tab]}
         >
           {`${tab}`}
         </S.Tab>

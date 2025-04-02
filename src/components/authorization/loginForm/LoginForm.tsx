@@ -9,8 +9,14 @@ import { setLoginUser } from '@common/providers/userProvider/useUserState';
 import { postLogin } from '@common/api/auth';
 import { IPostLogin } from '@common/interfaces/IAuth';
 
-import { ErrorTooltip, Form, Item, Label } from '../Authorization.styled';
-import * as S from './LoginForm.styled';
+import {
+  AuthWrapper,
+  ErrorTooltip,
+  Form,
+  Item,
+  Label,
+  SubmitButtonWrapper,
+} from '../Authorization.styled';
 
 const LoginForm = (): JSX.Element => {
   const [error, setError] = useState<string | null>(null);
@@ -47,7 +53,7 @@ const LoginForm = (): JSX.Element => {
   };
 
   return (
-    <S.Wrapper>
+    <AuthWrapper className="login-container">
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Item>
           <Label>Enter your E-Mail</Label>
@@ -64,11 +70,13 @@ const LoginForm = (): JSX.Element => {
           )}
         </Item>
         <Item>
-          <StyledButton label="sign in" type="submit" />
+          <SubmitButtonWrapper>
+            <StyledButton label="sign in" type="submit" />
+          </SubmitButtonWrapper>
         </Item>
         {error && <ErrorTooltip $isGlobal>{error}</ErrorTooltip>}
       </Form>
-    </S.Wrapper>
+    </AuthWrapper>
   );
 };
 

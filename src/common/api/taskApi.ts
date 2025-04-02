@@ -42,7 +42,10 @@ export const updateTask = async (
   const columnId = getColumn({ columnTitle: formValues.column })?.columnId;
   const parsedFormFields = omit(formValues, ['column', 'board']);
   const boardId = getCurrentBoardId();
-  const order = getLastOrderByType({ type: 'tasks', columnId, boardId });
+  const order =
+    oldTask.columnId === columnId
+      ? oldTask.order
+      : getLastOrderByType({ type: 'tasks', columnId, boardId });
   const updatedTask = {
     ...assign(oldTask, parsedFormFields),
     order,

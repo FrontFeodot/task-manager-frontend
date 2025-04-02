@@ -1,3 +1,9 @@
+import {
+  DESKTOP,
+  MOBILE,
+  TaskFlexBoxView,
+  TaskGridView,
+} from '@common/utils/mediaHelper';
 import { Text, TextInline } from '@components/text/TextCommon.styled';
 import styled from 'styled-components';
 
@@ -13,17 +19,26 @@ export const TaskFormWrapper = styled.form`
     'top-left top-right'
     'bottom bottom';
   grid-template-columns: ${calcGridWidth('60%')} ${calcGridWidth('40%')};
-  grid-template-rows: ${calcGridWidth('90%')} ${calcGridWidth('9%')};
+  grid-template-rows: ${calcGridWidth('90%')} ${calcGridWidth('10%')};
+
   gap: 16px;
   max-width: 100%;
   max-height: 100%;
-  height: 100%;
+
   min-height: 500px;
 
+  height: 100%;
+
   box-sizing: border-box;
+
+  @media (${TaskFlexBoxView}) {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
 `;
 export const LayoutItem = styled.div`
-  padding: 20px;
+  padding: 16px;
   border-radius: 16px;
   background-color: #18191a;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -39,7 +54,7 @@ export const LayoutItem = styled.div`
   }
 
   &:last-child button {
-    font-size: 0.875rem;
+    font-size: ${(props) => props.theme.fontSM};
     padding: inherit;
   }
 `;
@@ -52,45 +67,16 @@ export const TopLeft = styled(LayoutItem)`
     align-items: center;
     height: 36px;
   }
-`;
-export const TopRight = styled(LayoutItem)`
-  grid-area: top-right;
-`;
 
-export const Bottom = styled(LayoutItem)`
-  grid-area: bottom;
-  padding: 8px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
+  @media (${TaskGridView}) {
+    & :last-child {
+      height: 100%;
+    }
+  }
 
-export const BottomRightSection = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: auto;
-  height: 100%;
-  padding-right: 8px;
-  gap: 16px;
-`;
-
-export const MetaInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: auto;
-  height: 100%;
-  margin-right: 16px;
-`;
-export const MetaInfoRow = styled(TextInline)`
-  font-size: 0.75rem;
-  color: #a0a0a0;
-`;
-
-export const ButtonWrapper = styled.div`
-  display: flex;
-  width: 124px;
-  height: 100%;
+  @media (${TaskFlexBoxView}) {
+    height: auto;
+  }
 `;
 
 export const TaskSummary = styled.div`
@@ -98,7 +84,7 @@ export const TaskSummary = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
 
   border-bottom: 1px solid #3a3b3c;
   padding: 8px 16px;
@@ -106,9 +92,53 @@ export const TaskSummary = styled.div`
   & .select-title {
     color: #a0a0a0;
   }
+
+  @media (${TaskFlexBoxView}) {
+    justify-content: space-between;
+  }
 `;
 
 export const TaskSummaryContent = styled(TextInline)`
-  font-size: 0.875rem;
+  font-size: ${(props) => props.theme.fontSM};
   color: #a0a0a0;
+`;
+
+export const MetaInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+`;
+
+export const MetaInfoRow = styled(TextInline)`
+  font-size: ${(props) => props.theme.fontXS};
+  color: #a0a0a0;
+  width: max-content;
+`;
+
+export const TopRight = styled(LayoutItem)`
+  grid-area: top-right;
+`;
+
+export const Bottom = styled(LayoutItem)`
+  grid-area: bottom;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  min-height: 48px;
+
+  @media (${TaskFlexBoxView}) {
+    height: auto;
+  }
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  max-width: 124px;
+  min-height: 24px;
+  max-height: 36px;
+  width: 100%;
+  height: 100%;
 `;

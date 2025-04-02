@@ -7,24 +7,20 @@ import {
   ITaskType,
 } from '@common/interfaces/ITask';
 import { assign } from 'lodash';
-import { FaCirclePause } from 'react-icons/fa6';
-import { GrInProgress } from 'react-icons/gr';
-import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import { IconType } from 'react-icons';
 
 export type ISchemas = ITaskStatus | ITaskPriority | ITaskType;
 
 interface ISelectSchema {
   value: string;
-  Icon?: IconType;
 }
 
 export type ISchema = Record<string | number, ISelectSchema>;
 
 export const taskStatusSchema: ISchema = {
-  [ITaskStatus.TO_DO]: { value: 'To do', Icon: FaCirclePause },
-  [ITaskStatus.IN_PROGRESS]: { value: 'In progress', Icon: GrInProgress },
-  [ITaskStatus.DONE]: { value: 'Done', Icon: IoCheckmarkDoneCircle },
+  [ITaskStatus.TO_DO]: { value: 'To do' },
+  [ITaskStatus.IN_PROGRESS]: { value: 'In progress' },
+  [ITaskStatus.DONE]: { value: 'Done' },
 };
 
 export const taskPrioritySchema: ISchema = {
