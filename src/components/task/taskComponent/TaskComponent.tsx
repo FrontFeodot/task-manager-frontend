@@ -74,7 +74,7 @@ const TaskComponent = ({
   const onSubmit = async (data: ITaskFormValues) => {
     const response = await updateTask(task, data);
     if (response?.isSuccess) {
-      await getBoards();
+      getBoards();
       closeTask();
     }
   };
@@ -82,7 +82,7 @@ const TaskComponent = ({
   const onTaskDelete = async () => {
     const response = await deleteTask(pick(task, ['taskId', 'boardId']));
     if (response?.isSuccess) {
-      await getBoards();
+      getBoards();
       closeTask();
     }
   };

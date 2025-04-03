@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   ${(props) => props.theme.flexbox};
-
   width: 100%;
   height: auto;
 `;
@@ -13,8 +12,7 @@ export const LoginContainer = styled.div`
   flex-direction: column;
 
   width: 100%;
-  height: auto;
-
+  overflow: hidden;
   background-color: ${(props) => props.theme.bgTertiary};
 
   @media (${TABLET_DESKTOP}) {
@@ -22,6 +20,7 @@ export const LoginContainer = styled.div`
     max-width: 700px;
   }
   @media (${MOBILE}) {
-    max-height: 540px;
+    min-height: 420px;
+    max-height: 100%;
   }
 `;

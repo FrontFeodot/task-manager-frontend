@@ -53,7 +53,7 @@ export const CloseEditorWrapper = styled.div<{
   cursor: pointer;
   background-color: #202124;
 
-  display: ${({ $isExpanded }) => ($isExpanded ? 'block' : 'none')};
+  display: ${({ $isExpanded }) => ($isExpanded ? 'flex' : 'none')};
 
   width: ${({ $isOpenedEditor }) => ($isOpenedEditor ? '22px' : '0')};
   height: 30px;

@@ -9,7 +9,6 @@ export const ConfirmModalWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
 
-
   min-height: 184px;
   z-index: 101;
   background-color: #2f303d;

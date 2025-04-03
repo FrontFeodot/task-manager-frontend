@@ -30,7 +30,6 @@ export const createTaskApi = async (
     }
     return response as ICustomResponse;
   } catch (err) {
-    console.error(err);
     return err as ICustomResponse;
   }
 };
@@ -66,7 +65,6 @@ export const updateTask = async (
     }
     return response as ICustomResponse;
   } catch (err) {
-    console.error(err);
     return err as ICustomResponse;
   }
 };
@@ -87,7 +85,6 @@ export const deleteTask = async (
 
     return response as ICustomResponse;
   } catch (err) {
-    console.error(err);
     return err as ICustomResponse;
   }
 };

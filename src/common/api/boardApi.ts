@@ -4,6 +4,7 @@ import { keys } from 'lodash';
 import apiHandler from '@common/api/apiHandler';
 import { SELECTED_BOARD } from '@common/utils/cookies';
 import {
+  setBoardLoading,
   setBoardsList,
   setCurrentBoard,
 } from '@common/providers/boardProvider/useBoardState';
@@ -24,6 +25,7 @@ export const getBoards = async (): Promise<ICustomResponse<
   IBoardList | undefined
 > | void> => {
   try {
+    setBoardLoading(true);
     const response = await apiHandler<IBoardList>({
       method: IApiMethod.GET,
       url: ApiCalls.BOARD,
@@ -32,6 +34,7 @@ export const getBoards = async (): Promise<ICustomResponse<
     if (response.isError || !response.payload) {
       throw response;
     }
+
     const boardList = response.payload;
 
     setBoardsList(boardList);
@@ -42,8 +45,10 @@ export const getBoards = async (): Promise<ICustomResponse<
       const firstBoardName = boardList[keys(boardList)[0]].title;
       setCurrentBoardAction(firstBoardName);
     }
+    setBoardLoading(false);
   } catch (error) {
-    console.error(error);
+    setBoardLoading(false);
+
     return error as ICustomResponse;
   }
 };
@@ -62,7 +67,6 @@ export const createBoard = async (title: string): Promise<ICustomResponse> => {
     await getBoards();
     return response as ICustomResponse;
   } catch (err) {
-    console.error(err);
     return err as ICustomResponse;
   }
 };
@@ -84,7 +88,6 @@ export const updateBoardTitle = async (payload: {
     await getBoards();
     return response as ICustomResponse;
   } catch (err) {
-    console.error(err);
     return err as ICustomResponse;
   }
 };
@@ -111,7 +114,6 @@ export const deleteBoard = async (
     await getBoards();
     return response as ICustomResponse;
   } catch (err) {
-    console.error(err);
     return err as ICustomResponse;
   }
 };

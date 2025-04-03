@@ -49,7 +49,7 @@ const Column = ({
   return (
     <S.ColumnWrapper
       style={style}
-      ref={setNodeRef}
+      ref={taskSection && setNodeRef}
       id={column?.columnId}
       className="column"
     >

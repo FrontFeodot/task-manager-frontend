@@ -39,9 +39,7 @@ const TaskModal = (): JSX.Element => {
 
   //debugger
   useEffect(() => {
-    console.log('TaskModal');
     return () => {
-      console.log('TaskModal return', boardList);
       if (boardList) {
         handleClose();
       }

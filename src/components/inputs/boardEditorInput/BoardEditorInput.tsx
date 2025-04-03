@@ -32,7 +32,6 @@ const BoardEditorInput = ({
   const isColumnCreate = fieldName === 'column_create';
 
   const [isEdit, setIsEdit] = useState<boolean | null>(isBoardCreate);
-  console.log('autofocus, isEdit', autofocus, isEdit);
 
   const [error, setError] = useState<string | null>(null);
   const theme = useTheme();

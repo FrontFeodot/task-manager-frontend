@@ -83,9 +83,7 @@ const BoardEditor = ({
         setUpdatedData(null);
       }
       closeEditor();
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   };
 
   const onBoardDelete = () => {

@@ -12,10 +12,6 @@ import ConfirmModal from '../confirmModal/ConfirmModal';
 const ModalManager = (): JSX.Element | null => {
   const currentModal = useAppState((s) => s.currentModal);
 
-  useEffect(() => {
-    console.log('ModalManager');
-  }, []);
-
   if (!currentModal) {
     return null;
   }

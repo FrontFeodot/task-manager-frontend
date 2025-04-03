@@ -20,23 +20,26 @@ export const AuthWrapper = styled.div`
     max-height: 460px;
   }
   &.register-container {
-    max-height: 540px;
+    overflow: hidden;
   }
 `;
 
 export const Form = styled.form`
   ${(props) => props.theme.flexbox};
-  width: 100%;
-  height: 100%;
   flex-direction: column;
+  justify-content: flex-start;
+
+  width: 100%;
+  height: auto;
   gap: 30px;
   transition: all ease-in 1s;
-  
+  overflow: auto;
+
   @media (${MOBILE}) {
-    padding: 64px 24px;
+    padding: 48px 24px;
   }
   @media (${TABLET_DESKTOP}) {
-    padding: 64px 40px;
+    padding: 48px 40px;
   }
 `;
 
@@ -76,6 +79,11 @@ export const ErrorTooltip = styled.div<{ $isGlobal?: boolean }>`
   &.active {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  & p,
+  li {
+    white-space: pre-wrap;
   }
 `;
 

@@ -7,3 +7,6 @@ export const useUserState = create<IUser>(() => defaultState);
 
 export const setLoginUser = (isLoggedIn: boolean): void =>
   useUserState.setState({ isLoggedIn });
+
+export const setUserLoading = (loading: boolean): void =>
+  useUserState.setState({ loading });

@@ -85,11 +85,9 @@ const DeleteColumnModal = (): JSX.Element => {
         if (!response || (response && response.isError)) {
           throw response;
         }
-        await getBoards();
+        getBoards();
         closeModal();
-      } catch (err) {
-        console.error(err);
-      }
+      } catch (err) {}
     }
   };
 
@@ -99,28 +97,33 @@ const DeleteColumnModal = (): JSX.Element => {
     <S.ModalWrapper ref={ref}>
       <S.ModalLabel>What do we do with the tasks in this column?</S.ModalLabel>
       <S.ModalContent>
-        {restColumnsTitles.length ? (<S.RadioWrapper>
-          <S.HiddenRadio
-            name="tasksPath"
-            id="moveTo"
-            onChange={handleRadioChange}
-            ref={moveToRef}
-            checked={inputValue !== 'delete'}
-          />
-          <S.RadioButtonLabel htmlFor="moveTo" onMouseDown={handleSelectClick}>
-            <S.StyledRadio />
-            <S.RadioLabelContent>
-              <TextInline>Move to another column:</TextInline>
-              <CustomSelect
-                label="columns"
-                name="column"
-                items={restColumnsTitles}
-                handleChange={handleSelectChange}
-                defaultVal={restColumnsTitles[0]}
-              />
-            </S.RadioLabelContent>
-          </S.RadioButtonLabel>
-        </S.RadioWrapper>) : null}
+        {restColumnsTitles.length ? (
+          <S.RadioWrapper>
+            <S.HiddenRadio
+              name="tasksPath"
+              id="moveTo"
+              onChange={handleRadioChange}
+              ref={moveToRef}
+              checked={inputValue !== 'delete'}
+            />
+            <S.RadioButtonLabel
+              htmlFor="moveTo"
+              onMouseDown={handleSelectClick}
+            >
+              <S.StyledRadio />
+              <S.RadioLabelContent>
+                <TextInline>Move to another column:</TextInline>
+                <CustomSelect
+                  label="columns"
+                  name="column"
+                  items={restColumnsTitles}
+                  handleChange={handleSelectChange}
+                  defaultVal={restColumnsTitles[0]}
+                />
+              </S.RadioLabelContent>
+            </S.RadioButtonLabel>
+          </S.RadioWrapper>
+        ) : null}
         <S.RadioWrapper>
           <S.HiddenRadio
             name="tasksPath"

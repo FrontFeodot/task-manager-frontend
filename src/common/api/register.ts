@@ -31,7 +31,6 @@ const postRegister = async ({
       expires: 24 * 3600 * 1000, // expired time
     });
   } catch (error) {
-    console.error(error);
     return error as ICustomResponse<IPostRegisterResponse>;
   }
 };

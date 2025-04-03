@@ -20,12 +20,13 @@ import { useTheme } from 'styled-components';
 import { isDesktopView } from '@common/helpers/appHelper';
 
 const BoardNav = ({ boardList }: IBoardNav): JSX.Element => {
-  const isDesktop = isDesktopView()
+  const isDesktop = isDesktopView();
   const [isExpanded, toggleNav] = useState(isDesktop);
   const theme = useTheme();
   const [newBoardTitle, setNewBoardTitle] = useState<string | null>(null);
   const ToggleIcon = isExpanded ? RiExpandLeftFill : RiExpandRightFill;
   const openedEditor = useBoardState((s) => s.openedEditor);
+  const boardNavText = openedEditor ? 'Settings' : 'Boards List';
 
   const editorData =
     find(
@@ -47,7 +48,7 @@ const BoardNav = ({ boardList }: IBoardNav): JSX.Element => {
       closeEditor();
     }
   };
-  const boardNavText = openedEditor ? 'Settings' : 'Boards List';
+
   return (
     <S.BoardNavWrapper $isExpanded={isExpanded}>
       <S.TopSection $isExpanded={isExpanded}>

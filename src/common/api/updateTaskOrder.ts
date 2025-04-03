@@ -27,7 +27,6 @@ export const updateTaskOrder = async (
     setBoardsList(boardList);
     return response;
   } catch (error) {
-    console.error(error);
     return error as ICustomResponse<IBoardList>;
   }
 };
@@ -51,7 +50,6 @@ export const updateColumnOrder = async (
     setBoardsList(boardList);
     return response;
   } catch (error) {
-    console.error(error);
     return error as ICustomResponse<IBoardList>;
   }
 };

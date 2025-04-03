@@ -4,7 +4,6 @@ import { ITask } from '@common/interfaces/ITask';
 export interface IBoardState {
   boardList: IBoardList | null;
   loading: boolean;
-  isError: number;
   currentBoardTitle: string | null;
   openedEditor: IOpenedEditor | null;
 }

@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 
 import axios from 'common/api/axios';
 import { IApiHandler, ICustomResponse } from 'common/interfaces/IApiHandler';
@@ -33,9 +33,18 @@ const apiHandler = async <T>({
 
     return data as ICustomResponse<T>;
   } catch (err) {
-    console.error(err);
+    if (err instanceof AxiosError) {
+      console.error(err);
+      return err.response?.data;
+    }
 
-    return err as ICustomResponse<T>;
+    console.error('Unhandled error: ', err);
+
+    return {
+      isError: 1,
+      message: 'Unhandled error',
+      payload: err,
+    } as ICustomResponse<T>;
   }
 };
 

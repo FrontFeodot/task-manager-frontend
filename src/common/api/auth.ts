@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import { AxiosError } from 'axios';
 
 import apiHandler from '@common/api/apiHandler';
 import {
@@ -7,7 +8,10 @@ import {
   ICustomResponse,
 } from '@common/interfaces/IApiHandler';
 import { AUTH_TOKEN } from '@common/utils/cookies';
-import { setLoginUser } from '@common/providers/userProvider/useUserState';
+import {
+  setLoginUser,
+  setUserLoading,
+} from '@common/providers/userProvider/useUserState';
 import { IPostLogin } from '@common/interfaces/IAuth';
 import {
   resetBoardList,
@@ -19,6 +23,7 @@ export const postLogin = async ({
   password,
 }: IPostLogin): Promise<ICustomResponse | void> => {
   try {
+    setUserLoading(true);
     const response = await apiHandler<Record<string, string>>({
       method: IApiMethod.POST,
       url: ApiCalls.AUTH,
@@ -38,13 +43,15 @@ export const postLogin = async ({
     Cookies.set(AUTH_TOKEN, response.payload.token, {
       expires: 7,
     });
+    setUserLoading(false);
   } catch (err) {
-    console.error(`Auth error: `, err);
+    setUserLoading(false);
     return err as ICustomResponse;
   }
 };
 
 export const getProtected = async (): Promise<void> => {
+  setUserLoading(true);
   const token = Cookies.get(AUTH_TOKEN);
   if (token) {
     try {
@@ -60,9 +67,11 @@ export const getProtected = async (): Promise<void> => {
       }
       if (response.isSuccess) {
         setLoginUser(true);
+        setUserLoading(false);
       }
     } catch (err) {
-      console.error(err);
+      logout();
+      setUserLoading(false);
     }
   }
 };

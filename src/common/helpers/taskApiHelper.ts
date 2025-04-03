@@ -28,7 +28,6 @@ export const createTaskHandler = async (
 
     return response;
   } catch (err) {
-    console.error('createTaskHandler', err);
     return err as ICustomResponse;
   }
 };

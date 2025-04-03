@@ -1,4 +1,9 @@
-import { DESKTOP, MOBILE, TABLET, TABLET_DESKTOP } from '@common/utils/mediaHelper';
+import {
+  DESKTOP,
+  MOBILE,
+  TABLET,
+  TABLET_DESKTOP,
+} from '@common/utils/mediaHelper';
 import { Text, TextInline } from '@components/text/TextCommon.styled';
 import styled from 'styled-components';
 
@@ -18,16 +23,16 @@ export const ModalWrapper = styled.div`
     2px 4px 8px rgba(0, 0, 0, 0.2),
     0 8px 24px rgba(0, 0, 0, 0.3);
 
-    @media (${DESKTOP}) {
-      min-width: 576px;
+  @media (${DESKTOP}) {
+    min-width: 576px;
   }
-    @media (${TABLET}) {
-      min-width: 485px;
-      padding: 8px;
+  @media (${TABLET}) {
+    min-width: 485px;
+    padding: 8px;
   }
-    @media (${MOBILE}) {
-      min-width: 90%;
-      padding: 16px;
+  @media (${MOBILE}) {
+    min-width: 90%;
+    padding: 16px;
   }
 `;
 
@@ -40,8 +45,7 @@ export const ModalLabel = styled(Text)`
   color: ${(props) => props.theme.textPrimary};
 
   @media (${TABLET}) {
-  font-size: ${(props) => props.theme.fontXL};
-    
+    font-size: ${(props) => props.theme.fontXL};
   }
 `;
 
@@ -88,7 +92,7 @@ export const RadioButtonLabel = styled.label`
   width: 100%;
 `;
 
-export const StyledRadio = styled.span`
+export const StyledRadio = styled(Text)`
   display: inline-block;
   width: 20px;
   height: 20px;
@@ -97,7 +101,8 @@ export const StyledRadio = styled.span`
   border-radius: 8px;
   margin-right: 10px;
   transition: all 0.2s ease;
-  box-shadow: ${({ theme }) => theme.shadow};
+
+  ${({ theme }) => theme.shadow};
 
   ${HiddenRadio}:checked + ${RadioButtonLabel} & {
     background: ${({ theme }) => theme.buttonBg};
@@ -120,8 +125,7 @@ export const RadioLabelContent = styled.div`
     width: 208px;
     @media (${MOBILE}) {
       width: auto;
-
-  }
+    }
   }
 `;
 

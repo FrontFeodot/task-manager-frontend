@@ -23,6 +23,8 @@ import {
 import Column from '@components/board/column/Column';
 import EmptyLayout from '@components/layouts/emptyLayout/EmptyLayout';
 import { IEmptyLayoutType } from '@components/layouts/emptyLayout/EmptyLayout.types';
+import Loader from '@components/layouts/loader/Loader';
+
 import { getTaskById, getTasksForColumn } from '@common/helpers/taskHelper';
 import { ITask } from '@common/interfaces/ITask';
 import { IBoard, IColumn } from '@common/providers/boardProvider/types';
@@ -35,7 +37,7 @@ import {
 import * as S from './Board.styled';
 import { IBoardProps } from './Board.types';
 
-const Board = ({ boardData }: IBoardProps): JSX.Element => {
+const Board = ({ boardData, loading }: IBoardProps): JSX.Element => {
   const [virtualBoard, setVirtualBoard] = useState<IBoard | null | undefined>(
     boardData
   );
@@ -65,6 +67,10 @@ const Board = ({ boardData }: IBoardProps): JSX.Element => {
   useEffect(() => {
     setVirtualBoard(boardData || null);
   }, [boardData]);
+
+  if (loading) {
+    return <Loader isOpaque isRelative />;
+  }
 
   if (!virtualBoard) {
     return <EmptyLayout type={IEmptyLayoutType.BOARD} />;

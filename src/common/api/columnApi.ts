@@ -36,7 +36,6 @@ export const createColumnApi = async (
     }
     return response as ICustomResponse;
   } catch (err) {
-    console.error(err);
     return err as ICustomResponse;
   }
 };
@@ -59,7 +58,6 @@ export const updateColumn = async (
     await getBoards();
     return response as ICustomResponse;
   } catch (err) {
-    console.error(err);
     return err as ICustomResponse;
   }
 };
@@ -79,7 +77,6 @@ export const deleteColumn = async (payload: IDeleteTask) => {
 
     return response as ICustomResponse;
   } catch (err) {
-    console.error(err);
     return err as ICustomResponse;
   }
 };
