@@ -1,8 +1,8 @@
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { useUserState } from '@common/providers/userProvider/useUserState';
 
 import * as S from './Home.styled';
-import { useUserState } from '@common/providers/userProvider/useUserState';
-import { useNavigate } from 'react-router-dom';
 
 const Home = (): JSX.Element => {
   const navigate = useNavigate();

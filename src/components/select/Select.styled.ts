@@ -8,13 +8,14 @@ export const StyledSelect = styled.select`
   border-radius: 8px;
   font-size: ${(props) => props.theme.fontMD};
 
-  background-color: #252627;
-  border: 1px solid #3a3b3c;
-  color: #f0f0f0;
+  background-color: ${(props) => props.theme.inputBg};
+  border: ${(props) => props.theme.borderCommon};
+  color: ${(props) => props.theme.textPrimary};
+
   cursor: pointer;
 
   &:hover {
-    color: #00bfa6;
+    color: ${(props) => props.theme.successColor};
   }
 
   transition:
@@ -25,14 +26,14 @@ export const StyledSelect = styled.select`
   &:focus {
     outline: none;
 
-    border-color: #00bfa6;
+    border-color: ${(props) => props.theme.successColor};
     box-shadow: 0 0 5px rgba(0, 191, 166, 0.5);
   }
 `;
 
 export const Label = styled.label`
   font-size: ${(props) => props.theme.fontMD};
-  color: #a0a0a0;
+  color: ${(props) => props.theme.textDisabled};
   margin-bottom: 4px;
   display: block;
 `;

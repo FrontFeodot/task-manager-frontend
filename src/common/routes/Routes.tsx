@@ -20,13 +20,13 @@ const AppRouter = () => {
           return null;
         }
         if (isLoggedIn && userLoading) {
-          return <Route path={path} element={<Loader />} />;
+          return <Route path={path} element={<Loader />} key={path} />;
         }
 
-        return <Route path={path} element={element} />;
+        return <Route path={path} element={element} key={path} />;
       })}
       {map(commonRoutes, ({ path, element }) => {
-        return <Route path={path} element={element} />;
+        return <Route path={path} element={element} key={path} />;
       })}
     </Routes>
   );

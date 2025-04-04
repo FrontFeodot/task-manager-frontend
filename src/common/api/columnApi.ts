@@ -3,20 +3,14 @@ import {
   IApiMethod,
   ICustomResponse,
 } from '@common/interfaces/IApiHandler';
-import { ITask } from '@common/interfaces/ITask';
 import {
-  getCurrentBoardTitle,
   getCurrentBoardId,
 } from '@common/helpers/boardHelper';
+import { IColumn } from '@common/providers/boardProvider/types';
+import { IDeleteTask } from '@common/interfaces/IColumn';
 
 import apiHandler from './apiHandler';
-import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';
-import { assign, omit } from 'lodash';
-import { getColumn } from '@common/helpers/columnHelper';
-import { getLastOrderByType } from '@common/helpers/taskHelper';
-import { IColumn } from '@common/providers/boardProvider/types';
 import { getBoards } from './boardApi';
-import { IDeleteTask } from '@common/interfaces/IColumn';
 
 export const createColumnApi = async (
   column: Partial<IColumn>
@@ -64,7 +58,7 @@ export const updateColumn = async (
 
 export const deleteColumn = async (payload: IDeleteTask) => {
   try {
-    const response = await apiHandler({
+    const response = await apiHandler<undefined, IDeleteTask>({
       method: IApiMethod.DELETE,
       url: ApiCalls.COLUMN_DELETE,
       payload,

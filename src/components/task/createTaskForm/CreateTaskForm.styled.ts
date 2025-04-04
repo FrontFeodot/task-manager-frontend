@@ -1,4 +1,3 @@
-import { Text } from '@components/text/TextCommon.styled';
 import styled from 'styled-components';
 
 export const DetailsContainer = styled.div``;
@@ -10,11 +9,11 @@ export const TaskForm = styled.form`
   height: 100%;
   overflow: auto;
 
-  background-color: #18191a;
+  background-color: ${(props) => props.theme.bgPrimary};
   padding: 16px;
   border-radius: 16px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  color: #f0f0f0;
+  color: ${(props) => props.theme.textPrimary};
 `;
 
 export const FormItem = styled.div`
@@ -23,7 +22,7 @@ export const FormItem = styled.div`
 `;
 
 export const Button = styled.button`
-  color: #f0f0f0;
+  color: ${(props) => props.theme.textPrimary};
   padding: 8px 16px;
   border: none;
   border-radius: 8px;

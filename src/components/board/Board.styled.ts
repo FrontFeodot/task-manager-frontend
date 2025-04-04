@@ -8,13 +8,13 @@ export const BoardWrapper = styled.div`
   width: 100%;
   gap: 16px;
   padding: 16px 16px 0;
-  background-color: #18191a;
+  background-color: ${(props) => props.theme.bgPrimary};
 
   overflow-x: auto;
 
   @media (${TABLET_DESKTOP}) {
     flex-direction: row;
-    border-right: 4px solid #000000;
+    border-right: 4px solid ${(props) => props.theme.bgSecondary};
     margin-right: 16px;
   }
 
@@ -34,21 +34,5 @@ export const ColumnLabel = styled.div<{ $hasItems: boolean }>`
 
 export const ColumnText = styled(Text)`
   font-size: ${(props) => props.theme.fontXL};
-  color: #8ab4f8;
-`;
-
-export const TaskText = styled.div`
-  background-color: #303134;
-  padding: 8px 12px;
-  margin: 6px 0;
-  border-radius: 4px;
-  transition:
-    transform 0.2s ease,
-    background-color 0.2s ease;
-  cursor: pointer;
-
-  &:hover {
-    transform: translateY(-4px);
-    background-color: #404247;
-  }
+  color: ${(props) => props.theme.textSecondary};
 `;

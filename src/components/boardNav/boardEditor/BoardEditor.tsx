@@ -1,7 +1,5 @@
-import { Dispatch, useState } from 'react';
-import { RiCloseLargeLine } from 'react-icons/ri';
-import { useTheme } from 'styled-components';
 import map from 'lodash/map';
+import { Dispatch } from 'react';
 
 import StyledButton from '@components/styledButton/StyledButton';
 import { IButtonColor } from '@components/styledButton/StyledButton.types';
@@ -83,7 +81,9 @@ const BoardEditor = ({
         setUpdatedData(null);
       }
       closeEditor();
-    } catch (err) {}
+    } catch (err) {
+      return err;
+    }
   };
 
   const onBoardDelete = () => {

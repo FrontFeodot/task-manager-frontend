@@ -1,5 +1,6 @@
-import { IBoard, IOpenedEditor } from '@common/providers/boardProvider/types';
 import { Dispatch, SetStateAction } from 'react';
+
+import { IBoard } from '@common/providers/boardProvider/types';
 
 export interface IBoardEditor {
   editorData: IBoard;

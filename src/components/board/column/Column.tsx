@@ -12,6 +12,7 @@ import { IColumnProps } from './Column.types';
 import { openEditor } from '@common/providers/boardProvider/useBoardState';
 import { getCurrentBoardData } from '@common/helpers/boardHelper';
 import { IBoard } from '@common/providers/boardProvider/types';
+import { useTheme } from 'styled-components';
 
 const Column = ({
   column,
@@ -19,6 +20,8 @@ const Column = ({
   activeId,
   activeTask,
 }: IColumnProps): JSX.Element => {
+  const { iconColor } = useTheme();
+
   const {
     attributes,
     listeners,
@@ -55,7 +58,7 @@ const Column = ({
     >
       {!!taskSection && column !== undefined ? (
         <>
-          <S.DnDAnchor fill="#F5F6F7" {...attributes} {...listeners} />
+          <S.DnDAnchor fill={iconColor} {...attributes} {...listeners} />
           <S.ColumnLabel $hasItems={!!taskSection.length}>
             <S.ColumnText>{toUpper(column.title)}</S.ColumnText>
           </S.ColumnLabel>

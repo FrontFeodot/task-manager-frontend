@@ -4,10 +4,10 @@ import TaskModal from '@components/modals/taskModal/TaskModal';
 import { useAppState } from '@common/providers/appProvider/useAppState';
 import { IModal } from '@common/providers/appProvider/types';
 
-import * as S from './ModalManager.styled';
-import { useEffect } from 'react';
 import DeleteColumnModal from '../deleteColumnConfirm/DeleteColumnModal';
 import ConfirmModal from '../confirmModal/ConfirmModal';
+
+import * as S from './ModalManager.styled';
 
 const ModalManager = (): JSX.Element | null => {
   const currentModal = useAppState((s) => s.currentModal);

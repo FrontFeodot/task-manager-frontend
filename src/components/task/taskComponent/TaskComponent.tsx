@@ -1,5 +1,6 @@
 import upperFirst from 'lodash/upperFirst';
 import { useForm } from 'react-hook-form';
+import pick from 'lodash/pick';
 
 import TaskInput from '@components/inputs/taskInput/TaskInput';
 import TaskFormSelect from '@components/select/taskFormSelect/TaskFormSelect';
@@ -11,8 +12,6 @@ import {
   taskStatusSchema,
   taskTypesSchema,
 } from '@common/utils/tasdDetailsConfig';
-import { DATE_UP_TO_MINUTES } from '@common/utils/dateFormats';
-import { formatDate } from '@common/helpers/dateHelper';
 import { deleteTask, updateTask } from '@common/api/taskApi';
 import { getBoards } from '@common/api/boardApi';
 import { getColumn } from '@common/helpers/columnHelper';
@@ -22,8 +21,6 @@ import { getParentTask } from '@common/helpers/taskHelper';
 import * as S from './TaskComponent.styled';
 import { ITaskComponent, ITaskFormValues } from './TaskComponent.types';
 import { IButtonColor } from '@components/styledButton/StyledButton.types';
-import { pick } from 'lodash';
-import { useSearchParams } from 'react-router-dom';
 
 const TaskComponent = ({
   task,
@@ -38,8 +35,6 @@ const TaskComponent = ({
     status,
     columnId,
     customFields,
-    createdAt,
-    updatedAt,
     taskId,
     parentTask,
   } = task;
@@ -54,8 +49,6 @@ const TaskComponent = ({
     customFields,
     parentTask,
   };
-
-  const [_, setSearchParams] = useSearchParams();
 
   const { register, handleSubmit, watch, setValue } = useForm<ITaskFormValues>({
     defaultValues,

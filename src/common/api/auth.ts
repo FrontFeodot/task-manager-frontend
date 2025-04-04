@@ -1,5 +1,4 @@
 import Cookies from 'js-cookie';
-import { AxiosError } from 'axios';
 
 import apiHandler from '@common/api/apiHandler';
 import {
@@ -15,22 +14,15 @@ import {
 import { IPostLogin } from '@common/interfaces/IAuth';
 import {
   resetBoardList,
-  setBoardsList,
 } from '@common/providers/boardProvider/useBoardState';
 
-export const postLogin = async ({
-  email,
-  password,
-}: IPostLogin): Promise<ICustomResponse | void> => {
+export const postLogin = async (payload: IPostLogin): Promise<ICustomResponse | void> => {
   try {
     setUserLoading(true);
-    const response = await apiHandler<Record<string, string>>({
+    const response = await apiHandler<Record<string, string>, IPostLogin>({
       method: IApiMethod.POST,
       url: ApiCalls.AUTH,
-      payload: {
-        email,
-        password,
-      },
+      payload,
     });
 
     if (
@@ -55,7 +47,7 @@ export const getProtected = async (): Promise<void> => {
   const token = Cookies.get(AUTH_TOKEN);
   if (token) {
     try {
-      const response = await apiHandler<Record<string, string>>({
+      const response = await apiHandler<Record<string, string>, {token: string}>({
         method: IApiMethod.POST,
         url: ApiCalls.PROTECTED,
         payload: {
@@ -69,9 +61,10 @@ export const getProtected = async (): Promise<void> => {
         setLoginUser(true);
         setUserLoading(false);
       }
-    } catch (err) {
+    } catch {
       logout();
       setUserLoading(false);
+      return
     }
   }
 };

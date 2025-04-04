@@ -4,25 +4,25 @@ import {
   RiExpandLeftFill,
   RiCloseLargeLine,
 } from 'react-icons/ri';
+import find from 'lodash/find';
+import { useTheme } from 'styled-components';
+
+import { IBoard } from '@common/providers/boardProvider/types';
+import {
+  closeEditor,
+  useBoardState,
+} from '@common/providers/boardProvider/useBoardState';
+import { isDesktopView } from '@common/helpers/appHelper';
 
 import * as S from './BoardNav.styled';
 import { IBoardNav } from './BoardNav.types';
-import { IBoard } from '@common/providers/boardProvider/types';
 import BoardNavList from './boardNavList/BoardNavList';
 import BoardEditor from './boardEditor/BoardEditor';
-import { differenceBy, find, keys } from 'lodash';
-import {
-  closeEditor,
-  openEditor,
-  useBoardState,
-} from '@common/providers/boardProvider/useBoardState';
-import { useTheme } from 'styled-components';
-import { isDesktopView } from '@common/helpers/appHelper';
 
 const BoardNav = ({ boardList }: IBoardNav): JSX.Element => {
   const isDesktop = isDesktopView();
   const [isExpanded, toggleNav] = useState(isDesktop);
-  const theme = useTheme();
+  const { iconColor } = useTheme();
   const [newBoardTitle, setNewBoardTitle] = useState<string | null>(null);
   const ToggleIcon = isExpanded ? RiExpandLeftFill : RiExpandRightFill;
   const openedEditor = useBoardState((s) => s.openedEditor);
@@ -58,14 +58,14 @@ const BoardNav = ({ boardList }: IBoardNav): JSX.Element => {
           onClick={closeEditor}
         >
           {openedEditor ? (
-            <RiCloseLargeLine size={18} fill={theme.textPrimary} />
+            <RiCloseLargeLine size={18} fill={iconColor} />
           ) : null}
         </S.CloseEditorWrapper>
         <S.ToggleNavViewWrapper
           $isExpanded={isExpanded}
           onClick={onToggleClick}
         >
-          <ToggleIcon fill="#F5F6F7" size={18} />
+          <ToggleIcon fill={iconColor} size={18} />
         </S.ToggleNavViewWrapper>
       </S.TopSection>
       <S.BoardNavLabel>{isExpanded ? boardNavText : null}</S.BoardNavLabel>

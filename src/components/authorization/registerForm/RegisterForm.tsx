@@ -5,7 +5,7 @@ import get from 'lodash/get';
 import AuthInput from '@components/inputs/authInput/AuthInput';
 import StyledButton from '@components/styledButton/StyledButton';
 
-import postRegister from '@common/api/register';
+import postRegister from '@common/api/postRegister';
 import { IPostRegister } from '@common/interfaces/IAuth';
 import { setLoginUser } from '@common/providers/userProvider/useUserState';
 

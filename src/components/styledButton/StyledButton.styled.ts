@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { darken, lighten } from 'polished';
+
+import { Text } from '@components/text/TextCommon.styled';
+
 import { IButtonColor } from './StyledButton.types';
-import { Text, TextInline } from '@components/text/TextCommon.styled';
-import { MOBILE } from '@common/utils/mediaHelper';
 
 export const Wrapper = styled.div`
   display: flex;

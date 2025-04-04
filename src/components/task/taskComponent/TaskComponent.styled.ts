@@ -1,19 +1,14 @@
-import {
-  DESKTOP,
-  MOBILE,
-  TaskFlexBoxView,
-  TaskGridView,
-} from '@common/utils/mediaHelper';
-import { Text, TextInline } from '@components/text/TextCommon.styled';
+import { TaskFlexBoxView, TaskGridView } from '@common/utils/mediaHelper';
+import { TextInline } from '@components/text/TextCommon.styled';
 import styled from 'styled-components';
 
 const calcGridWidth = (value: string): string => `calc(${value} - 8px)`;
 
 export const TaskFormWrapper = styled.form`
-  background-color: #2f303d;
+  background-color: ${(props) => props.theme.modalBg};
 
   border-radius: 16px;
-  color: #f0f0f0;
+  color: ${(props) => props.theme.textPrimary};
   display: grid;
   grid-template-areas:
     'top-left top-right'
@@ -40,7 +35,7 @@ export const TaskFormWrapper = styled.form`
 export const LayoutItem = styled.div`
   padding: 16px;
   border-radius: 16px;
-  background-color: #18191a;
+  background-color: ${(props) => props.theme.bgPrimary};
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   height: 100%;
   gap: 16px;
@@ -48,8 +43,8 @@ export const LayoutItem = styled.div`
   flex-direction: column;
 
   &:not(:last-child) > div {
-    background-color: #252627;
-    border: 1px solid #3a3b3c;
+    background-color: ${(props) => props.theme.inputBg};
+    border: ${(props) => props.theme.borderCommon};
     padding: 16px;
   }
 
@@ -86,11 +81,11 @@ export const TaskSummary = styled.div`
   align-items: center;
   gap: 16px;
 
-  border-bottom: 1px solid #3a3b3c;
+  border-bottom: ${(props) => props.theme.borderCommon};
   padding: 8px 16px;
 
   & .select-title {
-    color: #a0a0a0;
+    color: ${(props) => props.theme.textDisabled};
   }
 
   @media (${TaskFlexBoxView}) {
@@ -100,7 +95,7 @@ export const TaskSummary = styled.div`
 
 export const TaskSummaryContent = styled(TextInline)`
   font-size: ${(props) => props.theme.fontSM};
-  color: #a0a0a0;
+  color: ${(props) => props.theme.textDisabled};
 `;
 
 export const MetaInfo = styled.div`
@@ -112,7 +107,7 @@ export const MetaInfo = styled.div`
 
 export const MetaInfoRow = styled(TextInline)`
   font-size: ${(props) => props.theme.fontXS};
-  color: #a0a0a0;
+  color: ${(props) => props.theme.textDisabled};
   width: max-content;
 `;
 

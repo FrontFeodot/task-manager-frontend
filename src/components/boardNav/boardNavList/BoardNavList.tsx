@@ -1,12 +1,10 @@
-import { useState } from 'react';
 import map from 'lodash/map';
 import { GoPlus } from 'react-icons/go';
-
+import { useTheme } from 'styled-components';
 import { MdOutlineSettings } from 'react-icons/md';
 
-import * as S from './BoardNavList.styled';
-import { IBoardNavList } from './BoardNavList.types';
-import { keys, upperCase } from 'lodash';
+import { TextInline } from '@components/text/TextCommon.styled';
+
 import { emptyBoard } from '@common/utils/boardEditorConfig';
 import { IBoard } from '@common/providers/boardProvider/types';
 import {
@@ -14,12 +12,16 @@ import {
   setCurrentBoardAction,
 } from '@common/helpers/boardHelper';
 import { openEditor } from '@common/providers/boardProvider/useBoardState';
-import { TextInline } from '@components/text/TextCommon.styled';
+
+import * as S from './BoardNavList.styled';
+import { IBoardNavList } from './BoardNavList.types';
+import { keys, upperCase } from 'lodash';
 
 const BoardNavList = ({
   boardList,
   isExpanded,
 }: IBoardNavList): JSX.Element => {
+  const { iconColor } = useTheme();
   const currentBoardId = getCurrentBoardId();
   return (
     <S.BoardList>
@@ -42,7 +44,7 @@ const BoardNavList = ({
                 <S.BoardSettingWrapper
                   onClick={() => openEditor({ data: currentBoard })}
                 >
-                  <MdOutlineSettings fill="#F5F6F7" size={16} />
+                  <MdOutlineSettings fill={iconColor} size={16} />
                 </S.BoardSettingWrapper>
               </S.BoardListItem>
             );

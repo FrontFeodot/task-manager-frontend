@@ -5,7 +5,7 @@ import * as S from './TaskCard.styled';
 import { useSearchParams } from 'react-router-dom';
 
 const CreateTask = ({ columnName }: { columnName: string }): JSX.Element => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [_, setSearchParams] = useSearchParams();
   const newSearchParams = new URLSearchParams();
 
   const handleClick = () => {

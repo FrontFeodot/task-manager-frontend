@@ -1,5 +1,3 @@
-import { IBoard } from '@common/providers/boardProvider/types';
-import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { InputHTMLAttributes, SyntheticEvent } from 'react';
 import {

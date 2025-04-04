@@ -1,9 +1,12 @@
+import { SetURLSearchParams } from 'react-router-dom';
 import {
   FcLowPriority,
   FcMediumPriority,
   FcHighPriority,
 } from 'react-icons/fc';
 import filter from 'lodash/filter';
+import find from 'lodash/find';
+import maxBy from 'lodash/maxBy';
 
 import {
   ITask,
@@ -12,16 +15,13 @@ import {
   ITaskType,
 } from '@common/interfaces/ITask';
 import { useBoardState } from '@common/providers/boardProvider/useBoardState';
+import { IColumn } from '@common/providers/boardProvider/types';
 
 import {
   getBoardById,
-  getCurrentBoardData,
   getCurrentBoardId,
   getCurrentBoardTitle,
 } from './boardHelper';
-import { find, map, maxBy } from 'lodash';
-import { IColumn } from '@common/providers/boardProvider/types';
-import { SetURLSearchParams } from 'react-router-dom';
 
 export const getPriorityIcon = (
   priority?: ITaskPriority,

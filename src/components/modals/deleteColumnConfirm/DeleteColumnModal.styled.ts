@@ -1,11 +1,12 @@
+import styled from 'styled-components';
+
+import { Text } from '@components/text/TextCommon.styled';
+
 import {
   DESKTOP,
   MOBILE,
   TABLET,
-  TABLET_DESKTOP,
 } from '@common/utils/mediaHelper';
-import { Text, TextInline } from '@components/text/TextCommon.styled';
-import styled from 'styled-components';
 
 export const ModalWrapper = styled.div`
   ${(props) => props.theme.flexbox};
@@ -17,7 +18,7 @@ export const ModalWrapper = styled.div`
   z-index: 101;
   padding: 24px;
 
-  background-color: #2f303d;
+  background-color: ${(props) => props.theme.modalBg};
   border-radius: 16px;
   box-shadow:
     2px 4px 8px rgba(0, 0, 0, 0.2),
@@ -97,7 +98,7 @@ export const StyledRadio = styled(Text)`
   width: 20px;
   height: 20px;
   background: ${({ theme }) => theme.bgTertiary};
-  border: 2px solid ${({ theme }) => theme.textAccent};
+  border: 2px solid ${({ theme }) => theme.buttonBorderColor};
   border-radius: 8px;
   margin-right: 10px;
   transition: all 0.2s ease;

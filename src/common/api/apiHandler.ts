@@ -1,16 +1,16 @@
 import Cookies from 'js-cookie';
 import { AxiosError, AxiosResponse } from 'axios';
 
-import axios from 'common/api/axios';
-import { IApiHandler, ICustomResponse } from 'common/interfaces/IApiHandler';
+import axios from '@common/api/axios';
+import { IApiHandler, ICustomResponse } from '@common/interfaces/IApiHandler';
 import { AUTH_TOKEN } from '@common/utils/cookies';
 
-const apiHandler = async <T>({
+const apiHandler = async <Res, Req = undefined>({
   method,
   url,
   payload,
   withAuth,
-}: IApiHandler): Promise<ICustomResponse<T>> => {
+}: IApiHandler<Req>): Promise<ICustomResponse<Res>> => {
   try {
     const response: AxiosResponse = await axios({
       method,
@@ -31,7 +31,7 @@ const apiHandler = async <T>({
       throw data;
     }
 
-    return data as ICustomResponse<T>;
+    return data as ICustomResponse<Res>;
   } catch (err) {
     if (err instanceof AxiosError) {
       console.error(err);
@@ -44,7 +44,7 @@ const apiHandler = async <T>({
       isError: 1,
       message: 'Unhandled error',
       payload: err,
-    } as ICustomResponse<T>;
+    } as ICustomResponse<Res>;
   }
 };
 

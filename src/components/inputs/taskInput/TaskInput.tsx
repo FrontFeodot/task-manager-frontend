@@ -39,7 +39,7 @@ const TaskInput = ({
               value={fieldValue}
               {...register(fieldName, {
                 required: 'Title is required',
-                onChange: (e: any) => {
+                onChange: (e) => {
                   setFieldValue(e.target.value);
                 },
               })}
@@ -50,7 +50,7 @@ const TaskInput = ({
             <S.StyledTextArea
               value={fieldValue}
               {...register(fieldName, {
-                onChange: (e: any) => {
+                onChange: (e) => {
                   setFieldValue(e.target.value);
                 },
               })}

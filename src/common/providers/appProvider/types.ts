@@ -4,7 +4,7 @@ export interface IAppState {
 
 export interface IModalProps {
   name: IModal;
-  data?: Record<string, string | any>;
+  data?: Record<string, string | unknown>;
 }
 
 export enum IModal {

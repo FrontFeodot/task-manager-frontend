@@ -8,7 +8,6 @@ import {
   setBoardsList,
   setCurrentBoard,
 } from '@common/providers/boardProvider/useBoardState';
-import { IBoard } from '@common/providers/boardProvider/types';
 import {
   ApiCalls,
   IApiMethod,

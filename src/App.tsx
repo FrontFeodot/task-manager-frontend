@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import NavMenu from '@components/nav/Nav';
 import ModalManager from '@components/modals/modalManager/ModalManager';
 
-import AppRouter from 'common/routes/Routes';
+import AppRouter from '@common/routes/Routes';
 import initialize from '@common/helpers/initialize';
 import useAppParams from '@common/hooks/useAppParams';
 

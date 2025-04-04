@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { Text } from '@components/text/TextCommon.styled';
+import { MOBILE } from '@common/utils/mediaHelper';
 
 export const TaskInputContainer = styled.div<{ $isTitleView: boolean }>`
   display: flex;
@@ -11,7 +12,7 @@ export const TaskInputContainer = styled.div<{ $isTitleView: boolean }>`
 
 export const Label = styled(Text)`
   font-size: ${(props) => props.theme.fontSM};
-  color: #a0a0a0;
+  color: ${(props) => props.theme.textDisabled};
 `;
 
 export const TitleValue = styled(Text)`
@@ -22,18 +23,18 @@ export const TitleValue = styled(Text)`
   transition: color 0.2s;
 
   &:hover {
-    color: #00bfa6;
+    color: ${(props) => props.theme.successColor};
   }
 `;
 
 export const DescriptionValue = styled(Text)`
-  max-height: 190px;
   min-height: 124px;
+  height: 100%;
   overflow: auto;
 
-  background-color: #252627;
-  border: 1px solid #3a3b3c;
-  color: #f0f0f0;
+  background-color: ${(props) => props.theme.inputBg};
+  border: ${(props) => props.theme.borderCommon};
+  color: ${(props) => props.theme.textPrimary};
   padding: 8px;
   border-radius: 8px;
 
@@ -48,24 +49,29 @@ export const DescriptionValue = styled(Text)`
     box-shadow 0.2s;
 
   &:hover {
-    color: #00bfa6;
+    color: ${(props) => props.theme.successColor};
+  }
+
+  @media (${MOBILE}) {
+    height: 160px;
   }
 `;
 
 export const StyledInput = styled.input`
-  background-color: #252627;
-  border: 1px solid #3a3b3c;
-  color: #f0f0f0;
+  background-color: ${(props) => props.theme.inputBg};
+  border: ${(props) => props.theme.borderCommon};
+  color: ${(props) => props.theme.textPrimary};
   padding: 8px;
   border-radius: 8px;
   font-size: ${(props) => props.theme.fontMD};
   width: 100%;
   transition:
-    border-color 0.2s,
+    border 0.2s,
     box-shadow 0.2s;
+
   &:focus {
+    border: ${({ theme }) => theme.inputBorder};
     outline: none;
-    border-color: #1e90ff;
     box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
   }
 `;
@@ -76,9 +82,9 @@ export const StyledTextArea = styled.textarea`
   border-radius: 8px;
   height: 190px;
 
-  background-color: #252627;
-  border: 1px solid #3a3b3c;
-  color: #f0f0f0;
+  background-color: ${(props) => props.theme.inputBg};
+  border: ${(props) => props.theme.borderCommon};
+  color: ${(props) => props.theme.textPrimary};
   font-size: ${(props) => props.theme.fontMD};
 
   box-sizing: border-box;
@@ -88,7 +94,11 @@ export const StyledTextArea = styled.textarea`
 
   &:focus {
     outline: none;
-    border-color: #1e90ff;
+    border: ${({ theme }) => theme.inputBorder};
     box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
+  }
+
+  @media (${MOBILE}) {
+    height: 160px;
   }
 `;

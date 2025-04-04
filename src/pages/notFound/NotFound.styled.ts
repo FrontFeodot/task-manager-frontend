@@ -6,7 +6,7 @@ export const NotFoundWrapper = styled.div`
 
   width: 100%;
   height: 100%;
-  background-color: #202124;
+  background-color: ${(props) => props.theme.bgTertiary};
 `;
 
 export const NotFoundLabel = styled(Text)`

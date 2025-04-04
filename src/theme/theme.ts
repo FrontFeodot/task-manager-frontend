@@ -11,19 +11,34 @@ export interface IFontSize {
 }
 
 export interface ITheme {
-  bgPrimary: string; //  (background)
+  bgPrimary: string;
   bgSecondary: string;
-  bgTertiary: string; //  (board), box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); border-radius: 8px;
+  bgTertiary: string;
+  bgGradient: string;
 
-  buttonBg: string; //?
-  textPrimary: string; // (Check rgba(255, 255, 255, 0.87))
-  textAccent: string; // '#27AE60' .
-  textButton: string; // ?
+  modalBg: string;
+
+  buttonBg: string;
+  buttonBorderColor: string;
+
+  textPrimary: string;
+  textSecondary: string;
+  textDisabled: string;
+  textButton: string;
+  iconColor: string;
+
+  errorBg: string;
+  errorText: string;
+  successColor: string;
+
+  borderCommon: string;
+
+  inputBg: string;
+  inputBorder: string;
+
   link: string;
-  shadow: string; //board ???
+  shadow: string;
   flexbox: string;
-  errorBg: string; // Фон тултипа ошибки
-  errorText: string; // Текст ошибки
   collapsedText: string;
 }
 
@@ -42,15 +57,30 @@ const fonts: IFontSize = {
 const theme: ITheme & IFontSize = {
   bgPrimary: '#18191a',
   bgSecondary: '#000000',
-  bgTertiary: '#242526',
+  bgTertiary: '#202124',
+  bgGradient: 'linear-gradient(145deg, #2a2b2e, #202124)',
+
+  modalBg: '#2f303d',
 
   buttonBg: '#9B51E0',
+  buttonBorderColor: '#9B51E0',
+
   textPrimary: '#F5F6F7',
-  textAccent: '#9B51E0',
+  textSecondary: '#8ab4f8',
+  textDisabled: '#a0a0a0',
   textButton: '#F5F6F7',
+
+  iconColor: '#F5F6F7',
+
   link: '#09d3ac',
   errorBg: '#FF4D4F',
   errorText: '#FFFFFF',
+  successColor: '#00bfa6',
+
+  borderCommon: '1px solid #3a3b3c',
+
+  inputBg: '#252627',
+  inputBorder: '1px solid #1e90ff',
 
   shadow: 'box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); border-radius: 8px;',
   flexbox: 'display: flex; justify-content: center; align-items: center;',

@@ -1,13 +1,13 @@
+import { SyntheticEvent, useEffect } from 'react';
 import isArray from 'lodash/isArray';
 import keys from 'lodash/keys';
 import map from 'lodash/map';
 import upperFirst from 'lodash/upperFirst';
 
+import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';
+
 import * as S from './Select.styled';
 import { ISelect } from './Select.types';
-import { ITask } from '@common/interfaces/ITask';
-import { SyntheticEvent, useEffect } from 'react';
-import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';
 
 const CustomSelect = ({
   items,
@@ -57,22 +57,18 @@ const CustomSelect = ({
         ref={selectRef}
       >
         {isArray(items)
-          ? map(items, (item, i) => {
-              return (
-                <option key={item} value={item}>
-                  {upperFirst(item)}
-                </option>
-              );
-            })
-          : map(keys(items), (item) => {
-              return (
-                <option key={item} value={item}>
-                  {isParentTask && !!+item
-                    ? `№${item} | ${items[item].value}`
-                    : items[item].value}{' '}
-                </option>
-              );
-            })}
+          ? map(items, (item) => (
+              <option key={item} value={item}>
+                {upperFirst(item)}
+              </option>
+            ))
+          : map(keys(items), (item) => (
+              <option key={item} value={item}>
+                {isParentTask && !!+item
+                  ? `№${item} | ${items[item].value}`
+                  : items[item].value}{' '}
+              </option>
+            ))}
       </S.StyledSelect>
     </S.SelectWrapper>
   );

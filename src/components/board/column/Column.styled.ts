@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { MdDragIndicator } from 'react-icons/md';
 
 import { Text } from '@components/text/TextCommon.styled';
-import { MOBILE, TABLET } from '@common/utils/mediaHelper';
+import { TABLET } from '@common/utils/mediaHelper';
 
 export const ColumnWrapper = styled.div`
   display: flex;
@@ -13,9 +13,9 @@ export const ColumnWrapper = styled.div`
 
   min-width: 196px;
 
-  background-color: #202124;
+  background-color: ${(props) => props.theme.bgTertiary};
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  color: #fff;
+  color: ${(props) => props.theme.textPrimary};
   border-radius: 8px;
 
   width: 100%;
@@ -31,7 +31,7 @@ export const ColumnLabel = styled.div<{ $hasItems?: boolean }>`
 
 export const ColumnText = styled(Text)<{ $isCreateColumn?: boolean }>`
   font-size: ${(props) => props.theme.fontXL};
-  color: #8ab4f8;
+  color: ${(props) => props.theme.textSecondary};
 
   text-align: ${({ $isCreateColumn }) => ($isCreateColumn ? 'center' : 'left')};
   ${({ $isCreateColumn }) => ($isCreateColumn ? 'cursor: pointer' : '')};

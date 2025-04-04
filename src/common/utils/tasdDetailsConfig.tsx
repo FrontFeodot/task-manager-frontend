@@ -1,4 +1,5 @@
 import reduce from 'lodash/reduce';
+import assign from 'lodash/assign';
 
 import { getStoriesList } from '@common/helpers/taskHelper';
 import {
@@ -6,8 +7,6 @@ import {
   ITaskStatus,
   ITaskType,
 } from '@common/interfaces/ITask';
-import { assign } from 'lodash';
-import { IconType } from 'react-icons';
 
 export type ISchemas = ITaskStatus | ITaskPriority | ITaskType;
 

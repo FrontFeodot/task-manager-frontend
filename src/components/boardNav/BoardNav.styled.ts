@@ -9,7 +9,8 @@ export const BoardNavWrapper = styled.div<{ $isExpanded: boolean }>`
   height: 100%;
   padding: 16px 8px;
 
-  background-color: #202124;
+  background-color: ${(props) => props.theme.bgTertiary};
+  border-right: 4px solid ${(props) => props.theme.bgSecondary};
 
   transition: all 0.3s ease-in;
 
@@ -17,16 +18,17 @@ export const BoardNavWrapper = styled.div<{ $isExpanded: boolean }>`
     position: relative;
     width: ${({ $isExpanded }) => ($isExpanded ? '20%' : '80px')};
     min-width: ${({ $isExpanded }) => ($isExpanded ? '248px' : '80px')};
-    border-right: 4px solid #000000;
   }
+
   @media (${MOBILE}) {
     position: absolute;
-    width: ${({ $isExpanded }) => ($isExpanded ? '100%' : '80px')};
 
-    ${({ $isExpanded }) =>
-      !$isExpanded ? 'border-right: 4px solid #000000' : ''};
-    z-index: 100;
+    width: ${({ $isExpanded }) => ($isExpanded ? '100%' : '80px')};
     height: calc(100% - 60px);
+
+    ${({ $isExpanded }) => ($isExpanded ? 'border-right: none' : '')};
+
+    z-index: 100;
     overflow: hidden;
   }
 `;
@@ -41,7 +43,7 @@ export const TopSection = styled.div<{ $isExpanded: boolean }>`
 
   width: 100%;
   min-height: 36px;
-  background-color: #202124;
+  background-color: ${(props) => props.theme.bgTertiary};
 `;
 
 export const CloseEditorWrapper = styled.div<{
@@ -51,7 +53,7 @@ export const CloseEditorWrapper = styled.div<{
   ${(props) => props.theme.flexbox};
 
   cursor: pointer;
-  background-color: #202124;
+  background-color: ${(props) => props.theme.bgTertiary};
 
   display: ${({ $isExpanded }) => ($isExpanded ? 'flex' : 'none')};
 
@@ -89,11 +91,11 @@ export const BoardListItem = styled.div<{ $isCreateLabel?: boolean }>`
 
   padding: 8px;
   border-radius: 4px;
-  border: 1px solid #3a3b3c;
+  border: ${(props) => props.theme.borderCommon};
   justify-content: ${({ $isCreateLabel }) =>
     $isCreateLabel ? 'center' : 'space-between'};
 
-  background: linear-gradient(145deg, #202124, #2a2b2e);
+  background: ${(props) => props.theme.bgGradient};
   cursor: pointer;
 `;
 

@@ -1,19 +1,16 @@
-import React, { SyntheticEvent, useEffect, useRef, useState } from 'react';
-import upperFirst from 'lodash/upperFirst';
+import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { FaPlus } from 'react-icons/fa';
-
-import * as S from './BoardEditorInput.styled';
-import { IBoardEditorInput } from './BoardEditorInput.types';
-import { IBoardFormValues } from '@common/interfaces/IBoard';
-import { isEmpty } from 'lodash';
-import StyledButton from '@components/styledButton/StyledButton';
 import { useTheme } from 'styled-components';
+
+import StyledButton from '@components/styledButton/StyledButton';
 import { IButtonColor } from '@components/styledButton/StyledButton.types';
-import { openModal } from '@common/providers/appProvider/useAppState';
-import { IModal } from '@common/providers/appProvider/types';
+
 import { deleteColumnHelper } from '@common/helpers/columnHelper';
+
+import { IBoardEditorInput } from './BoardEditorInput.types';
+import * as S from './BoardEditorInput.styled';
 
 const BoardEditorInput = ({
   fieldName,
@@ -94,6 +91,9 @@ const BoardEditorInput = ({
   const onDelete = async (): Promise<void> => {
     if (columnId && boardId) {
       const response = await deleteColumnHelper({ columnId, boardId });
+      if (response && response.isError) {
+        setError(response.message)
+      }
     }
   };
 

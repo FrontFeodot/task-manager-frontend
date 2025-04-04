@@ -1,21 +1,19 @@
 import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import find from 'lodash/find';
-import { MdOutlineClose } from 'react-icons/md';
 
 import EmptyLayout from '@components/layouts/emptyLayout/EmptyLayout';
 import { IEmptyLayoutType } from '@components/layouts/emptyLayout/EmptyLayout.types';
+import TaskComponent from '@components/task/taskComponent/TaskComponent';
+import CloseModalIcon from '@components/modals/closeModalIcon/CloseModalIcon';
 
 import useOutSideClick from '@common/hooks/useOutSideClick';
 import { getCurrentBoardTitle } from '@common/helpers/boardHelper';
 import { useBoardState } from '@common/providers/boardProvider/useBoardState';
-
-import * as S from './TaskModal.styled';
-import TaskComponent from '../../task/taskComponent/TaskComponent';
 import { getColumnTitles } from '@common/helpers/columnHelper';
 import { closeTaskModal } from '@common/helpers/taskHelper';
-import { useTheme } from 'styled-components';
-import CloseModalIcon from '../closeModalIcon/CloseModalIcon';
+
+import * as S from './TaskModal.styled';
 
 const TaskModal = (): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
@@ -23,7 +21,6 @@ const TaskModal = (): JSX.Element => {
   const taskId = Number(searchParams.get('taskId'));
   const selectedBoardName = getCurrentBoardTitle();
   const boardList = useBoardState((s) => s.boardList);
-  const { textPrimary } = useTheme();
   const selectedBoard = boardList?.[selectedBoardName || ''];
 
   const columnListTitles = getColumnTitles();

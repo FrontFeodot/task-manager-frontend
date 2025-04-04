@@ -41,7 +41,7 @@ export const taskDragEnd = async (
     if (response.isError) {
       throw response;
     }
-  } catch (err) {}
+  } catch {}
 };
 
 export const columnDragEnd = async (boardId: string, columns: IColumn[]) => {
@@ -53,7 +53,5 @@ export const columnDragEnd = async (boardId: string, columns: IColumn[]) => {
     if (response.isError) {
       throw response;
     }
-  } catch (err) {
-    return err;
-  }
+  } catch {}
 };

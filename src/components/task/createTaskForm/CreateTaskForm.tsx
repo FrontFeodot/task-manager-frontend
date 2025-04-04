@@ -2,9 +2,10 @@ import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 
 import TaskInput from '@components/inputs/taskInput/TaskInput';
+import CustomSelect from '@components/select/Select';
+import StyledButton from '@components/styledButton/StyledButton';
 
 import {
-  ITask,
   ITaskPriority,
   ITaskStatus,
   ITaskType,
@@ -19,12 +20,8 @@ import {
 import { closeModal } from '@common/providers/appProvider/useAppState';
 import { createTaskHandler } from '@common/helpers/taskApiHelper';
 import { getColumnTitles } from '@common/helpers/columnHelper';
-import { getBoards } from '@common/api/boardApi';
 
 import * as S from './CreateTaskForm.styled';
-import CustomSelect from '@components/select/Select';
-import StyledButton from '@components/styledButton/StyledButton';
-
 import { ITaskFormValues } from '../taskComponent/TaskComponent.types';
 
 const CreateTaskForm = (): JSX.Element => {
@@ -41,13 +38,7 @@ const CreateTaskForm = (): JSX.Element => {
     priority: ITaskPriority.LOW,
   };
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useForm<ITaskFormValues>({
+  const { register, handleSubmit, watch, setValue } = useForm<ITaskFormValues>({
     defaultValues,
   });
   const isStoryType = watch('type') === ITaskType.STORY;

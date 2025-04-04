@@ -12,11 +12,11 @@ export const TaskFormSelectWrapper = styled.div<{ $isEditField: boolean }>`
 
   cursor: pointer;
 
-  ${({ $isEditField }) =>
+  ${({ $isEditField, theme }) =>
     !$isEditField
       ? `
     &:hover {
-      color: #00bfa6;
+      color: ${theme.successColor};
     }
   `
       : ''}
@@ -24,7 +24,7 @@ export const TaskFormSelectWrapper = styled.div<{ $isEditField: boolean }>`
 
 export const TaskFormSelectLabel = styled(TextInline)`
   font-size: ${(props) => props.theme.fontSM};
-  color: #a0a0a0;
+  color: ${(props) => props.theme.textDisabled};
 `;
 
 export const TaskFormSelectValue = styled(TextInline)`

@@ -1,5 +1,5 @@
 import { Text } from '@components/text/TextCommon.styled';
-import styled from 'styled-components';
+import styled, { DefaultTheme } from 'styled-components';
 
 export const EditorInputWrapper = styled.div`
   display: flex;
@@ -9,15 +9,15 @@ export const EditorInputWrapper = styled.div`
 `;
 export const Label = styled(Text)`
   font-size: ${(props) => props.theme.fontSM};
-  color: #a0a0a0;
+  color: ${(props) => props.theme.textDisabled};
 `;
 
-const columnPresentationStyles = `
+const getColumnPresentationStyles = (theme: DefaultTheme) => `
   padding: 8px;
   border-radius: 4px;
-  border: 1px solid #3a3b3c;
+  border: ${theme.borderCommon};
 
-  background: linear-gradient(145deg, #202124, #2a2b2e);
+  background: ${theme.bgGradient};
 `;
 
 export const PresentationWrapper = styled.div<{
@@ -32,7 +32,8 @@ export const PresentationWrapper = styled.div<{
 
   ${({ $isColumnCreate }) => ($isColumnCreate ? 'cursor: pointer' : '')};
 
-  ${({ $isColumn }) => ($isColumn ? columnPresentationStyles : '')};
+  ${({ $isColumn, theme }) =>
+    $isColumn ? getColumnPresentationStyles(theme) : ''};
 `;
 
 export const PresentationButtons = styled.div`
@@ -72,9 +73,9 @@ export const EditSectionWrapper = styled.div`
 `;
 
 export const StyledInput = styled.input`
-  background-color: #252627;
-  border: 1px solid #3a3b3c;
-  color: #f0f0f0;
+  background-color: ${(props) => props.theme.bgTertiary};
+  border: ${(props) => props.theme.borderCommon};
+  color: ${(props) => props.theme.textPrimary};
   padding: 8px;
   border-radius: 8px;
   font-size: 1em;
@@ -84,7 +85,7 @@ export const StyledInput = styled.input`
     box-shadow 0.2s;
   &:focus {
     outline: none;
-    border-color: #1e90ff;
+    border: ${({ theme }) => theme.inputBorder};
     box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
   }
 `;

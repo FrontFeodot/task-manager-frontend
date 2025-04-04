@@ -1,9 +1,6 @@
-import { ICustomResponse } from '@common/interfaces/IApiHandler';
-import { IBoardFormValues } from '@common/interfaces/IBoard';
-import { IFormItem } from '@common/interfaces/ITask';
-import { IColumn } from '@common/providers/boardProvider/types';
 import { ISaveButtonHandler } from '@components/boardNav/boardEditor/BoardEditor.types';
-import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
+
+import { ICustomResponse } from '@common/interfaces/IApiHandler';
 
 export interface IBoardEditorInput {
   fieldName: string;

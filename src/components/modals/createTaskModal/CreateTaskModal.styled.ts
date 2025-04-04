@@ -14,7 +14,7 @@ export const CreateTaskModal = styled.div`
   padding: 36px 16px 16px;
 
   z-index: 101;
-  background-color: #2f303d;
+  background-color: ${(props) => props.theme.modalBg};
   overflow: hidden;
 
   @media (${DESKTOP}) {

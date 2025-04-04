@@ -1,27 +1,26 @@
 import { SyntheticEvent, useEffect, useRef, useState } from 'react';
+import findIndex from 'lodash/findIndex';
+import map from 'lodash/map';
+
+import { TextInline } from '@components/text/TextCommon.styled';
+import StyledButton from '@components/styledButton/StyledButton';
+import { IButtonColor } from '@components/styledButton/StyledButton.types';
+import CustomSelect from '@components/select/Select';
 
 import useOutsideClick from '@common/hooks/useOutSideClick';
 import {
   closeModal,
   useAppState,
 } from '@common/providers/appProvider/useAppState';
-import { removeSearchParam } from '@common/helpers/searchParamsHelper';
 
-import * as S from './DeleteColumnModal.styled';
-import { getTasksForColumn } from '@common/helpers/taskHelper';
 import {
   getBoardById,
-  getCurrentBoardData,
-  getCurrentBoardId,
 } from '@common/helpers/boardHelper';
 import { IBoard } from '@common/providers/boardProvider/types';
-import CustomSelect from '@components/select/Select';
-import { findIndex, map } from 'lodash';
-import { TextInline } from '@components/text/TextCommon.styled';
-import StyledButton from '@components/styledButton/StyledButton';
-import { IButtonColor } from '@components/styledButton/StyledButton.types';
 import { deleteColumnHelper, getColumn } from '@common/helpers/columnHelper';
 import { getBoards } from '@common/api/boardApi';
+
+import * as S from './DeleteColumnModal.styled';
 
 const DeleteColumnModal = (): JSX.Element => {
   const [inputValue, setInputValue] = useState<string | null>(null);
@@ -87,7 +86,9 @@ const DeleteColumnModal = (): JSX.Element => {
         }
         getBoards();
         closeModal();
-      } catch (err) {}
+      } catch (err) {
+        return err
+      }
     }
   };
 

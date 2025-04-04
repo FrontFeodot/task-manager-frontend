@@ -1,6 +1,6 @@
-import { MOBILE } from '@common/utils/mediaHelper';
-import { Text } from '@components/text/TextCommon.styled';
 import styled, { DefaultTheme } from 'styled-components';
+
+import { Text } from '@components/text/TextCommon.styled';
 
 export const BoardList = styled.div`
   display: flex;
@@ -26,11 +26,11 @@ export const BoardListItem = styled.div<{
   width: auto;
   padding: 8px;
   border-radius: 4px;
-  border: 1px solid #3a3b3c;
+  border: ${(props) => props.theme.borderCommon};
   justify-content: ${({ $isCreateLabel }) =>
     $isCreateLabel ? 'center' : 'space-between'};
 
-  background: linear-gradient(145deg, #202124, #2a2b2e);
+  background: ${(props) => props.theme.bgGradient};
   cursor: pointer;
   transition: all 0.3s ease-in;
   ${({ $isSelected, theme }) => ($isSelected ? selectedStyles(theme) : '')}

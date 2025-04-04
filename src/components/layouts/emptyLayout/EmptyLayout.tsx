@@ -1,6 +1,6 @@
 import { getEmptyLayoutContent } from './getEmptyLayoutContent';
 
-import { IEmptyLayout, IEmptyLayoutType } from './EmptyLayout.types';
+import { IEmptyLayout } from './EmptyLayout.types';
 import * as S from './EmptyLayout.styled';
 
 const EmptyLayout = ({ type }: IEmptyLayout): JSX.Element => {

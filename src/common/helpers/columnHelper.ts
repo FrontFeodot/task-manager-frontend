@@ -2,18 +2,17 @@ import { find, map } from 'lodash';
 
 import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 import { IBoard, IColumn } from '@common/providers/boardProvider/types';
-import {
-  getBoardById,
-  getCurrentBoardData,
-  getCurrentBoardId,
-  getCurrentBoardTitle,
-} from './boardHelper';
-import { getLastOrderByType, getTasksForColumn } from './taskHelper';
 import { createColumnApi, deleteColumn } from '@common/api/columnApi';
 import { getBoards } from '@common/api/boardApi';
 import { ICustomResponse } from '@common/interfaces/IApiHandler';
 import { openModal } from '@common/providers/appProvider/useAppState';
 import { IModal } from '@common/providers/appProvider/types';
+
+import {
+  getBoardById,
+  getCurrentBoardTitle,
+} from './boardHelper';
+import { getLastOrderByType, getTasksForColumn } from './taskHelper';
 
 export const getColumns = (): IColumn[] | undefined => {
   const currentBoard = getCurrentBoardTitle();

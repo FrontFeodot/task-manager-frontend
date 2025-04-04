@@ -11,7 +11,7 @@ export const TextInput = styled.input`
   width: 100%;
   height: 100%;
 
-  border: 1px solid ${(props) => props.theme.textAccent};
+  border: 1px solid ${(props) => props.theme.buttonBorderColor};
   padding: 10px 14px;
 
   color: ${(props) => props.theme.textPrimary};
@@ -42,6 +42,6 @@ export const ToggleIcon = styled.span`
   align-items: center;
 
   &:hover {
-    color: ${({ theme }) => theme.textAccent};
+    color: ${({ theme }) => theme.buttonBg};
   }
 `;

@@ -1,7 +1,8 @@
-import { MOBILE, TABLET_DESKTOP } from '@common/utils/mediaHelper';
-import StyledButton from '@components/styledButton/StyledButton';
-import { Text } from '@components/text/TextCommon.styled';
 import styled from 'styled-components';
+
+import { Text } from '@components/text/TextCommon.styled';
+
+import { MOBILE, TABLET_DESKTOP } from '@common/utils/mediaHelper';
 
 export const ConfirmModalWrapper = styled.div`
   ${(props) => props.theme.flexbox};
@@ -11,7 +12,7 @@ export const ConfirmModalWrapper = styled.div`
 
   min-height: 184px;
   z-index: 101;
-  background-color: #2f303d;
+  background-color: ${(props) => props.theme.modalBg};
   padding: 24px;
   border-radius: 16px;
   box-shadow:

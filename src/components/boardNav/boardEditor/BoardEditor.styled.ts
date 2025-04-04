@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export const BoardEditorWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #202124;
+  background-color: ${(props) => props.theme.bgTertiary};
   width: 100%;
   height: 100%;
   padding: 16px 0 24px;
@@ -39,7 +39,7 @@ export const ColumnList = styled.div`
 
 export const FieldLabel = styled(Text)<{ $isTitle?: boolean }>`
   font-size: ${(props) => props.theme.fontSM};
-  color: #a0a0a0;
+  color: ${(props) => props.theme.textDisabled};
 
   ${({ $isTitle }) => ($isTitle ? 'margin-bottom: 16px' : '')};
 `;
@@ -54,10 +54,10 @@ export const CreateNewColumn = styled.div`
 
   padding: 8px;
   border-radius: 4px;
-  border: 1px solid #3a3b3c;
+  border: ${(props) => props.theme.borderCommon};
   justify-content: center;
 
-  background: linear-gradient(145deg, #202124, #2a2b2e);
+  background: ${(props) => props.theme.bgGradient};
   cursor: pointer;
 `;
 

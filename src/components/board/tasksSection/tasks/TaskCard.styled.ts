@@ -8,8 +8,8 @@ export const TaskWrapper = styled.div`
   flex-direction: column;
   position: relative;
   gap: 8px;
-  background: linear-gradient(145deg, #202124, #2a2b2e);
-  border: 1px solid #3a3b3c;
+  background: ${(props) => props.theme.bgGradient};
+  border: ${(props) => props.theme.borderCommon};
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);

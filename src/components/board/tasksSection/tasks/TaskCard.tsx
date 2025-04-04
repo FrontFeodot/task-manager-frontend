@@ -1,4 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 import ProgressBar from '@components/progressBar/ProgressBar';
 
@@ -6,9 +8,6 @@ import { ITask, ITaskStatus } from '@common/interfaces/ITask';
 import { getPriorityIcon } from '@common/helpers/taskHelper';
 
 import * as S from './TaskCard.styled';
-import { SyntheticEvent } from 'react';
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 
 const TaskCard = ({
   title,
@@ -33,7 +32,7 @@ const TaskCard = ({
     data: { sortable: { containerId: columnId } },
   });
 
-  const handleOpenTask = (event: SyntheticEvent) => {
+  const handleOpenTask = () => {
     newSearchParams.set('taskId', String(taskId));
     setSearchParams(newSearchParams);
   };
@@ -49,7 +48,7 @@ const TaskCard = ({
       style={style}
       {...attributes}
       {...listeners}
-      onClick={(event: SyntheticEvent): void => handleOpenTask(event)}
+      onClick={(): void => handleOpenTask()}
     >
       <S.TaskTitle>{title}</S.TaskTitle>
       <S.PriorityIconWrapper>

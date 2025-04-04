@@ -5,10 +5,10 @@ export enum IApiMethod {
   DELETE = 'delete',
 }
 
-export interface IApiHandler {
+export interface IApiHandler<Req> {
   method: IApiMethod;
   url: ApiCalls;
-  payload?: Record<string, any>;
+  payload?: Req;
   withAuth?: boolean;
 }
 

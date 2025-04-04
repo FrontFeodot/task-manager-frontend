@@ -7,7 +7,7 @@ export const EmptyLayoutWrapper = styled.div`
   width: 100%;
   height: 100%;
 
-  background: linear-gradient(145deg, #2a2b2e, #202124);
+  background: ${(props) => props.theme.bgGradient};
   text-transform: uppercase;
 `;
 

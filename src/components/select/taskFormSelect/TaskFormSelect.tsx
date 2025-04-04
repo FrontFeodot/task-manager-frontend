@@ -1,10 +1,11 @@
-import { IStorySelect } from './TaskFormSelect.types';
-import * as S from './TaskFormSelect.styled';
 import { SyntheticEvent, useEffect, useRef, useState } from 'react';
-import CustomSelect from '../Select';
-import { getStorySchema } from '@common/utils/tasdDetailsConfig';
+import upperFirst from 'lodash/upperFirst';
+
 import useOutsideClick from '@common/hooks/useOutSideClick';
-import { upperFirst } from 'lodash';
+
+import * as S from './TaskFormSelect.styled';
+import { IStorySelect } from './TaskFormSelect.types';
+import CustomSelect from '../Select'; //
 
 const TaskFormSelect = ({
   name,

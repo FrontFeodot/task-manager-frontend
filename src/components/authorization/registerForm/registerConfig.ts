@@ -1,11 +1,11 @@
-import { UseFormGetValues, UseFormRegister } from 'react-hook-form';
+import { UseFormClearErrors, UseFormGetValues, UseFormRegister } from 'react-hook-form';
 
-import { IPostRegister } from 'common/interfaces/IAuth';
-import { emailRegex, passwordRegex } from 'common/utils/regex';
+import { IPostRegister } from '@common/interfaces/IAuth';
+import { emailRegex, passwordRegex } from '@common/utils/regex';
 
 export const getEmailConfig = (
   register: UseFormRegister<IPostRegister>,
-  clearErrors: any /* , onChange: (e: React.FormEvent<HTMLInputElement>) => void */
+  clearErrors: UseFormClearErrors<IPostRegister>
 ) => {
   return register('email', {
     required: 'Email is required',
@@ -27,7 +27,7 @@ export const getEmailConfig = (
   });
 };
 export const getPasswordConfig = (
-  register: UseFormRegister<IPostRegister> /* , onChange: (e: React.FormEvent<HTMLInputElement>) => void */
+  register: UseFormRegister<IPostRegister>
 ) => {
   return register('password', {
     required: 'Password is required',
@@ -46,7 +46,7 @@ export const getPasswordConfig = (
 };
 export const getConfirmPasswordConfig = (
   register: UseFormRegister<IPostRegister>,
-  getValues: UseFormGetValues<IPostRegister> /* , onChange: (e: React.FormEvent<HTMLInputElement>) => void */
+  getValues: UseFormGetValues<IPostRegister>
 ) => {
   return register('confirmPassword', {
     required: 'Please confirm your password',

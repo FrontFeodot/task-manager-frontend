@@ -7,7 +7,7 @@ export const TasksSectionWrapper = styled.div``;
 export const TaskSection = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #202124;
+  background-color: ${(props) => props.theme.bgTertiary};
   gap: 16px;
   min-height: 1px;
 `;

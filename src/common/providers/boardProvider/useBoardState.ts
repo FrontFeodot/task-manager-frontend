@@ -3,12 +3,7 @@ import { create } from 'zustand';
 import defaultState from './state';
 import { IBoard, IBoardState, IOpenedEditor } from './types';
 
-export const useBoardState = create<IBoardState>(() => ({
-  boardList: null,
-  loading: true,
-  currentBoardTitle: null,
-  openedEditor: null,
-}));
+export const useBoardState = create<IBoardState>(() => defaultState);
 
 export const setBoardsList = (boardList: Record<string, IBoard>): void =>
   useBoardState.setState(() => ({
