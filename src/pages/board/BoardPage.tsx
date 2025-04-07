@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import Board from '@components/board/Board';
+import BoardWrapper from '@components/board/BoardWrapper';
 import BoardNav from '@components/boardNav/BoardNav';
 
 import { getBoards } from '@common/api/boardApi';
@@ -25,7 +25,10 @@ const BoardPage = (): JSX.Element => {
     <S.Wrapper>
       <BoardNav boardList={boardList} />
 
-      <Board boardData={boardList?.[selectedBoardName]} loading={loading} />
+      <BoardWrapper
+        boardData={boardList?.[selectedBoardName]}
+        loading={loading}
+      />
     </S.Wrapper>
   );
 };

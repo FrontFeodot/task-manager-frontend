@@ -1,4 +1,8 @@
-import { UseFormClearErrors, UseFormGetValues, UseFormRegister } from 'react-hook-form';
+import {
+  UseFormClearErrors,
+  UseFormGetValues,
+  UseFormRegister,
+} from 'react-hook-form';
 
 import { IPostRegister } from '@common/interfaces/IAuth';
 import { emailRegex, passwordRegex } from '@common/utils/regex';
@@ -26,9 +30,7 @@ export const getEmailConfig = (
     },
   });
 };
-export const getPasswordConfig = (
-  register: UseFormRegister<IPostRegister>
-) => {
+export const getPasswordConfig = (register: UseFormRegister<IPostRegister>) => {
   return register('password', {
     required: 'Password is required',
     pattern: {

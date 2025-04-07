@@ -9,6 +9,8 @@ export const Wrapper = styled.div`
 
   width: 100%;
   height: fit-content;
+  min-height: 100%;
+
   padding-bottom: 80px;
   background: linear-gradient(315deg, #000000 15%, #9b51e0 135%);
 `;

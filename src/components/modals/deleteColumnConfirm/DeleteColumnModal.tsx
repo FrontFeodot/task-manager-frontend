@@ -13,9 +13,7 @@ import {
   useAppState,
 } from '@common/providers/appProvider/useAppState';
 
-import {
-  getBoardById,
-} from '@common/helpers/boardHelper';
+import { getBoardById } from '@common/helpers/boardHelper';
 import { IBoard } from '@common/providers/boardProvider/types';
 import { deleteColumnHelper, getColumn } from '@common/helpers/columnHelper';
 import { getBoards } from '@common/api/boardApi';
@@ -87,7 +85,7 @@ const DeleteColumnModal = (): JSX.Element => {
         getBoards();
         closeModal();
       } catch (err) {
-        return err
+        return err;
       }
     }
   };

@@ -12,11 +12,11 @@ import {
   setUserLoading,
 } from '@common/providers/userProvider/useUserState';
 import { IPostLogin } from '@common/interfaces/IAuth';
-import {
-  resetBoardList,
-} from '@common/providers/boardProvider/useBoardState';
+import { resetBoardList } from '@common/providers/boardProvider/useBoardState';
 
-export const postLogin = async (payload: IPostLogin): Promise<ICustomResponse | void> => {
+export const postLogin = async (
+  payload: IPostLogin
+): Promise<ICustomResponse | void> => {
   try {
     setUserLoading(true);
     const response = await apiHandler<Record<string, string>, IPostLogin>({
@@ -47,7 +47,10 @@ export const getProtected = async (): Promise<void> => {
   const token = Cookies.get(AUTH_TOKEN);
   if (token) {
     try {
-      const response = await apiHandler<Record<string, string>, {token: string}>({
+      const response = await apiHandler<
+        Record<string, string>,
+        { token: string }
+      >({
         method: IApiMethod.POST,
         url: ApiCalls.PROTECTED,
         payload: {
@@ -64,7 +67,7 @@ export const getProtected = async (): Promise<void> => {
     } catch {
       logout();
       setUserLoading(false);
-      return
+      return;
     }
   }
 };

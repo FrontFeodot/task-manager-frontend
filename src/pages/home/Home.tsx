@@ -28,19 +28,22 @@ const Home = (): JSX.Element => {
         <S.DescriptionText>
           You can use default layout with weekly planer:
         </S.DescriptionText>
-        <S.ImageWrapper src="/images/boardExample.png" />
+        <S.ImageWrapper src="/images/boardExample.png" alt="weekly_planer" />
       </S.DescriptionWrapper>
       <S.DescriptionWrapper>
         <S.DescriptionText>Or just create you own workspace:</S.DescriptionText>
-        <S.ImageWrapper src="/images/customBoardExample.png" />
+        <S.ImageWrapper
+          src="/images/customBoardExample.png"
+          alt="my_workspace"
+        />
       </S.DescriptionWrapper>
       {!isLoggedIn ? (
         <S.DescriptionWrapper>
           <S.DescriptionText>
-            Just try! Complete a simple{' '}
+            Just try! Complete a simple
             <S.RegisterLink onClick={clickHandler} $isLoggedIn={isLoggedIn}>
               registration
-            </S.RegisterLink>{' '}
+            </S.RegisterLink>
             and start manage your tasks!
           </S.DescriptionText>
         </S.DescriptionWrapper>

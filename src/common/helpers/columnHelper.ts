@@ -8,10 +8,7 @@ import { ICustomResponse } from '@common/interfaces/IApiHandler';
 import { openModal } from '@common/providers/appProvider/useAppState';
 import { IModal } from '@common/providers/appProvider/types';
 
-import {
-  getBoardById,
-  getCurrentBoardTitle,
-} from './boardHelper';
+import { getBoardById, getCurrentBoardTitle } from './boardHelper';
 import { getLastOrderByType, getTasksForColumn } from './taskHelper';
 
 export const getColumns = (): IColumn[] | undefined => {

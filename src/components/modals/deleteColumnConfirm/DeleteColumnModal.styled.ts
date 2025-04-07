@@ -2,11 +2,7 @@ import styled from 'styled-components';
 
 import { Text } from '@components/text/TextCommon.styled';
 
-import {
-  DESKTOP,
-  MOBILE,
-  TABLET,
-} from '@common/utils/mediaHelper';
+import { DESKTOP, MOBILE, TABLET } from '@common/utils/mediaHelper';
 
 export const ModalWrapper = styled.div`
   ${(props) => props.theme.flexbox};

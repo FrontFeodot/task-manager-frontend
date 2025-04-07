@@ -12,7 +12,10 @@ export const updateTaskOrder = async (
   tasksToUpdate: IUpdateTaskOrder[]
 ): Promise<ICustomResponse<IBoardList>> => {
   try {
-    const response = await apiHandler<IBoardList, {tasksToUpdate: IUpdateTaskOrder[]}>({
+    const response = await apiHandler<
+      IBoardList,
+      { tasksToUpdate: IUpdateTaskOrder[] }
+    >({
       method: IApiMethod.PUT,
       url: ApiCalls.UPDATE_TASKS_ORDER,
       payload: { tasksToUpdate },

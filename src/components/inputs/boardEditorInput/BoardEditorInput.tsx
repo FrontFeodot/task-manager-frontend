@@ -92,7 +92,7 @@ const BoardEditorInput = ({
     if (columnId && boardId) {
       const response = await deleteColumnHelper({ columnId, boardId });
       if (response && response.isError) {
-        setError(response.message)
+        setError(response.message);
       }
     }
   };
