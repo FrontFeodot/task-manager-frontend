@@ -49,6 +49,7 @@ const BoardEditor = ({
     }
     if (isBoardUpdate && boardId) {
       const response = await updateBoardTitle({ boardId, title: fieldValue });
+      setCurrentBoardAction(fieldValue);
       return response;
     }
 
