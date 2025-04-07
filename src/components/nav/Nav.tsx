@@ -20,6 +20,7 @@ const NavMenu = (): JSX.Element => {
     if (!isLoggedIn) {
       return navigate('/login');
     }
+    navigate('/');
     return logout();
   };
 
@@ -34,9 +35,9 @@ const NavMenu = (): JSX.Element => {
             <S.NavItem>
               <S.NavItemName to="/board">Board</S.NavItemName>
             </S.NavItem>
-            <S.NavItem>
+            {/*             <S.NavItem>
               <S.NavItemName to="/profile">Profile</S.NavItemName>
-            </S.NavItem>
+            </S.NavItem> */}
           </>
         ) : null}
       </S.NavItemsWrapper>

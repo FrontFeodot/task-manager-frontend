@@ -5,14 +5,11 @@ import ModalManager from '@components/modals/modalManager/ModalManager';
 
 import AppRouter from '@common/routes/Routes';
 import initialize from '@common/helpers/initialize';
-import useAppParams from '@common/hooks/useAppParams';
 
 import * as S from './App.styled';
 import './App.css';
 
 const App = (): JSX.Element => {
-  useAppParams();
-
   useEffect(() => {
     initialize();
   }, []);

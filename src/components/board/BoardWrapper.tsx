@@ -10,11 +10,14 @@ import { IBoard, IColumn } from '@common/providers/boardProvider/types';
 
 import { IBoardProps } from './BoardWrapper.types';
 import BoardComponent from './boardComponent/BoardComponent';
+import useAppParams from '@common/hooks/useAppParams';
 
 const BoardWrapper = ({ boardData, loading }: IBoardProps): JSX.Element => {
   const [virtualBoard, setVirtualBoard] = useState<IBoard | null | undefined>(
     boardData
   );
+
+  useAppParams();
 
   useEffect(() => {
     setVirtualBoard(boardData || null);

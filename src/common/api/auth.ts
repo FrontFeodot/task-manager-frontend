@@ -43,32 +43,33 @@ export const postLogin = async (
 };
 
 export const getProtected = async (): Promise<void> => {
-  setUserLoading(true);
   const token = Cookies.get(AUTH_TOKEN);
-  if (token) {
-    try {
-      const response = await apiHandler<
-        Record<string, string>,
-        { token: string }
-      >({
-        method: IApiMethod.POST,
-        url: ApiCalls.PROTECTED,
-        payload: {
-          token,
-        },
-      });
-      if (response instanceof Error || response.isError) {
-        throw response;
-      }
-      if (response.isSuccess) {
-        setLoginUser(true);
-        setUserLoading(false);
-      }
-    } catch {
-      logout();
-      setUserLoading(false);
-      return;
+
+  if (!token) {
+    return setUserLoading(false);
+  }
+  try {
+    const response = await apiHandler<
+      Record<string, string>,
+      { token: string }
+    >({
+      method: IApiMethod.POST,
+      url: ApiCalls.PROTECTED,
+      payload: {
+        token,
+      },
+    });
+    if (response instanceof Error || response.isError) {
+      throw response;
     }
+    if (response.isSuccess) {
+      setLoginUser(true);
+      setUserLoading(false);
+    }
+  } catch {
+    logout();
+    setUserLoading(false);
+    return;
   }
 };
 

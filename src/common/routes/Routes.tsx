@@ -10,21 +10,19 @@ import { AUTH_TOKEN } from '@common/utils/cookies';
 
 const AppRouter = () => {
   const isLoggedIn =
-    useUserState((s) => s.isLoggedIn) || Cookies.get(AUTH_TOKEN);
+    useUserState((s) => s.isLoggedIn) || !!Cookies.get(AUTH_TOKEN);
   const userLoading = useUserState((s) => s.loading);
 
   return (
     <Routes>
-      {map(userRoutes, ({ path, element }) => {
-        if (!isLoggedIn) {
-          return null;
-        }
-        if (isLoggedIn && userLoading) {
-          return <Route path={path} element={<Loader />} key={path} />;
-        }
-
-        return <Route path={path} element={element} key={path} />;
-      })}
+      {isLoggedIn
+        ? map(userRoutes, ({ path, element }) => {
+            if (userLoading) {
+              return <Route path={path} element={<Loader />} key={path} />;
+            }
+            return <Route path={path} element={element} key={path} />;
+          })
+        : null}
       {map(commonRoutes, ({ path, element }) => {
         return <Route path={path} element={element} key={path} />;
       })}
