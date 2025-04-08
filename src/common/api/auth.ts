@@ -16,7 +16,7 @@ import { resetBoardList } from '@common/providers/boardProvider/useBoardState';
 
 export const postLogin = async (
   payload: IPostLogin
-): Promise<ICustomResponse | void> => {
+): Promise<ICustomResponse<Record<string, string>>> => {
   try {
     setUserLoading(true);
     const response = await apiHandler<Record<string, string>, IPostLogin>({
@@ -26,9 +26,8 @@ export const postLogin = async (
     });
 
     if (
-      response.isError ||
-      !response?.payload?.token ||
-      response instanceof Error
+      response?.isError ||
+      !response?.payload?.token
     ) {
       throw response;
     }
@@ -36,9 +35,10 @@ export const postLogin = async (
       expires: 7,
     });
     setUserLoading(false);
+    return response as ICustomResponse<Record<string, string>>
   } catch (err) {
     setUserLoading(false);
-    return err as ICustomResponse;
+    return err as ICustomResponse<Record<string, string>>;
   }
 };
 

@@ -33,7 +33,7 @@ const apiHandler = async <Res, Req = undefined>({
 
     return data as ICustomResponse<Res>;
   } catch (err) {
-    if (err instanceof AxiosError) {
+    if (err instanceof AxiosError && err?.response?.data?.isError) {
       console.error(err);
       return err.response?.data;
     }

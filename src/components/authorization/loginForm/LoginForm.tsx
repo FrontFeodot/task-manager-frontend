@@ -46,8 +46,8 @@ const LoginForm = (): JSX.Element => {
   const onSubmit = async (data: IPostLogin) => {
     setError(null);
     const response = await postLogin(data);
-    if (response?.isError) {
-      return setError(response.message);
+    if (!response?.isSuccess) {
+      return setError(response?.message || 'Something went wrong');
     }
     setLoginUser(true);
   };
