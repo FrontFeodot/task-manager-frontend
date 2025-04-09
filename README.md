@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository contains the frontend part of the Task Manager project. The application allows users to manage tasks efficiently with features like login, registration, and task boards. The frontend is built using React and styled-components, with support for a dark theme.
+This repository contains the frontend part of the Task Manager project. The application built using React and bundled with Vite for fast and efficient development. It features a dynamic and responsive UI where users can create and edit boards, columns, and tasks. The interface is enriched with advanced drag-and-drop functionality using dnd-kit, ensuring an intuitive user experience. State management is handled with Zustand, and Styled Components are used for consistent, modular styling across the application. Additionally, secure authentication mechanisms are integrated to manage user sessions effectively.
 
 ### Features
 
