@@ -12,9 +12,16 @@ const AuthInput = ({
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePassword = () => setShowPassword(!showPassword);
+
+  const passwordType = showPassword ? 'text' : 'password';
+
   return (
     <S.Wrapper>
-      <S.TextInput type={type} {...config} {...inputProps} />
+      <S.TextInput
+        type={type === 'password' ? passwordType : type}
+        {...config}
+        {...inputProps}
+      />
       {type === 'password' && (
         <S.ToggleIcon onClick={togglePassword}>
           {showPassword ? (

@@ -25,17 +25,14 @@ export const postLogin = async (
       payload,
     });
 
-    if (
-      response?.isError ||
-      !response?.payload?.token
-    ) {
+    if (response?.isError || !response?.payload?.token) {
       throw response;
     }
     Cookies.set(AUTH_TOKEN, response.payload.token, {
       expires: 7,
     });
     setUserLoading(false);
-    return response as ICustomResponse<Record<string, string>>
+    return response as ICustomResponse<Record<string, string>>;
   } catch (err) {
     setUserLoading(false);
     return err as ICustomResponse<Record<string, string>>;
