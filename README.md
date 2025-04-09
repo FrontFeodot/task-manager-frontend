@@ -6,35 +6,37 @@ This repository contains the frontend part of the Task Manager project. The appl
 
 ### Features
 
-Login and Registration: Switchable tabs to log in or create an account.
+Dynamic UI: Create and edit boards, columns, and tasks with a modern, responsive design.
 
-Dark Theme: Consistent dark mode design with customizable styles.
+Intuitive Drag and Drop: Enhanced user experience through seamless drag-and-drop functionality.
 
-Task Management: Interact with task boards (under development).
+State Management & Styling: Efficient state control with Zustand paired with modular styling via Styled Components.
+
+Authentication: Secure user authentication integrated for controlled access.
 
 ### Tech Stack
 
-React: For building the user interface.
+React
 
-Styled-components: For dynamic and theme-based styling.
+Vite
 
-Axios: For making HTTP requests to the backend.
+Zustand
 
-React Router: For page navigation.
+Styled Components
+
+dnd-kit (for drag and drop)
 
 #### Installation
 
-Node.js (v16 or higher recommended)
+Node.js (v20 or higher recommended)
 
 Clone the repository:
 
-git clone https://github.com/yourusername/task-manager-frontend.git
+git clone https://github.com/FrontFeodot/task-manager-frontend.git
 cd task-manager-frontend
 
 Install dependencies:
 
 npm install
 
-Create a .env file in the root directory and add the backend API URL:
-
-REACT_APP_API_URL=http://localhost:4000
+npm start
