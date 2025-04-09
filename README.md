@@ -40,3 +40,5 @@ Install dependencies:
 npm install
 
 npm start
+
+The application is available at this link: https://frontfeodot-task-manager.netlify.app
