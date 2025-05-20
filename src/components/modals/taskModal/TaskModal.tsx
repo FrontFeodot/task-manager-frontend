@@ -34,7 +34,6 @@ const TaskModal = (): JSX.Element => {
     closeTaskModal(setSearchParams);
   };
 
-  //debugger
   useEffect(() => {
     return () => {
       if (boardList) {

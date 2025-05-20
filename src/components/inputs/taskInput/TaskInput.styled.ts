@@ -7,7 +7,8 @@ export const TaskInputContainer = styled.div<{ $isTitleView: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: ${({ $isTitleView }) => ($isTitleView ? 'auto' : 'auto')};
+  height: ${({ $isTitleView }) => ($isTitleView ? 'auto' : '100%')};
+  overflow-x: ${({ $isTitleView }) => ($isTitleView ? 'initial' : 'auto')};
 `;
 
 export const Label = styled(Text)`
@@ -80,7 +81,7 @@ export const StyledTextArea = styled.textarea`
   padding: 8px;
 
   border-radius: 8px;
-  height: 190px;
+  height: 100%;
 
   background-color: ${(props) => props.theme.inputBg};
   border: ${(props) => props.theme.borderCommon};

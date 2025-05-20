@@ -111,45 +111,47 @@ const TaskComponent = ({
           watch={watch}
         />
       </S.TopLeft>
-      <S.TopRight>
-        <TaskFormSelect
-          title={upperFirst(watch('column'))}
-          items={columnList}
-          name="column"
-          label={'Column'}
-          defaultVal={watch('column')}
-          register={register}
-          setValue={setValue}
-        />
-        <TaskFormSelect
-          title={upperFirst(watch('type'))}
-          items={taskTypesSchema}
-          name="type"
-          label={'Type'}
-          defaultVal={watch('type')}
-          register={register}
-          setValue={setValue}
-        />
-        <TaskFormSelect
-          title={upperFirst(watch('status'))}
-          items={taskStatusSchema}
-          name="status"
-          label={'status'}
-          defaultVal={watch('status')}
-          register={register}
-          setValue={setValue}
-        />
-        <TaskFormSelect
-          title={upperFirst(watch('priority'))}
-          items={taskPrioritySchema}
-          name="priority"
-          label={'Priority'}
-          defaultVal={watch('priority')}
-          register={register}
-          setValue={setValue}
-        />
-      </S.TopRight>
-      <S.Bottom>
+      <S.TopRightScrollableContainer>
+        <S.TopRight>
+          <TaskFormSelect
+            title={upperFirst(watch('column'))}
+            items={columnList}
+            name="column"
+            label={'Column'}
+            defaultVal={watch('column')}
+            register={register}
+            setValue={setValue}
+          />
+          <TaskFormSelect
+            title={upperFirst(watch('type'))}
+            items={taskTypesSchema}
+            name="type"
+            label={'Type'}
+            defaultVal={watch('type')}
+            register={register}
+            setValue={setValue}
+          />
+          <TaskFormSelect
+            title={upperFirst(watch('status'))}
+            items={taskStatusSchema}
+            name="status"
+            label={'status'}
+            defaultVal={watch('status')}
+            register={register}
+            setValue={setValue}
+          />
+          <TaskFormSelect
+            title={upperFirst(watch('priority'))}
+            items={taskPrioritySchema}
+            name="priority"
+            label={'Priority'}
+            defaultVal={watch('priority')}
+            register={register}
+            setValue={setValue}
+          />
+        </S.TopRight>
+      </S.TopRightScrollableContainer>
+      <S.Bottom className="task-buttons-section">
         <S.ButtonWrapper>
           {isFormChanged ? <StyledButton type="submit" label="save" /> : null}
         </S.ButtonWrapper>
