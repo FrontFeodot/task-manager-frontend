@@ -1,70 +1,33 @@
-import { SyntheticEvent, useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import upperFirst from 'lodash/upperFirst';
-
-import useOutsideClick from '@common/hooks/useOutSideClick';
 
 import * as S from './TaskFormSelect.styled';
 import { IStorySelect } from './TaskFormSelect.types';
-import CustomSelect from '../Select'; //
+import CustomSelect from '../Select';
 
 const TaskFormSelect = ({
   name,
   label,
   items,
-  title,
   defaultVal,
-  register,
   setValue,
 }: IStorySelect): JSX.Element => {
-  const selectRef = useRef<HTMLSelectElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const [isEditField, setIsEditField] = useState(false);
-  //const [fieldValue, setFieldValue] = useState(title);
-  const handleTitleClick = (event: SyntheticEvent) => {
-    if (isEditField) {
-      event.preventDefault();
-      event.stopPropagation();
-      return null;
-    }
-    setIsEditField(true);
-  };
-  useEffect(() => {
-    if (selectRef.current) {
-      selectRef.current?.focus();
-    }
-  }, [isEditField]);
+  const selectRef = useRef<HTMLDivElement>(null);
 
-  const handleOutsideClick = () => {
-    setIsEditField(false);
-  };
-
-  const handleChange = () => {
-    const selectValue = selectRef.current?.value;
-    setValue(name, selectValue);
-  };
-
-  useOutsideClick(wrapperRef, handleOutsideClick);
+  const firstItem = Array.isArray(items) ? items[0] : Object.keys(items)[0];
 
   return (
-    <S.TaskFormSelectWrapper
-      $isEditField={isEditField}
-      ref={wrapperRef}
-      onClick={handleTitleClick}
-    >
+    <S.TaskFormSelectWrapper ref={wrapperRef}>
       <S.TaskFormSelectLabel>{`${upperFirst(label)}:`}</S.TaskFormSelectLabel>
-      {isEditField ? (
-        <CustomSelect
-          name={name}
-          label={label}
-          items={items}
-          register={register}
-          selectRef={selectRef}
-          defaultVal={defaultVal}
-          handleChange={handleChange}
-        />
-      ) : (
-        <S.TaskFormSelectValue>{title}</S.TaskFormSelectValue>
-      )}
+      <CustomSelect
+        name={name}
+        label={label}
+        items={items}
+        selectRef={selectRef}
+        defaultVal={defaultVal ?? firstItem}
+        setValue={setValue}
+      />
     </S.TaskFormSelectWrapper>
   );
 };

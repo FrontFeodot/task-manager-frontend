@@ -1,72 +1,41 @@
 import { useRef, useState } from 'react';
 import upperFirst from 'lodash/upperFirst';
 
-import useOutsideClick from '@common/hooks/useOutSideClick';
-
 import * as S from './TaskInput.styled';
 import { ITaskInput } from './TaskInput.types';
 
 const TaskInput = ({
   fieldName,
   watch,
-  register,
   setValue,
   isCreateTask,
 }: ITaskInput): JSX.Element => {
-  const [isEditField, setIsEditField] = useState(isCreateTask);
-  const [fieldValue, setFieldValue] = useState(watch(fieldName) || '');
   const isTitleView = fieldName === 'title';
+  const inputRef = useRef<HTMLParagraphElement>(null);
+  const [isEditable, setIsEditable] = useState(isCreateTask);
 
-  const TitleComponent = isTitleView ? S.TitleValue : S.DescriptionValue;
-  const inputRef = useRef(null);
-
-  const toggleInput = () => {
-    if (fieldValue) {
-      setIsEditField(false);
-      setValue(fieldName, fieldValue);
+  const finalizeEdit = (): void => {
+    const text = inputRef.current?.innerText.trim() || '';
+    setValue(fieldName, text, { shouldValidate: true });
+    if (!isCreateTask) {
+      setIsEditable(false);
     }
   };
-
-  useOutsideClick<HTMLInputElement>(inputRef, toggleInput);
 
   return (
     <S.TaskInputContainer $isTitleView={isTitleView}>
       <S.Label>{upperFirst(fieldName)}</S.Label>
-      {isEditField ? (
-        <>
-          {isTitleView ? (
-            <S.StyledInput
-              value={fieldValue}
-              {...register(fieldName, {
-                required: 'Title is required',
-                onChange: (e) => {
-                  setFieldValue(e.target.value);
-                },
-              })}
-              ref={inputRef}
-              autoFocus={isEditField && !!fieldValue}
-            />
-          ) : (
-            <S.StyledTextArea
-              value={fieldValue}
-              {...register(fieldName, {
-                onChange: (e) => {
-                  setFieldValue(e.target.value);
-                },
-              })}
-              ref={inputRef}
-              autoFocus={isEditField && !!fieldValue}
-            />
-          )}
-        </>
-      ) : (
-        <TitleComponent
-          className={isTitleView ? 'input-title' : ''}
-          onClick={() => setIsEditField(true)}
-        >
-          {watch(fieldName)}
-        </TitleComponent>
-      )}
+      <S.EditableDiv
+        onMouseDown={() => setIsEditable(true)}
+        ref={inputRef}
+        contentEditable={isEditable}
+        suppressContentEditableWarning
+        onBlur={finalizeEdit}
+        $isTitleView={isTitleView}
+        $isCreateTask={isCreateTask}
+      >
+        {watch(fieldName)}
+      </S.EditableDiv>
     </S.TaskInputContainer>
   );
 };

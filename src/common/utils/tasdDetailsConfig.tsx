@@ -39,7 +39,7 @@ export const getStorySchema = (): ISchema => {
     stories,
     (acc: ISchema, story) => {
       const { taskId, title } = story;
-      assign(acc, { [taskId]: { value: title } }) as ISchema;
+      assign(acc, { [taskId]: { value: `№${taskId} | ${title}` } }) as ISchema;
       return acc;
     },
     { 0: { value: 'none' } } as ISchema

@@ -1,10 +1,10 @@
-import { SyntheticEvent, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import isArray from 'lodash/isArray';
 import keys from 'lodash/keys';
 import map from 'lodash/map';
 import upperFirst from 'lodash/upperFirst';
 
-import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';
+import useOutsideClick from '@common/hooks/useOutSideClick';
 
 import * as S from './Select.styled';
 import { ISelect } from './Select.types';
@@ -15,61 +15,81 @@ const CustomSelect = ({
   label,
   setValue,
   handleChange,
-  register,
   selectRef,
   isCreateTask,
   defaultVal,
   ...props
 }: ISelect): JSX.Element => {
-  const defaultValue =
-    defaultVal || (isArray(items) ? items[0] : keys(items)[0]);
+  const initialValue =
+    name === 'parentTask'
+      ? Number(defaultVal || (isArray(items) ? items[0] : keys(items)[0]))
+      : defaultVal || (isArray(items) ? items[0] : keys(items)[0]);
 
-  const isParentTask = name === 'parentTask';
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(initialValue);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (setValue) {
-      setValue(name, defaultValue);
+      setValue(name, selectedValue);
     }
-  }, []);
+  }, [selectedValue]);
+
+  const handleOptionClick = (value: string | number): void => {
+    setSelectedValue(value);
+    setIsOpen(false);
+
+    if (selectedValue === initialValue) return;
+
+    if (handleChange) {
+      handleChange(value);
+    }
+
+    if (setValue) {
+      setValue(name, value || undefined);
+    }
+  };
+
+  const toggleDropdown = () => setIsOpen((prev) => !prev);
+
+  useOutsideClick(wrapperRef, toggleDropdown);
 
   return (
-    <S.SelectWrapper>
+    <S.SelectWrapper $isCreateTask={isCreateTask}>
       {isCreateTask && <S.Label htmlFor={name}>{upperFirst(label)}</S.Label>}
-      <S.StyledSelect
+      <S.StyledSelectWrapper
         {...props}
-        defaultValue={defaultValue}
-        {...(register
-          ? {
-              ...register(name as keyof ITaskFormValues, {
-                onChange: (e: SyntheticEvent<HTMLSelectElement>) => {
-                  if (handleChange) {
-                    return handleChange(e);
-                  }
-                  if (setValue) {
-                    return setValue(name, e.currentTarget.value);
-                  }
-                },
-              }),
-            }
-          : {
-              onChange: handleChange,
-            })}
+        $isCreateTask={isCreateTask}
         ref={selectRef}
       >
-        {isArray(items)
-          ? map(items, (item) => (
-              <option key={item} value={item}>
-                {upperFirst(item)}
-              </option>
-            ))
-          : map(keys(items), (item) => (
-              <option key={item} value={item}>
-                {isParentTask && !!+item
-                  ? `№${item} | ${items[item].value}`
-                  : items[item].value}{' '}
-              </option>
-            ))}
-      </S.StyledSelect>
+        <S.SelectedOption onClick={toggleDropdown}>
+          {isArray(items)
+            ? upperFirst(String(selectedValue))
+            : items[selectedValue]?.value || upperFirst(String(selectedValue))}
+        </S.SelectedOption>
+        {isOpen && (
+          <S.OptionsContainer ref={wrapperRef}>
+            {isArray(items)
+              ? map(items, (item) => (
+                  <S.Option key={item} onClick={() => handleOptionClick(item)}>
+                    {upperFirst(item)}
+                  </S.Option>
+                ))
+              : map(keys(items), (item) => (
+                  <S.Option
+                    key={item}
+                    onClick={() =>
+                      handleOptionClick(
+                        name === 'parentTask' ? Number(item) : item
+                      )
+                    }
+                  >
+                    {items[item].value}
+                  </S.Option>
+                ))}
+          </S.OptionsContainer>
+        )}
+      </S.StyledSelectWrapper>
     </S.SelectWrapper>
   );
 };

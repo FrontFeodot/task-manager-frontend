@@ -23,8 +23,11 @@ import { getColumnTitles } from '@common/helpers/columnHelper';
 
 import * as S from './CreateTaskForm.styled';
 import { ITaskFormValues } from '../taskComponent/TaskComponent.types';
+import { useState } from 'react';
 
 const CreateTaskForm = (): JSX.Element => {
+  const [isError, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const [searchParams] = useSearchParams();
   const columns = getColumnTitles();
   const column = searchParams.get('columnName') || columns[0];
@@ -38,20 +41,25 @@ const CreateTaskForm = (): JSX.Element => {
     priority: ITaskPriority.LOW,
   };
 
-  const { register, handleSubmit, watch, setValue } = useForm<ITaskFormValues>({
+  const { handleSubmit, watch, setValue } = useForm<ITaskFormValues>({
     defaultValues,
   });
   const isStoryType = watch('type') === ITaskType.STORY;
   const storiesSchema = getStorySchema();
 
   const onSubmit = async (data: ITaskFormValues) => {
+    setLoading(true);
     const response = await createTaskHandler(data);
-    if (response?.message) {
+    setLoading(false);
+    if (response.isError) {
+      return setError(response.message);
+    }
+    if (response.isSuccess) {
       closeModal();
     }
   };
 
-  const formProps = { setValue, register, isCreateTask: true };
+  const formProps = { setValue, isCreateTask: true };
 
   return (
     <S.TaskForm onSubmit={handleSubmit(onSubmit)}>

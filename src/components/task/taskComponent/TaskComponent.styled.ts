@@ -1,4 +1,4 @@
-import { TaskFlexBoxView, TaskGridView } from '@common/utils/mediaHelper';
+import { TaskFlexBoxView } from '@common/utils/mediaHelper';
 import { TextInline } from '@components/text/TextCommon.styled';
 import styled from 'styled-components';
 
@@ -17,7 +17,6 @@ export const TaskFormWrapper = styled.form`
   box-sizing: border-box;
 
   @media (${TaskFlexBoxView}) {
-    flex-direction: column;
     overflow: auto;
     padding: 0;
   }
@@ -69,7 +68,7 @@ export const TopRightScrollableContainer = styled.div`
     width: 100%;
     height: auto;
   }
-`
+`;
 
 export const TopRight = styled(LayoutItem)`
   position: sticky;
@@ -97,6 +96,7 @@ export const TaskSummary = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
 
   border-bottom: ${(props) => props.theme.borderCommon};
@@ -118,9 +118,10 @@ export const TaskSummaryContent = styled(TextInline)`
 
 export const MetaInfo = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   height: 100%;
+  gap: 16px;
 `;
 
 export const MetaInfoRow = styled(TextInline)`

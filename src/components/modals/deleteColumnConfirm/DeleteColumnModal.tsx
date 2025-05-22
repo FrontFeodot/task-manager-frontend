@@ -53,11 +53,9 @@ const DeleteColumnModal = (): JSX.Element => {
       setInputValue(e.currentTarget.id);
     }
   };
-  const handleSelectChange = (e: SyntheticEvent): void => {
-    const { value } = e.currentTarget as HTMLSelectElement;
-
+  const handleSelectChange = (value?: string | number): void => {
     if (value) {
-      setSelectValue(value);
+      setSelectValue(value as string);
     }
   };
 

@@ -19,21 +19,17 @@ export const CreateTaskModal = styled.div`
 
   @media (${DESKTOP}) {
     width: 60%;
-    height: 80%;
     min-width: 1024px;
     max-height: 880px;
   }
 
   @media (${TABLET}) {
     width: 80%;
-    height: 80%;
     max-height: 880px;
   }
 
   @media (${MOBILE}) {
     width: 100%;
-    height: 100%;
-    max-height: 100%;
   }
 
   @media (${TABLET_DESKTOP}) {

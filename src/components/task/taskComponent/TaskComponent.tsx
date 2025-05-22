@@ -1,10 +1,10 @@
-import upperFirst from 'lodash/upperFirst';
-import { useForm } from 'react-hook-form';
 import pick from 'lodash/pick';
+import { useForm } from 'react-hook-form';
 
 import TaskInput from '@components/inputs/taskInput/TaskInput';
 import TaskFormSelect from '@components/select/taskFormSelect/TaskFormSelect';
 import StyledButton from '@components/styledButton/StyledButton';
+import { IButtonColor } from '@components/styledButton/StyledButton.types';
 
 import {
   getStorySchema,
@@ -17,10 +17,11 @@ import { getBoards } from '@common/api/boardApi';
 import { getColumn } from '@common/helpers/columnHelper';
 import { IColumn } from '@common/providers/boardProvider/types';
 import { getParentTask } from '@common/helpers/taskHelper';
+import { formatDate } from '@common/helpers/dateHelper';
+import { DATE_UP_TO_MINUTES } from '@common/utils/dateFormats';
 
 import * as S from './TaskComponent.styled';
 import { ITaskComponent, ITaskFormValues } from './TaskComponent.types';
-import { IButtonColor } from '@components/styledButton/StyledButton.types';
 
 const TaskComponent = ({
   task,
@@ -37,6 +38,7 @@ const TaskComponent = ({
     customFields,
     taskId,
     parentTask,
+    updatedAt,
   } = task;
 
   const defaultValues: ITaskFormValues = {
@@ -56,7 +58,6 @@ const TaskComponent = ({
   const storiesSchema = getStorySchema();
   const parentTaskItem = getParentTask(Number(watch('parentTask')));
   const currentValues = watch();
-  const parentTaskTitle = `${parentTaskItem?.taskId ? `№${parentTaskItem?.taskId} |` : ''} ${storiesSchema[parentTaskItem?.taskId || 0].value}`;
 
   const isFormChanged = Object.keys(defaultValues).some(
     (key) =>
@@ -85,18 +86,9 @@ const TaskComponent = ({
       <S.TopLeft>
         <S.TaskSummary>
           <S.TaskSummaryContent>{`Id: ${taskId};`}</S.TaskSummaryContent>
-          <S.TaskSummaryContent>Task details</S.TaskSummaryContent>
-          {watch('type') === 'task' ? (
-            <TaskFormSelect
-              title={parentTaskTitle}
-              items={storiesSchema}
-              name="parentTask"
-              label={'Story'}
-              defaultVal={parentTaskItem?.taskId || 0}
-              register={register}
-              setValue={setValue}
-            />
-          ) : null}
+          <S.MetaInfo>
+            <S.MetaInfoRow>{`Last updates at: ${formatDate(updatedAt, DATE_UP_TO_MINUTES)}`}</S.MetaInfoRow>
+          </S.MetaInfo>
         </S.TaskSummary>
         <TaskInput
           fieldName="title"
@@ -114,41 +106,42 @@ const TaskComponent = ({
       <S.TopRightScrollableContainer>
         <S.TopRight>
           <TaskFormSelect
-            title={upperFirst(watch('column'))}
             items={columnList}
             name="column"
             label={'Column'}
             defaultVal={watch('column')}
-            register={register}
             setValue={setValue}
           />
           <TaskFormSelect
-            title={upperFirst(watch('type'))}
-            items={taskTypesSchema}
-            name="type"
-            label={'Type'}
-            defaultVal={watch('type')}
-            register={register}
-            setValue={setValue}
-          />
-          <TaskFormSelect
-            title={upperFirst(watch('status'))}
             items={taskStatusSchema}
             name="status"
             label={'status'}
             defaultVal={watch('status')}
-            register={register}
             setValue={setValue}
           />
           <TaskFormSelect
-            title={upperFirst(watch('priority'))}
             items={taskPrioritySchema}
             name="priority"
             label={'Priority'}
             defaultVal={watch('priority')}
-            register={register}
             setValue={setValue}
           />
+          <TaskFormSelect
+            items={taskTypesSchema}
+            name="type"
+            label={'Type'}
+            defaultVal={watch('type')}
+            setValue={setValue}
+          />
+          {watch('type') === 'task' ? (
+            <TaskFormSelect
+              items={storiesSchema}
+              name="parentTask"
+              label={'Story'}
+              defaultVal={parentTaskItem?.taskId || 0}
+              setValue={setValue}
+            />
+          ) : null}
         </S.TopRight>
       </S.TopRightScrollableContainer>
       <S.Bottom className="task-buttons-section">

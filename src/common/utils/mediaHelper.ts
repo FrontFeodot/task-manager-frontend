@@ -6,6 +6,4 @@ export const DESKTOP = 'min-width: 1280px';
 
 export const TABLET_DESKTOP = 'min-width: 486px';
 
-export const TaskFlexBoxView = 'max-width: 768px';
-
-export const TaskGridView = 'min-width: 769px';
+export const TaskFlexBoxView = 'max-width: 1024px';
