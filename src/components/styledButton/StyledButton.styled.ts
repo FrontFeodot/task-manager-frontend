@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { darken, lighten } from 'polished';
 
+import { ITheme } from '@theme/theme';
+
 import { Text } from '@components/text/TextCommon.styled';
 
 import { IButtonColor } from './StyledButton.types';
@@ -11,7 +13,28 @@ export const Wrapper = styled.div`
   height: 100%;
 `;
 
-export const Button = styled.button<{ $buttonColor: IButtonColor }>`
+const getDisabledButtonStyles = (theme: ITheme) => `
+  background-color: ${theme.buttonDisabledBg};
+  color: ${theme.buttonDisabledText};
+  border-color: ${theme.buttonDisabledBorderColor};
+  cursor: auto;
+
+  &:hover {
+    background-color: ${theme.buttonDisabledBg};
+    color: ${theme.buttonDisabledText};
+    border-color: ${theme.buttonDisabledBorderColor};
+  }
+`;
+
+const getLoadingButtonStyles = () => `
+  padding: 0;
+`;
+
+export const Button = styled.button<{
+  $buttonColor: IButtonColor;
+  $isLoading: boolean;
+  disabled?: boolean;
+}>`
   ${(props) => props.theme.flexbox};
 
   width: 100%;
@@ -21,7 +44,7 @@ export const Button = styled.button<{ $buttonColor: IButtonColor }>`
   padding: 0 16px;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
   gap: 4px;
 
   ${({ theme }) => theme.shadow};
@@ -39,6 +62,9 @@ export const Button = styled.button<{ $buttonColor: IButtonColor }>`
     transform: scale(0.95);
     background: ${({ $buttonColor }) => darken(0.1, $buttonColor)};
   }
+
+  ${({ disabled, theme }) => (disabled ? getDisabledButtonStyles(theme) : '')}
+  ${({ $isLoading }) => ($isLoading ? getLoadingButtonStyles() : '')}
 `;
 
 export const ButtonLabel = styled(Text)`

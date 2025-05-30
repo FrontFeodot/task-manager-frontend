@@ -1,37 +1,38 @@
 import { useRef, useState } from 'react';
 import upperFirst from 'lodash/upperFirst';
 
-import * as S from './TaskInput.styled';
-import { ITaskInput } from './TaskInput.types';
+import * as S from './TaskTitle.styled';
+import { ITaskInput } from './TaskTitle.types';
 
-const TaskInput = ({
-  fieldName,
+const TaskTitle = ({
   watch,
   setValue,
   isCreateTask,
 }: ITaskInput): JSX.Element => {
-  const isTitleView = fieldName === 'title';
   const inputRef = useRef<HTMLParagraphElement>(null);
-  const [isEditable, setIsEditable] = useState(isCreateTask);
+  const [isEditable, setIsEditable] = useState(!!isCreateTask);
+  const fieldName = 'title';
 
   const finalizeEdit = (): void => {
-    const text = inputRef.current?.innerText.trim() || '';
-    setValue(fieldName, text, { shouldValidate: true });
+    const el = inputRef.current!;
+
+    const value = el.innerText.trim();
+
+    setValue(fieldName, value, { shouldValidate: true });
     if (!isCreateTask) {
       setIsEditable(false);
     }
   };
 
   return (
-    <S.TaskInputContainer $isTitleView={isTitleView}>
-      <S.Label>{upperFirst(fieldName)}</S.Label>
+    <S.TaskInputContainer>
+      <S.Label>{upperFirst(fieldName)} </S.Label>
       <S.EditableDiv
         onMouseDown={() => setIsEditable(true)}
         ref={inputRef}
         contentEditable={isEditable}
         suppressContentEditableWarning
         onBlur={finalizeEdit}
-        $isTitleView={isTitleView}
         $isCreateTask={isCreateTask}
       >
         {watch(fieldName)}
@@ -40,4 +41,4 @@ const TaskInput = ({
   );
 };
 
-export default TaskInput;
+export default TaskTitle;

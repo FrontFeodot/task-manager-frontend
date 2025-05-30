@@ -15,17 +15,17 @@ export const CreateTaskModal = styled.div`
 
   z-index: 101;
   background-color: ${(props) => props.theme.modalBg};
-  overflow: hidden;
+  overflow: auto;
 
   @media (${DESKTOP}) {
     width: 60%;
     min-width: 1024px;
-    max-height: 880px;
+    max-height: calc(100% - 142px);
   }
 
   @media (${TABLET}) {
     width: 80%;
-    max-height: 880px;
+    max-height: 100%;
   }
 
   @media (${MOBILE}) {

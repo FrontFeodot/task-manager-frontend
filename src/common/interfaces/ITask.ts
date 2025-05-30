@@ -1,5 +1,6 @@
 import { UniqueIdentifier } from '@dnd-kit/core';
 import { InputHTMLAttributes, SyntheticEvent } from 'react';
+import { RawDraftContentState } from 'react-draft-wysiwyg';
 import {
   FieldValues,
   UseFormRegister,
@@ -49,3 +50,7 @@ export interface IFormItem<T, TFieldValues extends FieldValues>
   watch?: UseFormWatch<TFieldValues>;
   handleChange?: (e: SyntheticEvent) => void;
 }
+
+export type IRawForCompare = Omit<RawDraftContentState, 'blocks'> & {
+  blocks: Array<Omit<RawDraftContentState['blocks'][0], 'key'>>;
+};

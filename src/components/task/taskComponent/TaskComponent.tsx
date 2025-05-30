@@ -1,10 +1,12 @@
 import pick from 'lodash/pick';
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 
-import TaskInput from '@components/inputs/taskInput/TaskInput';
+import TaskTitle from '@components/inputs/taskTitleInput/TaskTitle';
 import TaskFormSelect from '@components/select/taskFormSelect/TaskFormSelect';
 import StyledButton from '@components/styledButton/StyledButton';
 import { IButtonColor } from '@components/styledButton/StyledButton.types';
+import TaskDescriptionInput from '@components/inputs/taskDescription/TaskDescription';
 
 import {
   getStorySchema,
@@ -55,15 +57,19 @@ const TaskComponent = ({
   const { register, handleSubmit, watch, setValue } = useForm<ITaskFormValues>({
     defaultValues,
   });
+
+  const [isDescriptionChanged, setIsDescriptionChanged] = useState(false);
   const storiesSchema = getStorySchema();
   const parentTaskItem = getParentTask(Number(watch('parentTask')));
   const currentValues = watch();
 
-  const isFormChanged = Object.keys(defaultValues).some(
-    (key) =>
-      currentValues[key as keyof ITaskFormValues] !==
-      defaultValues[key as keyof ITaskFormValues]
-  );
+  const isFormChanged =
+    isDescriptionChanged ||
+    Object.keys(defaultValues).some(
+      (key) =>
+        currentValues[key as keyof ITaskFormValues] !==
+        defaultValues[key as keyof ITaskFormValues]
+    );
 
   const onSubmit = async (data: ITaskFormValues) => {
     const response = await updateTask(task, data);
@@ -90,17 +96,11 @@ const TaskComponent = ({
             <S.MetaInfoRow>{`Last updates at: ${formatDate(updatedAt, DATE_UP_TO_MINUTES)}`}</S.MetaInfoRow>
           </S.MetaInfo>
         </S.TaskSummary>
-        <TaskInput
-          fieldName="title"
+        <TaskTitle setValue={setValue} register={register} watch={watch} />
+        <TaskDescriptionInput
           setValue={setValue}
-          register={register}
           watch={watch}
-        />
-        <TaskInput
-          setValue={setValue}
-          fieldName="description"
-          register={register}
-          watch={watch}
+          setIsFormChanged={setIsDescriptionChanged}
         />
       </S.TopLeft>
       <S.TopRightScrollableContainer>

@@ -15,6 +15,9 @@ export default defineConfig({
       typescript: true,
     }),
   ],
+  define: {
+    global: 'window',
+  },
   resolve: {
     alias: {
       '@': '/src',

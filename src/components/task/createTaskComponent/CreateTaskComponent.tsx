@@ -1,10 +1,12 @@
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
+import { useState } from 'react';
 
-import TaskInput from '@components/inputs/taskInput/TaskInput';
 import CustomSelect from '@components/select/Select';
 import StyledButton from '@components/styledButton/StyledButton';
-
+import TaskTitle from '@components/inputs/taskTitleInput/TaskTitle';
+import TaskDescriptionInput from '@components/inputs/taskDescription/TaskDescription';
+import ErrorTooltip from '@components/error/ErrorTooltip.styled';
 import {
   ITaskPriority,
   ITaskStatus,
@@ -21,12 +23,11 @@ import { closeModal } from '@common/providers/appProvider/useAppState';
 import { createTaskHandler } from '@common/helpers/taskApiHelper';
 import { getColumnTitles } from '@common/helpers/columnHelper';
 
-import * as S from './CreateTaskForm.styled';
+import * as S from './CreateTaskComponent.styled';
 import { ITaskFormValues } from '../taskComponent/TaskComponent.types';
-import { useState } from 'react';
 
-const CreateTaskForm = (): JSX.Element => {
-  const [isError, setError] = useState('');
+const CreateTaskComponent = (): JSX.Element => {
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [searchParams] = useSearchParams();
   const columns = getColumnTitles();
@@ -48,9 +49,13 @@ const CreateTaskForm = (): JSX.Element => {
   const storiesSchema = getStorySchema();
 
   const onSubmit = async (data: ITaskFormValues) => {
+    if (!data.title) {
+      return setError('Title is required');
+    }
     setLoading(true);
     const response = await createTaskHandler(data);
     setLoading(false);
+
     if (response.isError) {
       return setError(response.message);
     }
@@ -64,10 +69,10 @@ const CreateTaskForm = (): JSX.Element => {
   return (
     <S.TaskForm onSubmit={handleSubmit(onSubmit)}>
       <S.FormItem>
-        <TaskInput {...formProps} watch={watch} fieldName="title" />
+        <TaskTitle {...formProps} watch={watch} />
       </S.FormItem>
-      <S.FormItem>
-        <TaskInput fieldName="description" watch={watch} {...formProps} />
+      <S.FormItem $isDescription>
+        <TaskDescriptionInput setValue={setValue} watch={watch} />
       </S.FormItem>
       <S.FormItem>
         <CustomSelect
@@ -112,12 +117,13 @@ const CreateTaskForm = (): JSX.Element => {
           {...formProps}
         />
       </S.FormItem>
+      {error ? <ErrorTooltip $isGlobal>{error}</ErrorTooltip> : null}
       <S.ButtonContainer>
-        <StyledButton label="Save" />
+        <StyledButton type="submit" label="Save" isLoading={loading} />
         <StyledButton label="Cancel" onClick={closeModal} />
       </S.ButtonContainer>
     </S.TaskForm>
   );
 };
 
-export default CreateTaskForm;
+export default CreateTaskComponent;

@@ -1,11 +1,15 @@
 import { useSearchParams } from 'react-router-dom';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import draftToHtml from 'draftjs-to-html';
 
 import ProgressBar from '@components/progressBar/ProgressBar';
 
 import { ITask, ITaskStatus } from '@common/interfaces/ITask';
-import { getPriorityIcon } from '@common/helpers/taskHelper';
+import {
+  getPriorityIcon,
+  getRawDescriptionContent,
+} from '@common/helpers/taskHelper';
 
 import * as S from './TaskCard.styled';
 
@@ -19,6 +23,9 @@ const TaskCard = ({
 }: ITask): JSX.Element => {
   const [_, setSearchParams] = useSearchParams();
   const newSearchParams = new URLSearchParams();
+
+  const descriptionRaw = getRawDescriptionContent(description || '');
+  const parsedDescription = descriptionRaw ? draftToHtml(descriptionRaw) : '';
 
   const {
     attributes,
@@ -54,9 +61,10 @@ const TaskCard = ({
       <S.PriorityIconWrapper>
         {getPriorityIcon(priority, 22)}
       </S.PriorityIconWrapper>
-      <S.TaskDescription>{description}</S.TaskDescription>
+      <S.TaskDescription
+        dangerouslySetInnerHTML={{ __html: parsedDescription }}
+      />
       <S.TaskBottomSection>
-        {/* здесь будут дочерние задачи */}
         <ProgressBar status={status} />
       </S.TaskBottomSection>
     </S.TaskWrapper>

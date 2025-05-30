@@ -16,9 +16,17 @@ export const TaskForm = styled.form`
   color: ${(props) => props.theme.textPrimary};
 `;
 
-export const FormItem = styled.div`
+export const FormItem = styled.div<{ $isDescription?: boolean }>`
   width: 100%;
   height: auto;
+  ${({ $isDescription }) => ($isDescription ? 'min-height: 250px' : '0')};
+
+  & .description-wrapper {
+    min-height: 250px;
+  }
+  & .description-editor {
+    min-height: 230px;
+  }
 `;
 
 export const Button = styled.button`
@@ -38,6 +46,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   gap: 16px;
   min-height: 36px;
+  margin-top: auto;
 
   & > div {
     height: auto;

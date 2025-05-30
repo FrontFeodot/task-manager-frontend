@@ -7,8 +7,10 @@ import {
 import filter from 'lodash/filter';
 import find from 'lodash/find';
 import maxBy from 'lodash/maxBy';
+import { RawDraftContentState } from 'draft-js';
 
 import {
+  IRawForCompare,
   ITask,
   ITaskPriority,
   ITaskStatus,
@@ -119,4 +121,35 @@ export const closeTaskModal = (setSearchParams: SetURLSearchParams): void => {
   const newSearchParams = new URLSearchParams();
   newSearchParams.delete('taskId');
   setSearchParams(newSearchParams);
+};
+
+export const getRawDescriptionContent = (
+  contentJSON: string
+): RawDraftContentState | void => {
+  try {
+    const raw = JSON.parse(contentJSON);
+    return raw;
+  } catch {
+    console.error(
+      'invalid JSON data in description editor, this field will be empty. Data: '
+    );
+    console.log(contentJSON);
+  }
+};
+
+export const prepareRawForCompare = (
+  raw: RawDraftContentState
+): IRawForCompare => ({
+  entityMap: raw.entityMap,
+  blocks: raw.blocks.map(({ key, ...rest }) => rest),
+});
+
+export const isDescriptionChanged = (
+  current: RawDraftContentState,
+  initial: RawDraftContentState
+) => {
+  const parsedInitial = prepareRawForCompare(initial);
+  const parsedCurrent = prepareRawForCompare(current);
+
+  return JSON.stringify(parsedInitial) !== JSON.stringify(parsedCurrent);
 };

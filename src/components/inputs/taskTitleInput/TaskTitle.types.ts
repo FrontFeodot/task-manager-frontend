@@ -4,7 +4,6 @@ import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 
 export interface ITaskInput
   extends IFormItem<HTMLInputElement, ITaskFormValues> {
-  fieldName: 'title' | 'description';
   isCreateTask?: boolean;
   setValue: UseFormSetValue<ITaskFormValues>;
   watch: UseFormWatch<ITaskFormValues>;

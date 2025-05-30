@@ -46,6 +46,7 @@ export const LayoutItem = styled.div`
 export const TopLeft = styled(LayoutItem)`
   width: calc(60% - 8px);
   min-height: calc(100% - 72px - 16px); // height of bottom section + gap
+  position: relative;
 
   .input-title {
     display: flex;

@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 import { Text } from '@components/text/TextCommon.styled';
 
-export const TaskInputContainer = styled.div<{ $isTitleView: boolean }>`
+export const TaskInputContainer = styled.div<{}>`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: ${({ $isTitleView }) => ($isTitleView ? 'auto' : '100%')};
-  overflow-x: ${({ $isTitleView }) => ($isTitleView ? 'initial' : 'auto')};
+  height: auto;
 `;
 
 export const Label = styled(Text)`
@@ -14,28 +13,18 @@ export const Label = styled(Text)`
   color: ${(props) => props.theme.textDisabled};
 `;
 
-export const TitleComponent = styled(Text)`
-  font-size: ${(props) => props.theme.fontXXL};
-  font-weight: bold;
-  cursor: pointer;
-  transition: color 0.2s;
-  word-break: break-word;
-`;
-
 export const EditableDiv = styled.div<{
-  $isTitleView: boolean;
   $isCreateTask?: boolean;
 }>`
   height: 100%;
   overflow: auto;
   background-color: ${(props) => props.theme.inputBg};
-  border: ${({ $isTitleView, $isCreateTask, theme }) =>
-    $isTitleView && !$isCreateTask ? 'none' : theme.borderCommon};
+  border: ${({ $isCreateTask, theme }) =>
+    !$isCreateTask ? 'none' : theme.borderCommon};
   color: ${(props) => props.theme.textPrimary};
   padding: 8px;
   border-radius: 8px;
-  font-size: ${({ theme, $isTitleView }) =>
-    $isTitleView ? theme.fontXXL : theme.fontMD};
+  font-size: ${({ theme }) => theme.fontXXL};
   word-wrap: break-word;
   white-space: pre-wrap;
   cursor: pointer;
@@ -51,7 +40,16 @@ export const EditableDiv = styled.div<{
     cursor: text;
   }
 
-  &:hover:not(:focus) {
-    color: ${(props) => props.theme.successColor};
+  &:hover:not(:focus),
+  &:hover:not(:focus) > * {
+    color: ${(props) => props.theme.successColor} !important;
+  }
+
+  & img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  & * {
+    padding: 0;
   }
 `;

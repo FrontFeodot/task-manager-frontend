@@ -28,12 +28,21 @@ export const TaskTitle = styled(Text)`
     font-size: ${(props) => props.theme.fontMD};
   }
 `;
-export const TaskDescription = styled(Text)`
+export const TaskDescription = styled.div`
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+
+  & p,
+  ul {
+    margin: 0;
+  }
+  & img {
+    width: 100% !important;
+    height: 100% !important;
+  }
 
   @media (${MOBILE}) {
     font-size: ${(props) => props.theme.fontSM};

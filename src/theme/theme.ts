@@ -20,6 +20,9 @@ export interface ITheme {
 
   buttonBg: string;
   buttonBorderColor: string;
+  buttonDisabledBg: string;
+  buttonDisabledBorderColor: string;
+  buttonDisabledText: string;
 
   textPrimary: string;
   textSecondary: string;
@@ -64,6 +67,9 @@ const theme: ITheme & IFontSize = {
 
   buttonBg: '#9B51E0',
   buttonBorderColor: '#9B51E0',
+  buttonDisabledBg: '#3a3b3c',
+  buttonDisabledBorderColor: '#3a3b3c',
+  buttonDisabledText: '#6f7275',
 
   textPrimary: '#F5F6F7',
   textSecondary: '#8ab4f8',

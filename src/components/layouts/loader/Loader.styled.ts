@@ -6,7 +6,7 @@ export const LoaderWrapper = styled.div<{
   $isRelative: boolean;
 }>`
   position: ${({ $isRelative }) => ($isRelative ? 'relative' : 'absolute')};
-  top: 60px;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
@@ -28,9 +28,9 @@ const spin = keyframes`
   to { transform: rotate(360deg); }
 `;
 
-export const LoaderSpinner = styled.div`
-  width: 80px;
-  height: 80px;
+export const LoaderSpinner = styled.div<{ $size: 'sm' | 'lg' }>`
+  width: ${({ $size }) => ($size === 'lg' ? 80 : 30)}px;
+  height: ${({ $size }) => ($size === 'lg' ? 80 : 30)}px;
   border: 4px solid ${({ theme }) => theme.bgTertiary};
   border-radius: 50%;
   border-top: 4px solid ${({ theme }) => theme.buttonBg};
