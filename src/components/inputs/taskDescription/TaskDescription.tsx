@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   EditorState,
   RawDraftContentState,
@@ -7,8 +7,7 @@ import {
 } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import isObject from 'lodash/isObject';
-import { IoMdCheckmark } from 'react-icons/io';
-import { MdOutlineClose } from 'react-icons/md';
+import { useTheme } from 'styled-components';
 
 import StyledButton from '@components/styledButton/StyledButton';
 import { IButtonColor } from '@components/styledButton/StyledButton.types';
@@ -17,6 +16,7 @@ import {
   getRawDescriptionContent,
   isDescriptionChanged,
 } from '@common/helpers/taskHelper';
+import Icon from '@common/icons/Icon';
 
 import * as S from './TaskDescription.styled';
 import { IEditorRef, ITaskDescription } from './TaskDescription.types';
@@ -24,6 +24,7 @@ import { IEditorRef, ITaskDescription } from './TaskDescription.types';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import useToolbarStyling from './hooks/useToolbarStyling';
+import { generateToolbarConfig, toolbarOptions } from './editorConfig';
 
 const TaskDescriptionInput = ({
   setValue,
@@ -32,14 +33,19 @@ const TaskDescriptionInput = ({
 }: ITaskDescription) => {
   const editorRef = useRef<IEditorRef | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const isCreateTask = !setIsFormChanged;
+  const { toolbarIcon } = useTheme();
 
   const initialRawRef = useRef<RawDraftContentState | null>(null);
 
   const [editorState, setEditorState] = useState<EditorState>();
   const [isConfirmModal, toggleConfirmModal] = useState(false);
 
+  const isCreateTask = !setIsFormChanged;
   const currentRaw = getRawDescriptionContent(watch('description') || '');
+  const toolbar = useMemo(
+    () => generateToolbarConfig(toolbarOptions, toolbarIcon),
+    []
+  );
 
   useToolbarStyling(containerRef);
 
@@ -112,30 +118,7 @@ const TaskDescriptionInput = ({
         wrapperClassName="description-wrapper"
         editorClassName="description-editor"
         toolbarClassName="description-toolbar"
-        toolbar={{
-          options: [
-            'inline',
-            'blockType',
-            'fontSize',
-            'list',
-            'colorPicker',
-            'link',
-            'emoji',
-            'image',
-            'remove',
-            'history',
-          ],
-          inline: {
-            options: [
-              'bold',
-              'italic',
-              'underline',
-              'strikethrough',
-              'superscript',
-              'subscript',
-            ],
-          },
-        }}
+        toolbar={toolbar}
         mention={{
           separator: ' ',
           trigger: '@',
@@ -155,12 +138,12 @@ const TaskDescriptionInput = ({
         <S.ChangedDataModal>
           <StyledButton
             buttonColor={IButtonColor.GREY}
-            Icon={<IoMdCheckmark fill="#F5F6F7" />}
+            Icon={<Icon name="checkmark" />}
             onClick={finalizeEdit}
           />
           <StyledButton
             buttonColor={IButtonColor.GREY}
-            Icon={<MdOutlineClose fill="#F5F6F7" />}
+            Icon={<Icon name="cross" />}
             onClick={setInitialData}
           />
         </S.ChangedDataModal>

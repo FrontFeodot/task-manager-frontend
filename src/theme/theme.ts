@@ -28,7 +28,10 @@ export interface ITheme {
   textSecondary: string;
   textDisabled: string;
   textButton: string;
+
   iconColor: string;
+  toolbarIcon: string;
+  toolbarBoxShadow: string;
 
   errorBg: string;
   errorText: string;
@@ -77,6 +80,8 @@ const theme: ITheme & IFontSize = {
   textButton: '#F5F6F7',
 
   iconColor: '#F5F6F7',
+  toolbarIcon: '#F5F6F7',
+  toolbarBoxShadow: '#9B51E0',
 
   link: '#09d3ac',
   errorBg: '#FF4D4F',

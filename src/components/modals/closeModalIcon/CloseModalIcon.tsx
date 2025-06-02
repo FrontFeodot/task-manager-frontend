@@ -1,15 +1,12 @@
-import { MdOutlineClose } from 'react-icons/md';
+import { closeModal } from '@common/providers/appProvider/useAppState';
+import Icon from '@common/icons/Icon';
 
 import * as S from './CloseModalIcon.styled';
-import { useTheme } from 'styled-components';
-import { closeModal } from '@common/providers/appProvider/useAppState';
 
 const CloseModalIcon = (): JSX.Element => {
-  const { textPrimary } = useTheme();
-
   return (
     <S.AccessibilityWrapper onClick={closeModal}>
-      <MdOutlineClose size={18} fill={textPrimary} />
+      <Icon name="cross" size={18} />
     </S.AccessibilityWrapper>
   );
 };

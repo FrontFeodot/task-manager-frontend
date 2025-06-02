@@ -44,6 +44,8 @@ export const TopSection = styled.div<{ $isExpanded: boolean }>`
   width: 100%;
   min-height: 36px;
   background-color: ${(props) => props.theme.bgTertiary};
+
+  color: ${({ theme }) => theme.iconColor};
 `;
 
 export const CloseEditorWrapper = styled.div<{
@@ -52,13 +54,14 @@ export const CloseEditorWrapper = styled.div<{
 }>`
   ${(props) => props.theme.flexbox};
 
-  cursor: pointer;
-  background-color: ${(props) => props.theme.bgTertiary};
-
   display: ${({ $isExpanded }) => ($isExpanded ? 'flex' : 'none')};
 
   width: ${({ $isOpenedEditor }) => ($isOpenedEditor ? '22px' : '0')};
   height: 30px;
+
+  cursor: pointer;
+  background-color: ${(props) => props.theme.bgTertiary};
+  color: ${({ theme }) => theme.textPrimary};
 `;
 
 export const ToggleNavViewWrapper = styled.div<{ $isExpanded: boolean }>`

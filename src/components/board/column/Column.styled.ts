@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { MdDragIndicator } from 'react-icons/md';
 
 import { Text } from '@components/text/TextCommon.styled';
 import { TABLET } from '@common/utils/mediaHelper';
+import Icon from '@common/icons/Icon';
 
 export const ColumnWrapper = styled.div`
   display: flex;
@@ -24,16 +24,17 @@ export const ColumnWrapper = styled.div`
 
 export const ColumnLabel = styled.div<{ $hasItems?: boolean }>`
   display: flex;
-  padding: 8px ${({ $hasItems }) => ($hasItems ? '8px' : '0')};
+  padding: 24px 0px 8px;
   align-items: center;
   justify-content: center;
+  height: auto;
 `;
 
 export const ColumnText = styled(Text)<{ $isCreateColumn?: boolean }>`
   font-size: ${(props) => props.theme.fontXL};
   color: ${(props) => props.theme.textSecondary};
 
-  text-align: ${({ $isCreateColumn }) => ($isCreateColumn ? 'center' : 'left')};
+  text-align: center;
   ${({ $isCreateColumn }) => ($isCreateColumn ? 'cursor: pointer' : '')};
 
   @media (${TABLET}) {
@@ -41,7 +42,7 @@ export const ColumnText = styled(Text)<{ $isCreateColumn?: boolean }>`
   }
 `;
 
-export const DnDAnchor = styled(MdDragIndicator)`
+export const DnDAnchor = styled(Icon)`
   position: absolute;
   align-self: flex-end;
   cursor: pointer;

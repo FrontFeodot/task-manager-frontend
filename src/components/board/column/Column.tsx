@@ -58,7 +58,12 @@ const Column = ({
     >
       {!!taskSection && column !== undefined ? (
         <>
-          <S.DnDAnchor fill={iconColor} {...attributes} {...listeners} />
+          <S.DnDAnchor
+            name="drag"
+            color={iconColor}
+            {...attributes}
+            {...listeners}
+          />
           <S.ColumnLabel $hasItems={!!taskSection.length}>
             <S.ColumnText>{toUpper(column.title)}</S.ColumnText>
           </S.ColumnLabel>

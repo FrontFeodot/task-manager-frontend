@@ -1,20 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-import { RiLogoutBoxLine } from 'react-icons/ri';
-import { RiLoginBoxLine } from 'react-icons/ri';
 
 import { useUserState } from '@common/providers/userProvider/useUserState';
 import StyledButton from '@components/styledButton/StyledButton';
 import { logout } from '@common/api/auth';
+import Icon from '@common/icons/Icon';
 
 import * as S from './Nav.styled';
-import { useTheme } from 'styled-components';
 
 const NavMenu = (): JSX.Element => {
   const isLoggedIn = useUserState((s) => s.isLoggedIn);
   const navigate = useNavigate();
-  const { textPrimary } = useTheme();
-
-  const ButtonIcon = isLoggedIn ? RiLogoutBoxLine : RiLoginBoxLine;
 
   const clickHandler = (): void => {
     if (!isLoggedIn) {
@@ -45,7 +40,7 @@ const NavMenu = (): JSX.Element => {
         <StyledButton
           label={isLoggedIn ? 'logout' : 'login'}
           onClick={clickHandler}
-          Icon={<ButtonIcon size={18} fill={textPrimary} />}
+          Icon={<Icon name={isLoggedIn ? 'logout' : 'login'} size={18} />}
           className="logout_button"
         />
       </S.ButtonWrapper>

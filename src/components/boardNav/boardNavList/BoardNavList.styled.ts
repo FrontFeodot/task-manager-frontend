@@ -50,7 +50,7 @@ export const ListItemLabel = styled(Text)<{ $isExpanded: boolean }>`
     ${({ $isExpanded }) => ($isExpanded ? 'padding-right: 24px;' : '')};
   }
 
-  &:has(.create-board-button) {
+  &:has(.plus) {
     ${(props) => props.theme.flexbox};
   }
 `;

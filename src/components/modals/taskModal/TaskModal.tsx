@@ -14,6 +14,7 @@ import { getColumnTitles } from '@common/helpers/columnHelper';
 import { closeTaskModal } from '@common/helpers/taskHelper';
 
 import * as S from './TaskModal.styled';
+import Loader from '@components/layouts/loader/Loader';
 
 const TaskModal = (): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
@@ -21,6 +22,7 @@ const TaskModal = (): JSX.Element => {
   const taskId = Number(searchParams.get('taskId'));
   const selectedBoardName = getCurrentBoardTitle();
   const boardList = useBoardState((s) => s.boardList);
+  const loading = useBoardState((s) => s.loading);
   const selectedBoard = boardList?.[selectedBoardName || ''];
 
   const columnListTitles = getColumnTitles();
@@ -43,6 +45,10 @@ const TaskModal = (): JSX.Element => {
   }, []);
 
   useOutSideClick(ref, handleClose);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <S.TaskModalWrapper ref={ref}>

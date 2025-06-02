@@ -8,10 +8,9 @@ export const AccessibilityWrapper = styled.div`
   ${(props) => props.theme.flexbox};
   width: 20px;
   cursor: pointer;
+  color: ${(props) => props.theme.iconColor};
 
   &:hover {
-    & svg {
-      fill: ${(props) => props.theme.errorBg};
-    }
+    color: ${(props) => props.theme.errorBg};
   }
 `;

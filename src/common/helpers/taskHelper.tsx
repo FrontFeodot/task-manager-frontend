@@ -1,9 +1,5 @@
 import { SetURLSearchParams } from 'react-router-dom';
-import {
-  FcLowPriority,
-  FcMediumPriority,
-  FcHighPriority,
-} from 'react-icons/fc';
+
 import filter from 'lodash/filter';
 import find from 'lodash/find';
 import maxBy from 'lodash/maxBy';
@@ -24,22 +20,12 @@ import {
   getCurrentBoardId,
   getCurrentBoardTitle,
 } from './boardHelper';
+import Icon from '@common/icons/Icon';
 
 export const getPriorityIcon = (
   priority?: ITaskPriority,
   size: number = 20
-) => {
-  switch (priority) {
-    case ITaskPriority.LOW:
-      return <FcLowPriority size={size} />;
-    case ITaskPriority.MEDIUM:
-      return <FcMediumPriority size={size} />;
-    case ITaskPriority.HIGH:
-      return <FcHighPriority size={size} />;
-    default:
-      return <></>;
-  }
-};
+) => <Icon name={`priority-${priority}`} size={size} />;
 
 export const getStatusLabel = (status: ITaskStatus): string => {
   switch (status) {
@@ -131,9 +117,9 @@ export const getRawDescriptionContent = (
     return raw;
   } catch {
     console.error(
-      'invalid JSON data in description editor, this field will be empty. Data: '
+      'invalid JSON data in description editor, this field will be empty. Data: ',
+      contentJSON
     );
-    console.log(contentJSON);
   }
 };
 
@@ -141,6 +127,7 @@ export const prepareRawForCompare = (
   raw: RawDraftContentState
 ): IRawForCompare => ({
   entityMap: raw.entityMap,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   blocks: raw.blocks.map(({ key, ...rest }) => rest),
 });
 

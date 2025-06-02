@@ -29,7 +29,7 @@ export const PresentationWrapper = styled.div<{
   justify-content: ${({ $isColumnCreate }) =>
     $isColumnCreate ? 'center' : 'space-between'};
   align-items: center;
-
+  color: ${({ theme }) => theme.textPrimary};
   ${({ $isColumnCreate }) => ($isColumnCreate ? 'cursor: pointer' : '')};
 
   ${({ $isColumn, theme }) =>

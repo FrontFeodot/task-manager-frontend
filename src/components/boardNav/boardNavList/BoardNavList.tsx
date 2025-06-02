@@ -1,7 +1,5 @@
 import map from 'lodash/map';
-import { GoPlus } from 'react-icons/go';
 import { useTheme } from 'styled-components';
-import { MdOutlineSettings } from 'react-icons/md';
 
 import { TextInline } from '@components/text/TextCommon.styled';
 
@@ -12,6 +10,7 @@ import {
   setCurrentBoardAction,
 } from '@common/helpers/boardHelper';
 import { openEditor } from '@common/providers/boardProvider/useBoardState';
+import Icon from '@common/icons/Icon';
 
 import * as S from './BoardNavList.styled';
 import { IBoardNavList } from './BoardNavList.types';
@@ -44,7 +43,7 @@ const BoardNavList = ({
                 <S.BoardSettingWrapper
                   onClick={() => openEditor({ data: currentBoard })}
                 >
-                  <MdOutlineSettings fill={iconColor} size={16} />
+                  <Icon name="settings" color={iconColor} size={16} />
                 </S.BoardSettingWrapper>
               </S.BoardListItem>
             );
@@ -58,7 +57,7 @@ const BoardNavList = ({
         }
       >
         <S.ListItemLabel $isExpanded>
-          <GoPlus size={16} className="create-board-button" />
+          <Icon name="plus" size={16} />
         </S.ListItemLabel>
       </S.BoardListItem>
     </S.BoardList>

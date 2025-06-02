@@ -19,6 +19,27 @@ export const Container = styled.div<{ $isCreateTask?: boolean }>`
     fill: ${({ theme }) => theme.textPrimary};
   }
 
+  .description-toolbar .rdw-option-wrapper {
+    box-shadow: none;
+    height: 24px;
+  }
+
+  :has(div:focus) .rdw-option-wrapper:hover {
+    box-shadow: 1px 1px 0px ${({ theme }) => theme.toolbarBoxShadow};
+  }
+
+  :has(div:focus) .rdw-option-active {
+    box-shadow: 1px 1px 0px ${({ theme }) => theme.toolbarBoxShadow};
+  }
+
+  .rdw-dropdown-carettoclose {
+    border-bottom-color: ${({ theme }) => theme.textPrimary};
+  }
+
+  .rdw-dropdown-carettoopen {
+    border-top-color: ${({ theme }) => theme.textPrimary};
+  }
+
   .rdw-option-wrapper,
   .rdw-dropdown-wrapper,
   .rdw-dropdown-optionwrapper,
@@ -35,7 +56,6 @@ export const Container = styled.div<{ $isCreateTask?: boolean }>`
     color: ${({ theme }) => theme.textPrimary};
     border: ${({ theme }) => theme.borderCommon};
     background: ${({ theme }) => theme.bgTertiary};
-    box-shadow: none;
   }
 
   .rdw-suggestion-option {
@@ -65,7 +85,8 @@ export const Container = styled.div<{ $isCreateTask?: boolean }>`
     background: ${({ theme }) => theme.successColor};
   }
 
-  .rdw-dropdownoption-highlighted {
+  .rdw-dropdownoption-highlighted,
+  .rdw-suggestion-option-active {
     background: ${({ theme }) => theme.buttonBg};
   }
 

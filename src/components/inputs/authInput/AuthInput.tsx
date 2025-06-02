@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+
+import Icon from '@common/icons/Icon';
 
 import * as S from './AuthInput.styled';
 import { ITextInput } from './AuthInput.types';
@@ -24,11 +25,7 @@ const AuthInput = ({
       />
       {type === 'password' && (
         <S.ToggleIcon onClick={togglePassword}>
-          {showPassword ? (
-            <AiOutlineEyeInvisible size={24} />
-          ) : (
-            <AiOutlineEye size={24} />
-          )}
+          <Icon name={`eye-${showPassword ? 'closed' : 'open'}`} size={24} />
         </S.ToggleIcon>
       )}
     </S.Wrapper>

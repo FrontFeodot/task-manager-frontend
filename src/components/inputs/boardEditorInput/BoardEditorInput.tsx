@@ -1,13 +1,10 @@
 import { SyntheticEvent, useEffect, useRef, useState } from 'react';
-import { FaEdit } from 'react-icons/fa';
-import { FaRegTrashAlt } from 'react-icons/fa';
-import { FaPlus } from 'react-icons/fa';
-import { useTheme } from 'styled-components';
 
 import StyledButton from '@components/styledButton/StyledButton';
 import { IButtonColor } from '@components/styledButton/StyledButton.types';
 
 import { deleteColumnHelper } from '@common/helpers/columnHelper';
+import Icon from '@common/icons/Icon';
 
 import { IBoardEditorInput } from './BoardEditorInput.types';
 import * as S from './BoardEditorInput.styled';
@@ -31,7 +28,6 @@ const BoardEditorInput = ({
   const [isEdit, setIsEdit] = useState<boolean | null>(isBoardCreate);
 
   const [error, setError] = useState<string | null>(null);
-  const theme = useTheme();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const hasCancelButton = !isBoardCreate;
@@ -131,25 +127,16 @@ const BoardEditorInput = ({
           onClick={handleCreateColumn}
         >
           <S.TitleValue>
-            {isColumnCreate ? (
-              <FaPlus size={18} fill={theme.textPrimary} />
-            ) : (
-              fieldValue
-            )}
+            {isColumnCreate ? <Icon name="plus" size={18} /> : fieldValue}
           </S.TitleValue>
           {isColumnUpdate || isBoardUpdate ? (
             <S.PresentationButtons>
               <S.PresentationButtonWrapper>
-                <FaEdit
-                  fill={theme.textPrimary}
-                  size={16}
-                  onClick={() => setIsEdit(true)}
-                />
+                <Icon name="edit" size={16} onClick={() => setIsEdit(true)} />
               </S.PresentationButtonWrapper>
               {isColumnUpdate ? (
                 <S.PresentationButtonWrapper $isRedButton onClick={onDelete}>
-                  {' '}
-                  <FaRegTrashAlt size={16} fill={theme.textPrimary} />{' '}
+                  <Icon name="trash" size={20} />
                 </S.PresentationButtonWrapper>
               ) : null}
             </S.PresentationButtons>

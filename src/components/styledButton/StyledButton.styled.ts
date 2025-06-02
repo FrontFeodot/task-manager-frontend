@@ -46,6 +46,7 @@ export const Button = styled.button<{
   cursor: pointer;
   transition: transform 0.3s ease;
   gap: 4px;
+  color: ${({ theme }) => theme.textButton};
 
   ${({ theme }) => theme.shadow};
 
@@ -71,5 +72,4 @@ export const ButtonLabel = styled(Text)`
   ${(props) => props.theme.flexbox};
   font-size: ${(props) => props.theme.fontMD};
   font-weight: bold;
-  color: ${({ theme }) => theme.textButton};
 `;

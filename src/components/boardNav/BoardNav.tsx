@@ -1,11 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  RiExpandRightFill,
-  RiExpandLeftFill,
-  RiCloseLargeLine,
-} from 'react-icons/ri';
 import find from 'lodash/find';
-import { useTheme } from 'styled-components';
 
 import { IBoard } from '@common/providers/boardProvider/types';
 import {
@@ -13,6 +7,7 @@ import {
   useBoardState,
 } from '@common/providers/boardProvider/useBoardState';
 import { isDesktopView } from '@common/helpers/appHelper';
+import Icon from '@common/icons/Icon';
 
 import * as S from './BoardNav.styled';
 import { IBoardNav } from './BoardNav.types';
@@ -22,9 +17,7 @@ import BoardEditor from './boardEditor/BoardEditor';
 const BoardNav = ({ boardList }: IBoardNav): JSX.Element => {
   const isDesktop = isDesktopView();
   const [isExpanded, toggleNav] = useState(isDesktop);
-  const { iconColor } = useTheme();
   const [newBoardTitle, setNewBoardTitle] = useState<string | null>(null);
-  const ToggleIcon = isExpanded ? RiExpandLeftFill : RiExpandRightFill;
   const openedEditor = useBoardState((s) => s.openedEditor);
   const boardNavText = openedEditor ? 'Settings' : 'Boards List';
 
@@ -57,15 +50,13 @@ const BoardNav = ({ boardList }: IBoardNav): JSX.Element => {
           $isOpenedEditor={!!openedEditor}
           onClick={closeEditor}
         >
-          {openedEditor ? (
-            <RiCloseLargeLine size={18} fill={iconColor} />
-          ) : null}
+          {openedEditor ? <Icon name="cross" size={18} /> : null}
         </S.CloseEditorWrapper>
         <S.ToggleNavViewWrapper
           $isExpanded={isExpanded}
           onClick={onToggleClick}
         >
-          <ToggleIcon fill={iconColor} size={18} />
+          <Icon name={isExpanded ? 'expand-left' : 'expand-right'} />
         </S.ToggleNavViewWrapper>
       </S.TopSection>
       <S.BoardNavLabel>{isExpanded ? boardNavText : null}</S.BoardNavLabel>
