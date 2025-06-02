@@ -1,6 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
+import {
+  EditorState,
+  convertToRaw,
+} from 'draft-js';
 
 import CustomSelect from '@components/select/Select';
 import StyledButton from '@components/styledButton/StyledButton';
@@ -26,6 +30,8 @@ import { getColumnTitles } from '@common/helpers/columnHelper';
 import * as S from './CreateTaskComponent.styled';
 import { ITaskFormValues } from '../taskComponent/TaskComponent.types';
 
+const getDefaultDescription = () => JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())) 
+
 const CreateTaskComponent = (): JSX.Element => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -34,7 +40,7 @@ const CreateTaskComponent = (): JSX.Element => {
   const column = searchParams.get('columnName') || columns[0];
   const defaultValues = {
     title: '',
-    description: '',
+    description: getDefaultDescription(),
     type: ITaskType.TASK,
     parentTask: 0,
     column,
