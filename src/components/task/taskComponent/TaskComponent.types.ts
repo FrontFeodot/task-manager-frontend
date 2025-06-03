@@ -1,9 +1,4 @@
-import {
-  ITask,
-  ITaskPriority,
-  ITaskStatus,
-  ITaskType,
-} from '@common/interfaces/ITask';
+import { ITask, ITaskPriority, ITaskType } from '@common/interfaces/ITask';
 
 export interface ITaskComponent {
   task: ITask;
@@ -13,7 +8,7 @@ export interface ITaskComponent {
 
 export interface ITaskFormValues {
   title: string;
-  status: ITaskStatus;
+  isDone: boolean;
   priority: ITaskPriority;
   description?: string;
   customFields?: Record<string, string>;

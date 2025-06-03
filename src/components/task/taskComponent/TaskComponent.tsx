@@ -11,7 +11,6 @@ import TaskDescriptionInput from '@components/inputs/taskDescription/TaskDescrip
 import {
   getStorySchema,
   taskPrioritySchema,
-  taskStatusSchema,
   taskTypesSchema,
 } from '@common/utils/tasdDetailsConfig';
 import { deleteTask, updateTask } from '@common/api/taskApi';
@@ -35,12 +34,12 @@ const TaskComponent = ({
     description,
     type,
     priority,
-    status,
     columnId,
     customFields,
     taskId,
     parentTask,
     updatedAt,
+    isDone,
   } = task;
 
   const defaultValues: ITaskFormValues = {
@@ -48,10 +47,10 @@ const TaskComponent = ({
     description,
     type,
     priority,
-    status,
     column: (getColumn({ columnId }) as IColumn).title,
     customFields,
     parentTask,
+    isDone,
   };
 
   const { register, handleSubmit, watch, setValue } = useForm<ITaskFormValues>({
@@ -62,6 +61,7 @@ const TaskComponent = ({
   const storiesSchema = getStorySchema();
   const parentTaskItem = getParentTask(Number(watch('parentTask')));
   const currentValues = watch();
+  const watchIsDone = watch('isDone');
 
   const isFormChanged =
     isDescriptionChanged ||
@@ -113,13 +113,6 @@ const TaskComponent = ({
             setValue={setValue}
           />
           <TaskFormSelect
-            items={taskStatusSchema}
-            name="status"
-            label={'status'}
-            defaultVal={watch('status')}
-            setValue={setValue}
-          />
-          <TaskFormSelect
             items={taskPrioritySchema}
             name="priority"
             label={'Priority'}
@@ -142,16 +135,33 @@ const TaskComponent = ({
               setValue={setValue}
             />
           ) : null}
+          <S.MarkAsDoneWrapper className="mark-task-as-done">
+            <S.MarkAsDoneContent>{`Mark as ${watchIsDone ? 'not done' : 'done'}`}</S.MarkAsDoneContent>
+            <S.MarkAsDoneButtonWrapper>
+              <StyledButton
+                label={watchIsDone ? 'Not done' : 'Done'}
+                buttonColor={
+                  watchIsDone ? IButtonColor.default : IButtonColor.BLUE
+                }
+                onClick={() => setValue('isDone', !watchIsDone)}
+              />
+            </S.MarkAsDoneButtonWrapper>
+          </S.MarkAsDoneWrapper>
         </S.TopRight>
       </S.TopRightScrollableContainer>
       <S.Bottom className="task-buttons-section">
         <S.ButtonWrapper>
-          {isFormChanged ? <StyledButton type="submit" label="save" /> : null}
+          {isFormChanged ? (
+            <StyledButton
+              type="submit"
+              label="save"
+              buttonColor={IButtonColor.GREEN}
+            />
+          ) : null}
         </S.ButtonWrapper>
 
         <S.ButtonWrapper>
           <StyledButton
-            type="button"
             label="delete"
             buttonColor={IButtonColor.RED}
             onClick={onTaskDelete}

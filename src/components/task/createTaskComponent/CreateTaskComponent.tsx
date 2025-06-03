@@ -8,16 +8,11 @@ import StyledButton from '@components/styledButton/StyledButton';
 import TaskTitle from '@components/inputs/taskTitleInput/TaskTitle';
 import TaskDescriptionInput from '@components/inputs/taskDescription/TaskDescription';
 import ErrorTooltip from '@components/error/ErrorTooltip.styled';
-import {
-  ITaskPriority,
-  ITaskStatus,
-  ITaskType,
-} from '@common/interfaces/ITask';
+import { ITaskPriority, ITaskType } from '@common/interfaces/ITask';
 
 import {
   getStorySchema,
   taskPrioritySchema,
-  taskStatusSchema,
   taskTypesSchema,
 } from '@common/utils/tasdDetailsConfig';
 import { closeModal } from '@common/providers/appProvider/useAppState';
@@ -42,7 +37,7 @@ const CreateTaskComponent = (): JSX.Element => {
     type: ITaskType.TASK,
     parentTask: 0,
     column,
-    status: ITaskStatus.TO_DO,
+    isDone: false,
     priority: ITaskPriority.LOW,
   };
 
@@ -102,14 +97,6 @@ const CreateTaskComponent = (): JSX.Element => {
           label="Column"
           items={columns}
           defaultVal={column}
-          {...formProps}
-        />
-      </S.FormItem>
-      <S.FormItem>
-        <CustomSelect
-          name="status"
-          label="Status"
-          items={taskStatusSchema}
           {...formProps}
         />
       </S.FormItem>

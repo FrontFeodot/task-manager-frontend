@@ -16,6 +16,17 @@ export const TaskWrapper = styled.div`
   cursor: pointer;
 `;
 
+export const TaskCardTop = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+`;
+
+export const TaskCardId = styled(Text)`
+  color: ${(props) => props.theme.textDisabled};
+`;
+
 export const TaskTitle = styled(Text)`
   ${(props) => props.theme.collapsedText};
 
@@ -24,10 +35,19 @@ export const TaskTitle = styled(Text)`
 
   font-size: ${(props) => props.theme.fontLG};
 
+  padding-bottom: 8px;
+  border-bottom: 2px solid ${(props) => props.theme.disabledBg};
+
   @media (${MOBILE}) {
     font-size: ${(props) => props.theme.fontMD};
   }
 `;
+
+export const Divider = styled.div`
+  width: 90%;
+  border: ${(props) => props.theme.borderCommon};
+`;
+
 export const TaskDescription = styled.div`
   display: -webkit-box;
   overflow: hidden;

@@ -12,7 +12,7 @@ export interface ITask {
   taskId: number;
   title: string;
   userId: string;
-  status: ITaskStatus;
+  isDone: boolean;
   priority: ITaskPriority;
   description?: string;
   customFields?: Record<string, string>;
@@ -24,12 +24,6 @@ export interface ITask {
   updatedAt: Date;
   order: number;
   id?: UniqueIdentifier; // for dnd
-}
-
-export enum ITaskStatus {
-  TO_DO = 'to do',
-  IN_PROGRESS = 'in progress',
-  DONE = 'done',
 }
 
 export enum ITaskPriority {

@@ -2,25 +2,15 @@ import reduce from 'lodash/reduce';
 import assign from 'lodash/assign';
 
 import { getStoriesList } from '@common/helpers/taskHelper';
-import {
-  ITaskPriority,
-  ITaskStatus,
-  ITaskType,
-} from '@common/interfaces/ITask';
+import { ITaskPriority, ITaskType } from '@common/interfaces/ITask';
 
-export type ISchemas = ITaskStatus | ITaskPriority | ITaskType;
+export type ISchemas = ITaskPriority | ITaskType;
 
 interface ISelectSchema {
   value: string;
 }
 
 export type ISchema = Record<string | number, ISelectSchema>;
-
-export const taskStatusSchema: ISchema = {
-  [ITaskStatus.TO_DO]: { value: 'To do' },
-  [ITaskStatus.IN_PROGRESS]: { value: 'In progress' },
-  [ITaskStatus.DONE]: { value: 'Done' },
-};
 
 export const taskPrioritySchema: ISchema = {
   [ITaskPriority.LOW]: { value: 'Low' },

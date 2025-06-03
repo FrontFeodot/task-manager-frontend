@@ -4,7 +4,7 @@ import { Text } from '@components/text/TextCommon.styled';
 import { TABLET } from '@common/utils/mediaHelper';
 import Icon from '@common/icons/Icon';
 
-export const ColumnWrapper = styled.div`
+export const ColumnWrapper = styled.div<{ $isDone: boolean }>`
   display: flex;
   flex-direction: column;
   padding: 16px;
@@ -20,6 +20,8 @@ export const ColumnWrapper = styled.div`
 
   width: 100%;
   height: fit-content;
+
+  ${({ $isDone }) => ($isDone ? 'box-shadow: 0 0 10px 2px #8ab4f8' : '')};
 `;
 
 export const ColumnLabel = styled.div<{ $hasItems?: boolean }>`

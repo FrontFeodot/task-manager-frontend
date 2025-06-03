@@ -19,6 +19,7 @@ const Column = ({
   taskSection,
   activeId,
   activeTask,
+  isDone,
 }: IColumnProps): JSX.Element => {
   const { iconColor } = useTheme();
 
@@ -55,6 +56,7 @@ const Column = ({
       ref={taskSection && setNodeRef}
       id={column?.columnId}
       className="column"
+      $isDone={!!isDone}
     >
       {!!taskSection && column !== undefined ? (
         <>

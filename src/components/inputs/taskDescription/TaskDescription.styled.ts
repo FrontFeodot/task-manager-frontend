@@ -64,7 +64,7 @@ export const Container = styled.div<{ $isCreateTask?: boolean }>`
 
   .rdw-mention-link {
     color: ${({ theme }) => theme.textSecondary};
-    background-color: ${({ theme }) => theme.buttonDisabledBg};
+    background-color: ${({ theme }) => theme.disabledBg};
   }
 
   .rdw-image-alignment-option {
@@ -197,7 +197,7 @@ export const Label = styled(Text)`
 export const ChangedDataModal = styled.div`
   position: absolute;
   right: 16px;
-  bottom: 8px;
+  bottom: 6px;
 
   display: flex;
   flex-direction: row;

@@ -1,6 +1,7 @@
+import styled, { DefaultTheme } from 'styled-components';
+
 import { MOBILE, TABLET_DESKTOP } from '@common/utils/mediaHelper';
-import { Text } from '@components/text/TextCommon.styled';
-import styled from 'styled-components';
+import { Text, TextInline } from '@components/text/TextCommon.styled';
 
 export const BoardEditorWrapper = styled.div`
   display: flex;
@@ -29,12 +30,59 @@ export const BoardEditorFieldsList = styled.div`
 
 export const TitleWrapper = styled.div``;
 
-export const ColumnList = styled.div`
+export const DoneColumnWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 48px;
+  padding: 8px 0;
+
+  color: ${(props) => props.theme.textPrimary};
+
+  border-top: ${(props) => props.theme.borderCommon};
+  border-bottom: ${(props) => props.theme.borderCommon};
+
+  & .button_label {
+    font-size: ${(props) => props.theme.fontSM};
+  }
+`;
+
+export const DoneColumnContent = styled(TextInline)``;
+
+export const SelectDoneColumnButton = styled.div`
+  width: 106px;
+  height: 100%;
+`;
+
+const getSelectModeStyles = (theme: DefaultTheme): string => `
+  .settings-column-item {
+    box-shadow: 0 0 10px 2px ${theme.textSecondary};
+    cursor: pointer;
+  }
+  .settings-column-item:hover {
+    box-shadow: 0 0 10px 6px ${theme.textSecondary};
+  }
+`;
+
+export const ColumnList = styled.div<{
+  $isSelectModeActive: boolean;
+  $doneColumn: string | null;
+}>`
   display: flex;
   flex-direction: column;
   height: auto;
 
   gap: 16px;
+
+  .settings-column-item[data-value=${(props) => props.$doneColumn}] {
+    box-shadow: 0 0 10px 2px ${(props) => props.theme.textSecondary};
+  }
+
+  ${({ $isSelectModeActive, theme }) =>
+    $isSelectModeActive ? getSelectModeStyles(theme) : ''};
 `;
 
 export const FieldLabel = styled(Text)<{ $isTitle?: boolean }>`

@@ -16,3 +16,9 @@ export interface ISaveButtonHandler {
   isBoardUpdate?: boolean;
   columnId?: string;
 }
+
+export interface IUseBoardHandlers {
+  boardId: string;
+  editorData: IBoard;
+  setUpdatedData?: Dispatch<SetStateAction<string | null>>;
+}

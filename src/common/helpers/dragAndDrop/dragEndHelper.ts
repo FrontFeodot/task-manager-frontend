@@ -12,6 +12,7 @@ import { IUpdateTaskOrder } from '@common/interfaces/IDnd';
 export const taskDragEnd = async (
   over: Over,
   tasks: ITask[],
+  doneColumn: string | null,
   initialColumnId?: string
 ) => {
   const targetColumnId = over.data.current?.sortable?.containerId || over.id;
@@ -25,14 +26,14 @@ export const taskDragEnd = async (
     initialColumnId === targetColumnId
       ? tasksInInitial
       : [...tasksInInitial, ...tasksInTarget];
-
   const payload = map(
     tasksToUpdate,
-    ({ taskId, order, columnId, boardId }) => ({
+    ({ taskId, order, columnId, boardId, isDone }) => ({
       taskId,
       order,
       columnId,
       boardId,
+      isDone: doneColumn === columnId || isDone,
     })
   );
 

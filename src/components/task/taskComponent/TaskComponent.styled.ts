@@ -34,7 +34,9 @@ export const LayoutItem = styled.div`
   &:not(.task-buttons-section) > div {
     background-color: ${(props) => props.theme.inputBg};
     border: ${(props) => props.theme.borderCommon};
-    padding: 16px;
+    &:not(.mark-task-as-done) {
+      padding: 16px;
+    }
   }
 
   &:last-child button {
@@ -137,5 +139,23 @@ export const ButtonWrapper = styled.div`
   min-height: 24px;
   max-height: 36px;
   width: 100%;
+  height: 100%;
+`;
+
+export const MarkAsDoneWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 50px;
+  padding: 8px 16px;
+`;
+
+export const MarkAsDoneContent = styled(TextInline)``;
+
+export const MarkAsDoneButtonWrapper = styled.div`
+  width: 128px;
   height: 100%;
 `;

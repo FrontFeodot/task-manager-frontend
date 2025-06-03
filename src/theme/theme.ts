@@ -15,12 +15,12 @@ export interface ITheme {
   bgSecondary: string;
   bgTertiary: string;
   bgGradient: string;
+  disabledBg: string;
 
   modalBg: string;
 
   buttonBg: string;
   buttonBorderColor: string;
-  buttonDisabledBg: string;
   buttonDisabledBorderColor: string;
   buttonDisabledText: string;
 
@@ -65,12 +65,12 @@ const theme: ITheme & IFontSize = {
   bgSecondary: '#000000',
   bgTertiary: '#202124',
   bgGradient: 'linear-gradient(145deg, #2a2b2e, #202124)',
+  disabledBg: '#3a3b3c',
 
   modalBg: '#2f303d',
 
   buttonBg: '#9B51E0',
   buttonBorderColor: '#9B51E0',
-  buttonDisabledBg: '#3a3b3c',
   buttonDisabledBorderColor: '#3a3b3c',
   buttonDisabledText: '#6f7275',
 

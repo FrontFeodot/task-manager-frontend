@@ -9,7 +9,6 @@ import {
   IRawForCompare,
   ITask,
   ITaskPriority,
-  ITaskStatus,
   ITaskType,
 } from '@common/interfaces/ITask';
 import { useBoardState } from '@common/providers/boardProvider/useBoardState';
@@ -26,19 +25,6 @@ export const getPriorityIcon = (
   priority?: ITaskPriority,
   size: number = 20
 ) => <Icon name={`priority-${priority}`} size={size} />;
-
-export const getStatusLabel = (status: ITaskStatus): string => {
-  switch (status) {
-    case ITaskStatus.TO_DO:
-      return 'To do';
-    case ITaskStatus.IN_PROGRESS:
-      return 'In progress';
-    case ITaskStatus.DONE:
-      return 'Done';
-    default:
-      return 'Icebox';
-  }
-};
 
 export const getStoriesList = (): ITask[] | undefined => {
   const currentBoard = getCurrentBoardTitle();

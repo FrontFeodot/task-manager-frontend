@@ -3,9 +3,9 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import draftToHtml from 'draftjs-to-html';
 
-import ProgressBar from '@components/progressBar/ProgressBar';
+import TaskGradientBar from '@components/taskGradientBar/TaskGradientBar';
 
-import { ITask, ITaskStatus } from '@common/interfaces/ITask';
+import { ITask } from '@common/interfaces/ITask';
 import {
   getPriorityIcon,
   getRawDescriptionContent,
@@ -16,10 +16,10 @@ import * as S from './TaskCard.styled';
 const TaskCard = ({
   title,
   description,
-  status = ITaskStatus.TO_DO,
   priority,
   taskId,
   columnId,
+  isDone,
 }: ITask): JSX.Element => {
   const [_, setSearchParams] = useSearchParams();
   const newSearchParams = new URLSearchParams();
@@ -57,6 +57,9 @@ const TaskCard = ({
       {...listeners}
       onClick={(): void => handleOpenTask()}
     >
+      <S.TaskCardTop>
+        <S.TaskCardId>{`Id: ${taskId}`}</S.TaskCardId>
+      </S.TaskCardTop>
       <S.TaskTitle>{title}</S.TaskTitle>
       <S.PriorityIconWrapper>
         {getPriorityIcon(priority, 22)}
@@ -65,7 +68,7 @@ const TaskCard = ({
         dangerouslySetInnerHTML={{ __html: parsedDescription }}
       />
       <S.TaskBottomSection>
-        <ProgressBar status={status} />
+        <TaskGradientBar priority={priority} isDone={isDone} />
       </S.TaskBottomSection>
     </S.TaskWrapper>
   );

@@ -37,7 +37,7 @@ const BoardComponent = ({
   boardData,
   updateBoardState,
 }: IBoardComponent): JSX.Element => {
-  const { columns, tasks } = boardData;
+  const { columns, tasks, doneColumn } = boardData;
 
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [activeItem, setActiveItem] = useState<'tasks' | 'columns' | null>(
@@ -104,7 +104,7 @@ const BoardComponent = ({
       setHasChanges(false);
       if (activeItem === 'tasks') {
         const initialColumnId = activeTask?.columnId;
-        taskDragEnd(over, boardData.tasks, initialColumnId);
+        taskDragEnd(over, boardData.tasks, doneColumn, initialColumnId);
       }
       if (activeItem === 'columns') {
         await columnDragEnd(boardData.boardId, columns);
@@ -133,6 +133,7 @@ const BoardComponent = ({
               column={column}
               activeId={activeId}
               activeTask={activeTask}
+              isDone={doneColumn === column.columnId}
               key={column.columnId}
             />
           );

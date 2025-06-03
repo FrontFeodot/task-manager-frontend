@@ -116,3 +116,28 @@ export const deleteBoard = async (
     return err as ICustomResponse;
   }
 };
+
+export const updateDoneColumn = async (
+  doneColumn: string | null
+): Promise<ICustomResponse<IBoardList>> => {
+  const boardId = getCurrentBoardId();
+
+  try {
+    const response = await apiHandler<
+      IBoardList,
+      { boardId: string; doneColumn: string | null }
+    >({
+      method: IApiMethod.PUT,
+      url: ApiCalls.BOARD_UPDATE_DONE_COLUMN,
+      withAuth: true,
+      payload: { boardId, doneColumn },
+    });
+    if (response.isError || !response.payload) {
+      throw response;
+    }
+    setBoardsList(response.payload);
+    return response;
+  } catch (err) {
+    return err as ICustomResponse<IBoardList>;
+  }
+};

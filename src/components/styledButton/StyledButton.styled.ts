@@ -14,13 +14,13 @@ export const Wrapper = styled.div`
 `;
 
 const getDisabledButtonStyles = (theme: ITheme) => `
-  background-color: ${theme.buttonDisabledBg};
+  background-color: ${theme.disabledBg};
   color: ${theme.buttonDisabledText};
   border-color: ${theme.buttonDisabledBorderColor};
   cursor: auto;
 
   &:hover {
-    background-color: ${theme.buttonDisabledBg};
+    background-color: ${theme.disabledBg};
     color: ${theme.buttonDisabledText};
     border-color: ${theme.buttonDisabledBorderColor};
   }

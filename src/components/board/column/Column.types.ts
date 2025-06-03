@@ -8,4 +8,5 @@ export interface IColumnProps {
   taskSection?: ITask[];
   activeId: UniqueIdentifier | null;
   activeTask?: ITask;
+  isDone?: boolean;
 }

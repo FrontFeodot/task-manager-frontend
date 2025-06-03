@@ -13,6 +13,7 @@ export interface IBoard {
   boardId: string;
   title: string;
   tasks: ITask[];
+  doneColumn: string | null;
   createdAt: Date;
 }
 

@@ -1,105 +1,41 @@
 import map from 'lodash/map';
-import { Dispatch } from 'react';
+import find from 'lodash/find';
 
 import StyledButton from '@components/styledButton/StyledButton';
 import { IButtonColor } from '@components/styledButton/StyledButton.types';
 import BoardEditorInput from '@components/inputs/boardEditorInput/BoardEditorInput';
 
-import { createColumnHelper } from '@common/helpers/columnHelper';
-import { ICustomResponse } from '@common/interfaces/IApiHandler';
-import { updateColumn } from '@common/api/columnApi';
-import {
-  createBoard,
-  deleteBoard,
-  updateBoardTitle,
-} from '@common/api/boardApi';
 import { DATE_UP_TO_MINUTES } from '@common/utils/dateFormats';
 import { formatDate } from '@common/helpers/dateHelper';
-import { openModal } from '@common/providers/appProvider/useAppState';
-import { IModal } from '@common/providers/appProvider/types';
-import { setCurrentBoardAction } from '@common/helpers/boardHelper';
-import {
-  closeEditor,
-  openEditor,
-} from '@common/providers/boardProvider/useBoardState';
+import Icon from '@common/icons/Icon';
 
 import * as S from './BoardEditor.styled';
-import { IBoardEditor, ISaveButtonHandler } from './BoardEditor.types';
+import { IBoardEditor } from './BoardEditor.types';
+import { useBoardEditorHandlers } from './useBoardEditorHandlers';
 
 const BoardEditor = ({
   editorData,
   newField,
   setUpdatedData,
 }: IBoardEditor): JSX.Element => {
-  const { title, columns, createdAt, boardId } = editorData;
+  const { title, columns, createdAt, boardId, doneColumn } = editorData;
+  const {
+    loading,
+    isSelectModeActive,
+    handleListClick,
+    saveButtonHandler,
+    onBoardDelete,
+    closeEditMode,
+    toggleSelectMode,
+  } = useBoardEditorHandlers({
+    setUpdatedData,
+    boardId,
+    editorData,
+  });
 
-  const saveButtonHandler = async ({
-    fieldValue,
-    isBoardCreate,
-    isBoardUpdate,
-    isColumnCreate,
-    isColumnUpdate,
-    columnId,
-  }: ISaveButtonHandler): Promise<ICustomResponse> => {
-    if (isBoardCreate && setUpdatedData) {
-      const response = await createBoard(fieldValue);
-      setUpdatedData(fieldValue);
-      setCurrentBoardAction(fieldValue);
-      return response;
-    }
-    if (isBoardUpdate && boardId) {
-      const response = await updateBoardTitle({ boardId, title: fieldValue });
-      setCurrentBoardAction(fieldValue);
-      return response;
-    }
+  const doneColumnTitle =
+    find(columns, (column) => column.columnId === doneColumn)?.title || null;
 
-    if (isColumnCreate) {
-      const response = await createColumnHelper(fieldValue, boardId);
-      return response;
-    }
-    if (isColumnUpdate) {
-      const response = await updateColumn({ title: fieldValue, columnId });
-      return response;
-    }
-
-    return { isError: 1, message: 'Unhandled' } as ICustomResponse;
-  };
-
-  const closeEditMode = () => {
-    openEditor({ data: editorData });
-  };
-
-  const deleteBoardCallback = async (
-    boardId: string,
-    setUpdatedData: Dispatch<React.SetStateAction<string | null>>
-  ) => {
-    try {
-      const response = await deleteBoard(boardId);
-      if (response.isError) {
-        throw response;
-      }
-      if (setUpdatedData) {
-        setUpdatedData(null);
-      }
-      closeEditor();
-    } catch (err) {
-      return err;
-    }
-  };
-
-  const onBoardDelete = () => {
-    if (!setUpdatedData) return;
-
-    openModal({
-      name: IModal.CONFIRM_MODAL,
-      data: {
-        title: 'Delete the board?',
-        message: 'Tasks and columns from this board will be removed too',
-        args: [boardId, setUpdatedData],
-        callback: deleteBoardCallback,
-      },
-    });
-  };
   return (
     <S.BoardEditorWrapper>
       <S.BoardEditorFieldsList>
@@ -112,9 +48,27 @@ const BoardEditor = ({
             closeEditMode={closeEditMode}
           />
         </S.TitleWrapper>
-
+        {columns.length > 1 ? (
+          <S.DoneColumnWrapper>
+            <S.DoneColumnContent>
+              {doneColumn ? 'Select "Done" column' : 'Change "Done" column'}{' '}
+              <Icon name="tooltip" />
+            </S.DoneColumnContent>
+            <S.SelectDoneColumnButton>
+              <StyledButton
+                label={isSelectModeActive ? 'Cancel' : 'Select'}
+                onClick={toggleSelectMode}
+              />
+            </S.SelectDoneColumnButton>
+          </S.DoneColumnWrapper>
+        ) : null}
         {!!title ? (
-          <S.ColumnList>
+          <S.ColumnList
+            onClick={handleListClick}
+            className="settings-column-list"
+            $isSelectModeActive={isSelectModeActive}
+            $doneColumn={loading ? null : doneColumnTitle}
+          >
             <S.FieldLabel>Columns</S.FieldLabel>
             {columns?.length
               ? map(columns, ({ title, columnId }, index) => {

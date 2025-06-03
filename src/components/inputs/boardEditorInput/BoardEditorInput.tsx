@@ -122,6 +122,8 @@ const BoardEditorInput = ({
         </S.EditSectionWrapper>
       ) : (
         <S.PresentationWrapper
+          className="settings-column-item"
+          data-value={fieldValue}
           $isColumn={isColumnCreate || isColumnUpdate}
           $isColumnCreate={isColumnCreate}
           onClick={handleCreateColumn}

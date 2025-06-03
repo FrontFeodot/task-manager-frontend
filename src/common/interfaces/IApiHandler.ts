@@ -20,6 +20,7 @@ export enum ApiCalls {
   BOARD_CREATE = '/board/create',
   BOARD_DELETE = '/board/delete',
   BOARD_UPDATE_TITLE = '/board/update/title',
+  BOARD_UPDATE_DONE_COLUMN = '/board/update/done-column',
   UPDATE_TASKS_ORDER = '/board/update/tasks',
   UPDATE_COLUMNS_ORDER = '/board/update/columns',
   TASK_CREATE = '/task/create',
