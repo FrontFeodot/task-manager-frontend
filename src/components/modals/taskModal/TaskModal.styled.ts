@@ -14,7 +14,7 @@ export const TaskModalWrapper = styled.div`
 
   @media (${DESKTOP}) {
     width: 60%;
-    height: 75%;
+    height: 80%;
     min-width: 1024px;
     min-height: 600px;
   }

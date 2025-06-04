@@ -30,6 +30,8 @@ export const ColumnLabel = styled.div<{ $hasItems?: boolean }>`
   align-items: center;
   justify-content: center;
   height: auto;
+
+  word-break: break-word;
 `;
 
 export const ColumnText = styled(Text)<{ $isCreateColumn?: boolean }>`

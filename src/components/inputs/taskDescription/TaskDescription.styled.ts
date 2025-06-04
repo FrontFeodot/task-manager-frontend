@@ -127,6 +127,9 @@ export const Container = styled.div<{ $isCreateTask?: boolean }>`
   }
 
   .description-wrapper {
+    display: flex;
+    flex-direction: column;
+
     height: 100%;
     ${({ $isCreateTask }) => (!$isCreateTask ? 'margin-bottom: 32px' : '')};
   }
@@ -204,4 +207,31 @@ export const ChangedDataModal = styled.div`
   gap: 8px;
   width: 112px;
   height: 32px;
+`;
+
+export const PasteModal = styled.div`
+  position: absolute;
+  left: 16px;
+  bottom: 6px;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 256px;
+  height: 32px;
+  padding: 4px;
+  gap: 8px;
+
+  & button {
+    padding: 4px 8px;
+  }
+
+  & span {
+    margin-right: 8px;
+  }
+
+  & .button_label {
+    font-size: ${(props) => props.theme.fontXS};
+  }
 `;
