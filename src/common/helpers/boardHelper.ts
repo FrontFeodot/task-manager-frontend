@@ -7,33 +7,38 @@ import {
 } from '@common/providers/boardProvider/useBoardState';
 import { IBoard } from '@common/providers/boardProvider/types';
 import { find } from 'lodash';
+import { useUserState } from '@common/providers/userProvider/useUserState';
 
 export const getBoardById = (boardId: string): IBoard | undefined => {
   const { boardList } = useBoardState.getState();
   return find(boardList, (board) => board.boardId === boardId);
 };
 
-export const getCurrentBoardTitle = (): string | undefined => {
-  const { currentBoardTitle, boardList } = useBoardState.getState();
+export const getCurrentBoardId = (): string | undefined => {
+  const { currentBoardId, boardList } = useBoardState.getState();
 
-  if (currentBoardTitle && boardList && boardList[currentBoardTitle]) {
-    return currentBoardTitle;
+  if (currentBoardId && boardList && boardList[currentBoardId]) {
+    return currentBoardId;
   }
 };
 
 export const getCurrentBoardData = (): IBoard | undefined => {
-  const currentBoard = getCurrentBoardTitle();
+  const currentBoard = getCurrentBoardId();
   if (currentBoard) {
     return useBoardState.getState().boardList?.[currentBoard];
   }
 };
 
-export const getCurrentBoardId = (): string => {
+export const getCurrentBoardTitle = (): string => {
   const currentBoard = getCurrentBoardData();
-  return currentBoard?.boardId as string;
+  return currentBoard?.title as string;
 };
 
-export const setCurrentBoardAction = (boardTitle: string): void => {
-  setCurrentBoard(boardTitle);
-  Cookies.set(SELECTED_BOARD, boardTitle);
+export const setCurrentBoardAction = (boardId: string): void => {
+  setCurrentBoard(boardId);
+  Cookies.set(SELECTED_BOARD, boardId);
+};
+
+export const isBoardOwner = (ownerEmail: string): boolean => {
+  return useUserState.getState().data?.email === ownerEmail;
 };

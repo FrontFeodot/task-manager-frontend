@@ -17,7 +17,7 @@ const apiHandler = async <Res, Req = undefined>({
       url,
       data: payload,
       ...(withAuth
-        ? { headers: { Authorization: Cookies.get(AUTH_TOKEN) } }
+        ? { headers: { authorization: Cookies.get(AUTH_TOKEN) } }
         : {}),
     });
 

@@ -11,7 +11,7 @@ export const setBoardsList = (boardList: Record<string, IBoard>): void =>
   }));
 export const setCurrentBoard = (currentBoardTitle: string | null): void =>
   useBoardState.setState(() => ({
-    currentBoardTitle,
+    currentBoardId: currentBoardTitle,
   }));
 export const openEditor = (openedEditor: IOpenedEditor): void =>
   useBoardState.setState(() => ({
@@ -22,9 +22,7 @@ export const closeEditor = (): void =>
     openedEditor: null,
   }));
 export const resetBoardList = (): void =>
-  useBoardState.setState(() => ({
-    boardList: null,
-  }));
+  useBoardState.setState(() => defaultState);
 export const setBoardLoading = (loading: boolean): void =>
   useBoardState.setState(() => ({
     loading,

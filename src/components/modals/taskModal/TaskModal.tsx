@@ -8,7 +8,7 @@ import TaskComponent from '@components/task/taskComponent/TaskComponent';
 import CloseModalIcon from '@components/modals/closeModalIcon/CloseModalIcon';
 
 import useOutSideClick from '@common/hooks/useOutSideClick';
-import { getCurrentBoardTitle } from '@common/helpers/boardHelper';
+import { getCurrentBoardId } from '@common/helpers/boardHelper';
 import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 import { getColumnTitles } from '@common/helpers/columnHelper';
 import { closeTaskModal } from '@common/helpers/taskHelper';
@@ -20,10 +20,9 @@ const TaskModal = (): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const taskId = Number(searchParams.get('taskId'));
-  const selectedBoardName = getCurrentBoardTitle();
-  const boardList = useBoardState((s) => s.boardList);
+  const boardId = getCurrentBoardId();
+  const selectedBoard = useBoardState((s) => s.boardList?.[boardId || '']);
   const loading = useBoardState((s) => s.loading);
-  const selectedBoard = boardList?.[selectedBoardName || ''];
 
   const columnListTitles = getColumnTitles();
 
@@ -38,9 +37,7 @@ const TaskModal = (): JSX.Element => {
 
   useEffect(() => {
     return () => {
-      if (boardList) {
-        handleClose();
-      }
+      handleClose();
     };
   }, []);
 

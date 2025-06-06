@@ -21,6 +21,7 @@ const BoardEditorInput = ({
   const [fieldValue, setFieldValue] = useState(currentValue);
   const isBoardCreate = fieldName === 'title_create';
   const isBoardUpdate = fieldName === 'title_update';
+  const isShareBoard = fieldName === 'share_board';
 
   const isColumnUpdate = /\d/.test(fieldName);
   const isColumnCreate = fieldName === 'column_create';
@@ -40,12 +41,12 @@ const BoardEditorInput = ({
 
   useEffect(() => {
     if (autofocus) {
-      handleCreateColumn();
+      handleEditMode();
     }
   }, [autofocus]);
 
-  const handleCreateColumn = () => {
-    if (isColumnCreate) {
+  const handleEditMode = () => {
+    if (isColumnCreate || isShareBoard) {
       setIsEdit(true);
       setFieldValue('');
     }
@@ -74,6 +75,7 @@ const BoardEditorInput = ({
       isBoardUpdate,
       isColumnCreate,
       isColumnUpdate,
+      isShareBoard,
       columnId,
     });
 
@@ -97,6 +99,11 @@ const BoardEditorInput = ({
     <S.EditorInputWrapper>
       {isEdit ? (
         <S.EditSectionWrapper>
+          {isShareBoard ? (
+            <S.ShareBoardTitle>
+              Enter the email address of the invited user
+            </S.ShareBoardTitle>
+          ) : null}
           <S.StyledInput
             ref={inputRef}
             name={fieldName}
@@ -104,10 +111,12 @@ const BoardEditorInput = ({
             onChange={onChangeHandler}
             autoFocus
           />
+          {error ? <S.ErrorContainer>{error}</S.ErrorContainer> : null}
+
           <S.ButtonContainer $hasCancelButton={hasCancelButton}>
             <StyledButton
               onClick={onSubmit}
-              label="Save"
+              label={isShareBoard ? 'Send' : 'Save'}
               buttonColor={IButtonColor.GREEN}
             />
             {hasCancelButton ? (
@@ -118,7 +127,6 @@ const BoardEditorInput = ({
               />
             ) : null}
           </S.ButtonContainer>
-          {error ? <S.ErrorContainer>{error}</S.ErrorContainer> : null}
         </S.EditSectionWrapper>
       ) : (
         <S.PresentationWrapper
@@ -126,11 +134,17 @@ const BoardEditorInput = ({
           data-value={fieldValue}
           $isColumn={isColumnCreate || isColumnUpdate}
           $isColumnCreate={isColumnCreate}
-          onClick={handleCreateColumn}
+          onClick={handleEditMode}
         >
-          <S.TitleValue>
-            {isColumnCreate ? <Icon name="plus" size={18} /> : fieldValue}
-          </S.TitleValue>
+          {isShareBoard ? (
+            <S.ShareBoardButton>
+              <StyledButton label="Share board" />
+            </S.ShareBoardButton>
+          ) : (
+            <S.TitleValue>
+              {isColumnCreate ? <Icon name="plus" size={18} /> : fieldValue}
+            </S.TitleValue>
+          )}
           {isColumnUpdate || isBoardUpdate ? (
             <S.PresentationButtons>
               <S.PresentationButtonWrapper>

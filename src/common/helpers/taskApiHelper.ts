@@ -12,7 +12,7 @@ export const createTaskHandler = async (
   data: ITaskFormValues
 ): Promise<ICustomResponse> => {
   const columnId = getColumn({ columnTitle: data.column })?.columnId;
-  const boardId = getCurrentBoardId();
+  const boardId = getCurrentBoardId() as string;
   const order = getLastOrderByType({ type: 'tasks', columnId, boardId });
   try {
     const response = await createTaskApi({

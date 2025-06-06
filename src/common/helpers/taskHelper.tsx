@@ -11,13 +11,12 @@ import {
   ITaskPriority,
   ITaskType,
 } from '@common/interfaces/ITask';
-import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 import { IColumn } from '@common/providers/boardProvider/types';
 
 import {
   getBoardById,
   getCurrentBoardId,
-  getCurrentBoardTitle,
+  getCurrentBoardData,
 } from './boardHelper';
 import Icon from '@common/icons/Icon';
 
@@ -27,11 +26,12 @@ export const getPriorityIcon = (
 ) => <Icon name={`priority-${priority}`} size={size} />;
 
 export const getStoriesList = (): ITask[] | undefined => {
-  const currentBoard = getCurrentBoardTitle();
-  if (currentBoard) {
-    const allTasks = useBoardState.getState().boardList?.[currentBoard].tasks;
-
-    return filter(allTasks, (task) => task.type === ITaskType.STORY);
+  const currentBoardData = getCurrentBoardData();
+  if (currentBoardData) {
+    return filter(
+      currentBoardData.tasks,
+      (task) => task.type === ITaskType.STORY
+    );
   }
 };
 
@@ -81,11 +81,9 @@ export const getLastOrderByType = ({
 };
 
 export const getTaskById = (taskId: number): ITask | undefined => {
-  const currentBoard = getCurrentBoardTitle();
-  if (currentBoard) {
-    const allTasks = useBoardState.getState().boardList?.[currentBoard].tasks;
-
-    return find(allTasks, (task) => task.taskId === taskId);
+  const currentBoardData = getCurrentBoardData();
+  if (currentBoardData) {
+    return find(currentBoardData.tasks, (task) => task.taskId === taskId);
   }
 };
 

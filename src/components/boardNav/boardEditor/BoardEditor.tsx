@@ -12,13 +12,17 @@ import Icon from '@common/icons/Icon';
 import * as S from './BoardEditor.styled';
 import { IBoardEditor } from './BoardEditor.types';
 import { useBoardEditorHandlers } from './useBoardEditorHandlers';
+import { isBoardOwner } from '@common/helpers/boardHelper';
 
 const BoardEditor = ({
   editorData,
   newField,
   setUpdatedData,
 }: IBoardEditor): JSX.Element => {
-  const { title, columns, createdAt, boardId, doneColumn } = editorData;
+  const { title, columns, createdAt, boardId, doneColumn, ownerEmail } =
+    editorData;
+  const isOwner = isBoardOwner(ownerEmail);
+
   const {
     loading,
     isSelectModeActive,
@@ -95,10 +99,22 @@ const BoardEditor = ({
           </S.ColumnList>
         ) : null}
       </S.BoardEditorFieldsList>
+      {isOwner && newField !== 'board' ? (
+        <BoardEditorInput
+          saveButtonHandler={saveButtonHandler}
+          fieldName="share_board"
+          boardId={boardId}
+          closeEditMode={closeEditMode}
+        />
+      ) : null}
+      {!isOwner && newField !== 'board' ? (
+        <S.BoardOwnerField>Board owner: {ownerEmail} </S.BoardOwnerField>
+      ) : null}
       {createdAt ? (
         <S.CreatedAtBoard>{`Created at: ${formatDate(createdAt, DATE_UP_TO_MINUTES)}`}</S.CreatedAtBoard>
       ) : null}
-      {newField !== 'board' ? (
+
+      {newField !== 'board' && isOwner ? (
         <S.DeleteBoardButton>
           <StyledButton
             label="Delete board"

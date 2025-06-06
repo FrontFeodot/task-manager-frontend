@@ -3,6 +3,7 @@ import { ISaveButtonHandler, IUseBoardHandlers } from './BoardEditor.types';
 import {
   createBoard,
   deleteBoard,
+  shareBoard,
   updateBoardTitle,
   updateDoneColumn,
 } from '@common/api/boardApi';
@@ -60,17 +61,21 @@ export const useBoardEditorHandlers = ({
     isBoardUpdate,
     isColumnCreate,
     isColumnUpdate,
+    isShareBoard,
     columnId,
-  }: ISaveButtonHandler): Promise<ICustomResponse> => {
+  }: ISaveButtonHandler): Promise<ICustomResponse<string | undefined>> => {
     if (isBoardCreate && setUpdatedData) {
       const response = await createBoard(fieldValue);
       setUpdatedData(fieldValue);
-      setCurrentBoardAction(fieldValue);
+
+      if (response.payload) {
+        setCurrentBoardAction(response.payload);
+      }
       return response;
     }
     if (isBoardUpdate && boardId) {
       const response = await updateBoardTitle({ boardId, title: fieldValue });
-      setCurrentBoardAction(fieldValue);
+      setCurrentBoardAction(boardId);
       return response;
     }
 
@@ -80,6 +85,10 @@ export const useBoardEditorHandlers = ({
     }
     if (isColumnUpdate) {
       const response = await updateColumn({ title: fieldValue, columnId });
+      return response;
+    }
+    if (isShareBoard) {
+      const response = shareBoard(boardId, fieldValue);
       return response;
     }
 

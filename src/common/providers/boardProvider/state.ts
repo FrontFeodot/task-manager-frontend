@@ -1,7 +1,7 @@
 const defaultState = {
   boardList: null,
   loading: true,
-  currentBoardTitle: null,
+  currentBoardId: null,
   openedEditor: null,
 };
 export default defaultState;

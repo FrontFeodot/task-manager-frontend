@@ -21,7 +21,8 @@ export const ColumnWrapper = styled.div<{ $isDone: boolean }>`
   width: 100%;
   height: fit-content;
 
-  ${({ $isDone }) => ($isDone ? 'box-shadow: 0 0 10px 2px #8ab4f8' : '')};
+  box-shadow: ${({ $isDone }) =>
+    $isDone ? '0 0 10px 2px #8ab4f8' : '0 0 8px 1px #3a3b3c'};
 `;
 
 export const ColumnLabel = styled.div<{ $hasItems?: boolean }>`

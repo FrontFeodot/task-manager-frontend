@@ -106,14 +106,26 @@ export const ButtonContainer = styled.div<{ $hasCancelButton?: boolean }>`
 
 export const ErrorContainer = styled(Text)`
   ${(props) => props.theme.flexbox};
-
+  align-self: center;
+  justify-content: flex-start;
   width: 100%;
   padding: 8px;
-  margin: 8px 0;
-
-  border-radius: 4px;
+  margin-bottom: 8px;
 
   background-color: ${(props) => props.theme.errorBg};
   color: ${(props) => props.theme.errorText};
   box-sizing: border-box;
+`;
+
+export const ShareBoardButton = styled.div`
+  width: 100%;
+  height: 36px;
+  margin-bottom: 24px;
+`;
+
+export const ShareBoardTitle = styled(Text)`
+  font-size: ${(props) => props.theme.fontSM};
+  color: ${(props) => props.theme.textDisabled};
+
+  margin-bottom: 8px;
 `;

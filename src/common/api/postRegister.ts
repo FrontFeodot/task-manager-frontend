@@ -8,7 +8,10 @@ import {
 } from '@common/interfaces/IApiHandler';
 import { IPostRegister, IPostRegisterResponse } from '@common/interfaces/IAuth';
 import { AUTH_TOKEN } from '@common/utils/cookies';
-import { setUserLoading } from '@common/providers/userProvider/useUserState';
+import {
+  setUserData,
+  setUserLoading,
+} from '@common/providers/userProvider/useUserState';
 
 const postRegister = async (
   payload: IPostRegister
@@ -26,6 +29,7 @@ const postRegister = async (
     Cookies.set(AUTH_TOKEN, response.payload.token, {
       expires: 24 * 3600 * 1000, // expired time
     });
+    setUserData({ email: payload.email });
     setUserLoading(false);
   } catch (error) {
     setUserLoading(false);

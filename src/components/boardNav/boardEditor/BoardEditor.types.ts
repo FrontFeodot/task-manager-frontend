@@ -14,6 +14,7 @@ export interface ISaveButtonHandler {
   isColumnUpdate?: boolean;
   isBoardCreate?: boolean;
   isBoardUpdate?: boolean;
+  isShareBoard?: boolean;
   columnId?: string;
 }
 

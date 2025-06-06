@@ -15,7 +15,6 @@ import {
 } from '@common/interfaces/IApiHandler';
 import {
   getCurrentBoardId,
-  getCurrentBoardTitle,
   setCurrentBoardAction,
 } from '@common/helpers/boardHelper';
 import { IBoardList } from '@common/interfaces/IBoard';
@@ -25,7 +24,7 @@ export const getBoards = async (): Promise<ICustomResponse<
 > | void> => {
   try {
     setBoardLoading(true);
-    const response = await apiHandler<IBoardList>({
+    const response = await apiHandler<IBoardList, { email: string }>({
       method: IApiMethod.GET,
       url: ApiCalls.BOARD,
       withAuth: true,
@@ -38,11 +37,11 @@ export const getBoards = async (): Promise<ICustomResponse<
 
     setBoardsList(boardList);
 
-    const currentBoard = getCurrentBoardTitle();
+    const currentBoard = getCurrentBoardId();
 
     if (!currentBoard) {
-      const firstBoardName = boardList[keys(boardList)[0]].title;
-      setCurrentBoardAction(firstBoardName);
+      const firstBoardId = boardList[keys(boardList)[0]].boardId;
+      setCurrentBoardAction(firstBoardId);
     }
     setBoardLoading(false);
   } catch (error) {
@@ -52,9 +51,9 @@ export const getBoards = async (): Promise<ICustomResponse<
   }
 };
 
-export const createBoard = async (title: string): Promise<ICustomResponse> => {
+export const createBoard = async (title: string): Promise<ICustomResponse<string | undefined>> => {
   try {
-    const response = await apiHandler({
+    const response = await apiHandler<string, {title: string}>({
       method: IApiMethod.POST,
       url: ApiCalls.BOARD_CREATE,
       withAuth: true,
@@ -64,7 +63,8 @@ export const createBoard = async (title: string): Promise<ICustomResponse> => {
       throw response;
     }
     await getBoards();
-    return response as ICustomResponse;
+
+    return response as ICustomResponse<string>;
   } catch (err) {
     return err as ICustomResponse;
   }
@@ -120,7 +120,7 @@ export const deleteBoard = async (
 export const updateDoneColumn = async (
   doneColumn: string | null
 ): Promise<ICustomResponse<IBoardList>> => {
-  const boardId = getCurrentBoardId();
+  const boardId = getCurrentBoardId() as string;
 
   try {
     const response = await apiHandler<
@@ -139,5 +139,25 @@ export const updateDoneColumn = async (
     return response;
   } catch (err) {
     return err as ICustomResponse<IBoardList>;
+  }
+};
+
+export const shareBoard = async (
+  boardId: string,
+  invitedUserEmail: string
+): Promise<ICustomResponse> => {
+  try {
+    const response = await apiHandler({
+      method: IApiMethod.POST,
+      url: ApiCalls.BOARD_SHARE,
+      withAuth: true,
+      payload: { boardId, invitedUserEmail },
+    });
+    if (!response || response.isError) {
+      throw response;
+    }
+    return response as ICustomResponse;
+  } catch (err) {
+    return err as ICustomResponse;
   }
 };

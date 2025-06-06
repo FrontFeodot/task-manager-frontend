@@ -9,17 +9,19 @@ import {
 import { AUTH_TOKEN } from '@common/utils/cookies';
 import {
   setLoginUser,
+  setUserData,
   setUserLoading,
 } from '@common/providers/userProvider/useUserState';
-import { IPostLogin } from '@common/interfaces/IAuth';
+import { IPostLogin, IPostLoginResponse } from '@common/interfaces/IAuth';
 import { resetBoardList } from '@common/providers/boardProvider/useBoardState';
+import { IUserData } from '@common/providers/userProvider/types';
 
 export const postLogin = async (
   payload: IPostLogin
-): Promise<ICustomResponse<Record<string, string>>> => {
+): Promise<ICustomResponse<IPostLoginResponse | undefined>> => {
   try {
     setUserLoading(true);
-    const response = await apiHandler<Record<string, string>, IPostLogin>({
+    const response = await apiHandler<IPostLoginResponse, IPostLogin>({
       method: IApiMethod.POST,
       url: ApiCalls.AUTH,
       payload,
@@ -31,11 +33,12 @@ export const postLogin = async (
     Cookies.set(AUTH_TOKEN, response.payload.token, {
       expires: 7,
     });
+    setUserData(response.payload);
     setUserLoading(false);
-    return response as ICustomResponse<Record<string, string>>;
+    return response as ICustomResponse<IPostLoginResponse>;
   } catch (err) {
     setUserLoading(false);
-    return err as ICustomResponse<Record<string, string>>;
+    return err as ICustomResponse;
   }
 };
 
@@ -46,10 +49,7 @@ export const getProtected = async (): Promise<void> => {
     return setUserLoading(false);
   }
   try {
-    const response = await apiHandler<
-      Record<string, string>,
-      { token: string }
-    >({
+    const response = await apiHandler<IUserData, { token: string }>({
       method: IApiMethod.POST,
       url: ApiCalls.PROTECTED,
       payload: {
@@ -59,8 +59,9 @@ export const getProtected = async (): Promise<void> => {
     if (response instanceof Error || response.isError) {
       throw response;
     }
-    if (response.isSuccess) {
+    if (response.isSuccess && response.payload) {
       setLoginUser(true);
+      setUserData(response.payload);
       setUserLoading(false);
     }
   } catch {
@@ -72,6 +73,7 @@ export const getProtected = async (): Promise<void> => {
 
 export const logout = (): void => {
   setLoginUser(false);
+  setUserData(null)
   resetBoardList();
   Cookies.remove(AUTH_TOKEN);
 };

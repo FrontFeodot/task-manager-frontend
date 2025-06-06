@@ -4,7 +4,7 @@ import { ITask } from '@common/interfaces/ITask';
 export interface IBoardState {
   boardList: IBoardList | null;
   loading: boolean;
-  currentBoardTitle: string | null;
+  currentBoardId: string | null;
   openedEditor: IOpenedEditor | null;
 }
 
@@ -14,6 +14,7 @@ export interface IBoard {
   title: string;
   tasks: ITask[];
   doneColumn: string | null;
+  ownerEmail: string;
   createdAt: Date;
 }
 

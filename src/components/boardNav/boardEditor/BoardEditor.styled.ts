@@ -123,5 +123,11 @@ export const CreatedAtBoard = styled(Text)`
 export const DeleteBoardButton = styled.div`
   width: 100%;
   min-height: 36px;
-  margin-bottom: 24px;
+`;
+
+export const BoardOwnerField = styled(Text)`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 8px;
 `;

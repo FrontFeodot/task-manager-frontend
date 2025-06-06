@@ -7,6 +7,7 @@ import { emptyBoard } from '@common/utils/boardEditorConfig';
 import { IBoard } from '@common/providers/boardProvider/types';
 import {
   getCurrentBoardId,
+  isBoardOwner,
   setCurrentBoardAction,
 } from '@common/helpers/boardHelper';
 import { openEditor } from '@common/providers/boardProvider/useBoardState';
@@ -22,23 +23,26 @@ const BoardNavList = ({
 }: IBoardNavList): JSX.Element => {
   const { iconColor } = useTheme();
   const currentBoardId = getCurrentBoardId();
+
   return (
     <S.BoardList>
       {boardList
-        ? map(keys(boardList), (boardTitle, index) => {
-            const currentBoard = boardList[boardTitle];
+        ? map(keys(boardList), (boardId, index) => {
+            const currentBoard = boardList[boardId];
+            const isOwner = isBoardOwner(currentBoard.ownerEmail);
+
             const title = isExpanded
-              ? boardTitle
-              : upperCase(Array.from(boardTitle)[0]);
+              ? currentBoard.title
+              : upperCase(Array.from(currentBoard.title)[0]);
             return (
               <S.BoardListItem
                 $isExpanded={isExpanded}
                 $isSelected={currentBoardId === currentBoard.boardId}
                 key={index}
-                onClick={(): void => setCurrentBoardAction(currentBoard.title)}
+                onClick={(): void => setCurrentBoardAction(boardId)}
               >
                 <S.ListItemLabel $isExpanded={isExpanded}>
-                  <TextInline>{title}</TextInline>
+                  <TextInline>{`${title}${!isOwner ? ` (${currentBoard.ownerEmail})` : ''}`}</TextInline>
                 </S.ListItemLabel>
                 <S.BoardSettingWrapper
                   onClick={() => openEditor({ data: currentBoard })}

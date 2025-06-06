@@ -12,3 +12,8 @@ export interface IPostLogin {
   email: string;
   password: string;
 }
+
+export interface IPostLoginResponse {
+  token: string;
+  email: string;
+}

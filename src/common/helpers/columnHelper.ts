@@ -1,6 +1,5 @@
 import { find, map } from 'lodash';
 
-import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 import { IBoard, IColumn } from '@common/providers/boardProvider/types';
 import { createColumnApi, deleteColumn } from '@common/api/columnApi';
 import { getBoards } from '@common/api/boardApi';
@@ -8,14 +7,16 @@ import { ICustomResponse } from '@common/interfaces/IApiHandler';
 import { openModal } from '@common/providers/appProvider/useAppState';
 import { IModal } from '@common/providers/appProvider/types';
 
-import { getBoardById, getCurrentBoardTitle } from './boardHelper';
+import {
+  getBoardById,
+  getCurrentBoardData,
+} from './boardHelper';
 import { getLastOrderByType, getTasksForColumn } from './taskHelper';
 
 export const getColumns = (): IColumn[] | undefined => {
-  const currentBoard = getCurrentBoardTitle();
-  if (currentBoard) {
-    return useBoardState.getState().boardList?.[currentBoard]
-      .columns as IColumn[];
+  const currentBoardData = getCurrentBoardData();
+  if (currentBoardData) {
+    return currentBoardData.columns as IColumn[];
   }
 };
 

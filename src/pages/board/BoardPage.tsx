@@ -12,8 +12,7 @@ import * as S from './BoardPage.styled';
 const BoardPage = (): JSX.Element => {
   const boardList = useBoardState((s) => s.boardList);
   const boardLoading = useBoardState((s) => s.loading);
-  const selectedBoardName = useBoardState((s) => s.currentBoardTitle) || '';
-
+  const selectedBoardId = useBoardState((s) => s.currentBoardId) || '';
   const userLoading = useUserState((s) => s.loading);
 
   const loading = userLoading || boardLoading;
@@ -27,7 +26,7 @@ const BoardPage = (): JSX.Element => {
       <BoardNav boardList={boardList} />
 
       <BoardWrapper
-        boardData={boardList?.[selectedBoardName]}
+        boardData={boardList?.[selectedBoardId]}
         loading={loading}
       />
     </S.Wrapper>
