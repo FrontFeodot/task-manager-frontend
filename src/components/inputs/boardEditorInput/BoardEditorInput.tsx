@@ -28,7 +28,10 @@ const BoardEditorInput = ({
 
   const [isEdit, setIsEdit] = useState<boolean | null>(isBoardCreate);
 
-  const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<{
+    status: number;
+    message: string;
+  } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const hasCancelButton = !isBoardCreate;
@@ -53,8 +56,8 @@ const BoardEditorInput = ({
   };
 
   const onChangeHandler = (e: SyntheticEvent<HTMLInputElement>): void => {
-    if (!!error) {
-      setError(null);
+    if (!!result) {
+      setResult(null);
     }
     setFieldValue(e.currentTarget.value);
   };
@@ -67,9 +70,13 @@ const BoardEditorInput = ({
 
   const onSubmit = async (): Promise<void> => {
     if (!fieldValue) {
-      return setError('Field is empty');
+      return setResult({ status: 0, message: 'Field is empty' });
     }
-    const response = await saveButtonHandler({
+    if (isColumnCreate) {
+      setIsEdit(false);
+    }
+
+    const { isSuccess, message } = await saveButtonHandler({
       fieldValue,
       isBoardCreate,
       isBoardUpdate,
@@ -79,18 +86,25 @@ const BoardEditorInput = ({
       columnId,
     });
 
-    if (response.isError) {
-      return setError(response.message);
+    if (isColumnCreate && isSuccess) {
+      closeEditMode();
+      return;
     }
-    closeEditMode();
-    setIsEdit(false);
+    setResult({ status: isSuccess, message });
+    setTimeout(() => {
+      setResult(null);
+      if (isSuccess) {
+        closeEditMode();
+        setIsEdit(false);
+      }
+    }, 5000);
   };
 
   const onDelete = async (): Promise<void> => {
     if (columnId && boardId) {
       const response = await deleteColumnHelper({ columnId, boardId });
       if (response && response.isError) {
-        setError(response.message);
+        setResult({ status: 0, message: response.message });
       }
     }
   };
@@ -105,32 +119,41 @@ const BoardEditorInput = ({
             </S.ShareBoardTitle>
           ) : null}
           <S.StyledInput
+            disabled={!!result?.status}
             ref={inputRef}
             name={fieldName}
             value={fieldValue}
             onChange={onChangeHandler}
             autoFocus
           />
-          {error ? <S.ErrorContainer>{error}</S.ErrorContainer> : null}
+          {result ? (
+            <S.ResultContainer $isSuccess={!!result.status}>
+              {result.message}
+            </S.ResultContainer>
+          ) : null}
 
-          <S.ButtonContainer $hasCancelButton={hasCancelButton}>
-            <StyledButton
-              onClick={onSubmit}
-              label={isShareBoard ? 'Send' : 'Save'}
-              buttonColor={IButtonColor.GREEN}
-            />
-            {hasCancelButton ? (
+          {!result?.status ? (
+            <S.ButtonContainer $hasCancelButton={hasCancelButton}>
               <StyledButton
-                label="Cancel"
-                buttonColor={IButtonColor.RED}
-                onClick={onCancelHandler}
+                disabled={!!result?.status}
+                onClick={onSubmit}
+                label={isShareBoard ? 'Send' : 'Save'}
+                buttonColor={IButtonColor.GREEN}
               />
-            ) : null}
-          </S.ButtonContainer>
+              {hasCancelButton ? (
+                <StyledButton
+                  disabled={!!result?.status}
+                  label="Cancel"
+                  buttonColor={IButtonColor.RED}
+                  onClick={onCancelHandler}
+                />
+              ) : null}
+            </S.ButtonContainer>
+          ) : null}
         </S.EditSectionWrapper>
       ) : (
         <S.PresentationWrapper
-          className="settings-column-item"
+          className={isColumnCreate ? '' : 'settings-column-item'}
           data-value={fieldValue}
           $isColumn={isColumnCreate || isColumnUpdate}
           $isColumnCreate={isColumnCreate}

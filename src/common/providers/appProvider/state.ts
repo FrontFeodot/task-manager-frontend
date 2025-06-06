@@ -1,5 +1,5 @@
 const defaultState = {
-  currentModal: null,
+  modals: [],
 };
 
 export default defaultState;

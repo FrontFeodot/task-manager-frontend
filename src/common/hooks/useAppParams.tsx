@@ -10,14 +10,15 @@ import {
 import { useUserState } from '@common/providers/userProvider/useUserState';
 import Cookies from 'js-cookie';
 import { AUTH_TOKEN } from '@common/utils/cookies';
+import { some } from 'lodash';
 
 const useAppParams = (): void => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const hasSelectedTask = !!searchParams.get('taskId');
-  const isTaskOpened = useAppState(
-    (s) => s.currentModal?.name === IModal.TASK_MODAL
+  const isTaskOpened = useAppState((s) =>
+    some(s.modals, (modal) => modal.name === IModal.TASK_MODAL)
   );
 
   const isLoggedIn =
@@ -28,7 +29,7 @@ const useAppParams = (): void => {
       openModal({ name: IModal.TASK_MODAL });
     }
     if (!hasSelectedTask && isTaskOpened) {
-      closeModal();
+      closeModal(IModal.TASK_MODAL);
     }
   }, [searchParams]);
 

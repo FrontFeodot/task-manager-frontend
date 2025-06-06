@@ -35,6 +35,8 @@ export interface ITheme {
 
   errorBg: string;
   errorText: string;
+
+  successBg: string;
   successColor: string;
 
   borderCommon: string;
@@ -86,6 +88,7 @@ const theme: ITheme & IFontSize = {
   link: '#09d3ac',
   errorBg: '#FF4D4F',
   errorText: '#FFFFFF',
+  successBg: '#16a34a',
   successColor: '#00bfa6',
 
   borderCommon: '1px solid #3a3b3c',

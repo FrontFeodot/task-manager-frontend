@@ -21,6 +21,7 @@ import { getColumnTitles } from '@common/helpers/columnHelper';
 
 import * as S from './CreateTaskComponent.styled';
 import { ITaskFormValues } from '../taskComponent/TaskComponent.types';
+import { IModal } from '@common/providers/appProvider/types';
 
 const getDefaultDescription = () =>
   JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent()));
@@ -47,6 +48,10 @@ const CreateTaskComponent = (): JSX.Element => {
   const isStoryType = watch('type') === ITaskType.STORY;
   const storiesSchema = getStorySchema();
 
+  const handleClose = () => {
+    closeModal(IModal.CREATE_TASK);
+  };
+
   const onSubmit = async (data: ITaskFormValues) => {
     if (!data.title) {
       return setError('Title is required');
@@ -59,7 +64,7 @@ const CreateTaskComponent = (): JSX.Element => {
       return setError(response.message);
     }
     if (response.isSuccess) {
-      closeModal();
+      handleClose();
     }
   };
 
@@ -111,7 +116,7 @@ const CreateTaskComponent = (): JSX.Element => {
       {error ? <ErrorTooltip $isGlobal>{error}</ErrorTooltip> : null}
       <S.ButtonContainer>
         <StyledButton type="submit" label="Save" isLoading={loading} />
-        <StyledButton label="Cancel" onClick={closeModal} />
+        <StyledButton label="Cancel" onClick={handleClose} />
       </S.ButtonContainer>
     </S.TaskForm>
   );

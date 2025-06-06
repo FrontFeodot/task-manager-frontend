@@ -1,5 +1,5 @@
 export interface IAppState {
-  currentModal: IModalProps | null;
+  modals: IModalProps[];
 }
 
 export interface IModalProps {

@@ -104,7 +104,7 @@ export const ButtonContainer = styled.div<{ $hasCancelButton?: boolean }>`
   }
 `;
 
-export const ErrorContainer = styled(Text)`
+export const ResultContainer = styled(Text)<{ $isSuccess: boolean }>`
   ${(props) => props.theme.flexbox};
   align-self: center;
   justify-content: flex-start;
@@ -112,7 +112,8 @@ export const ErrorContainer = styled(Text)`
   padding: 8px;
   margin-bottom: 8px;
 
-  background-color: ${(props) => props.theme.errorBg};
+  background-color: ${({ $isSuccess, theme }) =>
+    $isSuccess ? theme.successBg : theme.errorBg};
   color: ${(props) => props.theme.errorText};
   box-sizing: border-box;
 `;

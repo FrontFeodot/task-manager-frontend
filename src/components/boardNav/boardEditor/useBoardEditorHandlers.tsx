@@ -19,6 +19,13 @@ import { openModal } from '@common/providers/appProvider/useAppState';
 import { IModal } from '@common/providers/appProvider/types';
 import { SyntheticEvent } from 'react-draft-wysiwyg';
 
+const SELECT_COLUMN_TITLE = 'Select column as "done" column?';
+const SELECT_COLUMN_MESSAGE =
+  'All tasks in this column will be with "done" status';
+const UNSELECT_COLUMN_TITLE = 'Remove "done" status from this column?';
+const UNSELECT_COLUMN_MESSAGE =
+  'After this action, new tasks in this column will not have the "done" status';
+
 export const useBoardEditorHandlers = ({
   setUpdatedData,
   boardId,
@@ -29,6 +36,13 @@ export const useBoardEditorHandlers = ({
 
   const toggleSelectMode = (): void => {
     setSelectColumnMode(!isSelectModeActive);
+  };
+
+  const handleDoneColumn = async (columnId: string) => {
+    await updateDoneColumn(
+      columnId === editorData.doneColumn ? null : columnId
+    );
+    setLoading(false);
   };
 
   const handleListClick = async (e: SyntheticEvent) => {
@@ -49,10 +63,17 @@ export const useBoardEditorHandlers = ({
     setLoading(true);
     setSelectColumnMode(false);
 
-    await updateDoneColumn(
-      column.columnId === editorData.doneColumn ? null : column.columnId
-    );
-    setLoading(false);
+    const isDoneColumn = column.columnId === editorData.doneColumn;
+
+    openModal({
+      name: IModal.CONFIRM_MODAL,
+      data: {
+        title: isDoneColumn ? UNSELECT_COLUMN_TITLE : SELECT_COLUMN_TITLE,
+        message: isDoneColumn ? UNSELECT_COLUMN_MESSAGE : SELECT_COLUMN_MESSAGE,
+        args: [column.columnId],
+        callback: handleDoneColumn,
+      },
+    });
   };
 
   const saveButtonHandler = async ({

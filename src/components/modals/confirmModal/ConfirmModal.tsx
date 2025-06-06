@@ -1,31 +1,27 @@
-import {
-  closeModal,
-  useAppState,
-} from '@common/providers/appProvider/useAppState';
+import { closeModal } from '@common/providers/appProvider/useAppState';
 import * as S from './ConfirmModal.styled';
 import { IButtonColor } from '@components/styledButton/StyledButton.types';
 import StyledButton from '@components/styledButton/StyledButton';
 import useOutsideClick from '@common/hooks/useOutSideClick';
 import { useRef } from 'react';
+import { IConfirmModal } from './ConfirmModalProps.types';
+import { IModal } from '@common/providers/appProvider/types';
+import { getCurrentModal } from '@common/helpers/appHelper';
 
 const ConfirmModal = (): JSX.Element => {
   const modalRef = useRef(null);
-  const modalData = useAppState((s) => s.currentModal?.data);
-  const { title, message, args, callback } = modalData as {
-    title: string;
-    message?: string;
-    args: string[];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    callback: (...props: any) => void;
-  };
+  const modalData = getCurrentModal(IModal.CONFIRM_MODAL)?.data;
+  const { title, message, args, callback } = modalData as IConfirmModal;
 
   const onSubmit = async () => {
-    await callback(...args);
+    if (callback && args) {
+      await callback(...args);
+    }
     onClose();
   };
 
   const onClose = (): void => {
-    closeModal();
+    closeModal(IModal.CONFIRM_MODAL);
   };
 
   useOutsideClick(modalRef, onClose);

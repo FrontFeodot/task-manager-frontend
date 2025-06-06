@@ -3,9 +3,7 @@ import {
   IApiMethod,
   ICustomResponse,
 } from '@common/interfaces/IApiHandler';
-import {
-  getCurrentBoardId,
-} from '@common/helpers/boardHelper';
+import { getCurrentBoardId } from '@common/helpers/boardHelper';
 import { IColumn } from '@common/providers/boardProvider/types';
 import { IDeleteTask } from '@common/interfaces/IColumn';
 

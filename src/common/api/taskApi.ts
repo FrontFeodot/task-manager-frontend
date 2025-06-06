@@ -4,9 +4,7 @@ import {
   ICustomResponse,
 } from '@common/interfaces/IApiHandler';
 import { ITask } from '@common/interfaces/ITask';
-import {
-  getCurrentBoardId,
-} from '@common/helpers/boardHelper';
+import { getCurrentBoardId } from '@common/helpers/boardHelper';
 
 import apiHandler from './apiHandler';
 import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';

@@ -11,7 +11,6 @@ export const ModalWrapper = styled.div`
 
   width: 33%;
   height: auto;
-  z-index: 101;
   padding: 24px;
 
   background-color: ${(props) => props.theme.modalBg};

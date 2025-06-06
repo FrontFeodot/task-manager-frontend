@@ -13,7 +13,6 @@ export const CreateTaskModal = styled.div`
   height: auto;
   padding: 36px 16px 16px;
 
-  z-index: 101;
   background-color: ${(props) => props.theme.modalBg};
   overflow: auto;
 

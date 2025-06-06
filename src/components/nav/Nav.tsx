@@ -6,6 +6,8 @@ import { logout } from '@common/api/auth';
 import Icon from '@common/icons/Icon';
 
 import * as S from './Nav.styled';
+import { IModal } from '@common/providers/appProvider/types';
+import { openModal } from '@common/providers/appProvider/useAppState';
 
 const NavMenu = (): JSX.Element => {
   const isLoggedIn = useUserState((s) => s.isLoggedIn);
@@ -15,8 +17,17 @@ const NavMenu = (): JSX.Element => {
     if (!isLoggedIn) {
       return navigate('/login');
     }
-    navigate('/');
-    return logout();
+    openModal({
+      name: IModal.CONFIRM_MODAL,
+      data: {
+        title: 'Are you sure want to logout?',
+        args: [],
+        callback: () => {
+          navigate('/');
+          logout();
+        },
+      },
+    });
   };
 
   return (

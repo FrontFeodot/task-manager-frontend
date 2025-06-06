@@ -73,7 +73,7 @@ export const getProtected = async (): Promise<void> => {
 
 export const logout = (): void => {
   setLoginUser(false);
-  setUserData(null)
+  setUserData(null);
   resetBoardList();
   Cookies.remove(AUTH_TOKEN);
 };

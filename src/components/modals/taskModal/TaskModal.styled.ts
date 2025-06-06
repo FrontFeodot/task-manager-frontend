@@ -9,7 +9,6 @@ import styled from 'styled-components';
 export const TaskModalWrapper = styled.div`
   padding: 36px 16px 16px;
   position: relative;
-  z-index: 101;
   background-color: ${(props) => props.theme.modalBg};
 
   @media (${DESKTOP}) {

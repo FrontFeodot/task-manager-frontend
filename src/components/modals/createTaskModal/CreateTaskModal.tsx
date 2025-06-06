@@ -6,6 +6,7 @@ import CreateTaskComponent from '../../task/createTaskComponent/CreateTaskCompon
 import * as S from './CreateTaskModal.styled';
 import { removeSearchParam } from '@common/helpers/searchParamsHelper';
 import CloseModalIcon from '../closeModalIcon/CloseModalIcon';
+import { IModal } from '@common/providers/appProvider/types';
 
 const CreateTaskModal = (): JSX.Element => {
   const ref = useRef(null);
@@ -16,11 +17,15 @@ const CreateTaskModal = (): JSX.Element => {
     };
   }, []);
 
-  useOutsideClick(ref, closeModal);
+  const handleClose = () => {
+    closeModal(IModal.CREATE_TASK);
+  };
+
+  useOutsideClick(ref, handleClose);
 
   return (
     <S.CreateTaskModal ref={ref}>
-      <CloseModalIcon />
+      <CloseModalIcon closeHandler={handleClose} />
 
       <CreateTaskComponent />
     </S.CreateTaskModal>

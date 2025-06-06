@@ -7,10 +7,7 @@ import { ICustomResponse } from '@common/interfaces/IApiHandler';
 import { openModal } from '@common/providers/appProvider/useAppState';
 import { IModal } from '@common/providers/appProvider/types';
 
-import {
-  getBoardById,
-  getCurrentBoardData,
-} from './boardHelper';
+import { getBoardById, getCurrentBoardData } from './boardHelper';
 import { getLastOrderByType, getTasksForColumn } from './taskHelper';
 
 export const getColumns = (): IColumn[] | undefined => {
@@ -97,6 +94,4 @@ export const deleteColumnHelper = async ({
   } catch (err) {
     return err as ICustomResponse;
   }
-
-  return;
 };

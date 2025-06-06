@@ -8,10 +8,7 @@ import { IButtonColor } from '@components/styledButton/StyledButton.types';
 import CustomSelect from '@components/select/Select';
 
 import useOutsideClick from '@common/hooks/useOutSideClick';
-import {
-  closeModal,
-  useAppState,
-} from '@common/providers/appProvider/useAppState';
+import { closeModal } from '@common/providers/appProvider/useAppState';
 
 import { getBoardById } from '@common/helpers/boardHelper';
 import { IBoard } from '@common/providers/boardProvider/types';
@@ -19,6 +16,8 @@ import { deleteColumnHelper, getColumn } from '@common/helpers/columnHelper';
 import { getBoards } from '@common/api/boardApi';
 
 import * as S from './DeleteColumnModal.styled';
+import { IModal } from '@common/providers/appProvider/types';
+import { getCurrentModal } from '@common/helpers/appHelper';
 
 const DeleteColumnModal = (): JSX.Element => {
   const [inputValue, setInputValue] = useState<string | null>(null);
@@ -26,7 +25,7 @@ const DeleteColumnModal = (): JSX.Element => {
   const ref = useRef(null);
   const moveToRef = useRef<HTMLInputElement | null>(null);
 
-  const currentModal = useAppState((s) => s.currentModal);
+  const currentModal = getCurrentModal(IModal.DELETE_COLUMN_CONFIRM);
 
   const columnId = currentModal?.data?.columnId as string;
   const boardId = currentModal?.data?.boardId as string;
@@ -46,7 +45,9 @@ const DeleteColumnModal = (): JSX.Element => {
     setSelectValue(restColumnsTitles[0]);
   }, []);
 
-  useOutsideClick(ref, closeModal);
+  const handleClose = (): void => closeModal(IModal.DELETE_COLUMN_CONFIRM);
+
+  useOutsideClick(ref, handleClose);
 
   const handleRadioChange = (e: SyntheticEvent<HTMLInputElement>): void => {
     if (e.currentTarget.id) {
@@ -81,14 +82,12 @@ const DeleteColumnModal = (): JSX.Element => {
           throw response;
         }
         getBoards();
-        closeModal();
+        handleClose();
       } catch (err) {
         return err;
       }
     }
   };
-
-  const handleClose = (): void => closeModal();
 
   return (
     <S.ModalWrapper ref={ref}>

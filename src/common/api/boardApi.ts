@@ -51,9 +51,11 @@ export const getBoards = async (): Promise<ICustomResponse<
   }
 };
 
-export const createBoard = async (title: string): Promise<ICustomResponse<string | undefined>> => {
+export const createBoard = async (
+  title: string
+): Promise<ICustomResponse<string | undefined>> => {
   try {
-    const response = await apiHandler<string, {title: string}>({
+    const response = await apiHandler<string, { title: string }>({
       method: IApiMethod.POST,
       url: ApiCalls.BOARD_CREATE,
       withAuth: true,

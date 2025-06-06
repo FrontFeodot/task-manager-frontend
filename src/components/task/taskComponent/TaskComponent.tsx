@@ -1,6 +1,6 @@
 import pick from 'lodash/pick';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import TaskTitle from '@components/inputs/taskTitleInput/TaskTitle';
 import TaskFormSelect from '@components/select/taskFormSelect/TaskFormSelect';
@@ -23,11 +23,15 @@ import { DATE_UP_TO_MINUTES } from '@common/utils/dateFormats';
 
 import * as S from './TaskComponent.styled';
 import { ITaskComponent, ITaskFormValues } from './TaskComponent.types';
+import { openModal } from '@common/providers/appProvider/useAppState';
+import { IModal } from '@common/providers/appProvider/types';
+import { ITask } from '@common/interfaces/ITask';
 
 const TaskComponent = ({
   task,
   columnList,
   closeTask,
+  setHasUnsavedChanges,
 }: ITaskComponent): JSX.Element => {
   const {
     title,
@@ -71,6 +75,10 @@ const TaskComponent = ({
         defaultValues[key as keyof ITaskFormValues]
     );
 
+  useEffect(() => {
+    setHasUnsavedChanges(isFormChanged);
+  }, [isFormChanged]);
+
   const onSubmit = async (data: ITaskFormValues) => {
     const response = await updateTask(task, data);
     if (response?.isSuccess) {
@@ -79,8 +87,20 @@ const TaskComponent = ({
     }
   };
 
-  const onTaskDelete = async () => {
-    const response = await deleteTask(pick(task, ['taskId', 'boardId']));
+  const confirmDelete = () => {
+    openModal({
+      name: IModal.CONFIRM_MODAL,
+      data: {
+        title: 'Are you sure want to delete this task?',
+        message: 'This action is irreversible.',
+        args: [pick(task, ['taskId', 'boardId'])],
+        callback: onTaskDelete,
+      },
+    });
+  };
+
+  const onTaskDelete = async (payload: Pick<ITask, 'taskId' | 'boardId'>) => {
+    const response = await deleteTask(payload);
     if (response?.isSuccess) {
       getBoards();
       closeTask();
@@ -164,7 +184,7 @@ const TaskComponent = ({
           <StyledButton
             label="delete"
             buttonColor={IButtonColor.RED}
-            onClick={onTaskDelete}
+            onClick={confirmDelete}
           />
         </S.ButtonWrapper>
       </S.Bottom>
