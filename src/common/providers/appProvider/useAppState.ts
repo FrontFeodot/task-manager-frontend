@@ -20,3 +20,13 @@ export const closeModal = (closedModal: string): void => {
     modals: filter(state.modals, (modal) => modal.name !== closedModal),
   }));
 };
+
+export const toggleAppLoading = (appLoading: boolean): void =>
+  useAppState.setState(() => ({
+    appLoading,
+  }));
+
+export const setAppError = (appError: string | null): void =>
+  useAppState.setState(() => ({
+    appError,
+  }));

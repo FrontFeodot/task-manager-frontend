@@ -1,6 +1,6 @@
 import { MOBILE, TABLET } from '@common/utils/mediaHelper';
 import { Text, TextInline } from '@components/text/TextCommon.styled';
-import styled, { DefaultTheme } from 'styled-components';
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -86,12 +86,7 @@ export const ImageWrapper = styled.img`
   margin: 16px 0;
 `;
 
-const getRegisterLinkStyles = (theme: DefaultTheme) => `
-  color: ${theme.link};
+export const RegisterLink = styled(TextInline)`
+  color: ${(props) => props.theme.link};
   cursor: pointer;
-`;
-
-export const RegisterLink = styled(TextInline)<{ $isLoggedIn?: boolean }>`
-  ${({ $isLoggedIn, theme }) =>
-    !$isLoggedIn ? getRegisterLinkStyles(theme) : ''};
 `;

@@ -1,5 +1,7 @@
 export interface IAppState {
   modals: IModalProps[];
+  appLoading: boolean;
+  appError: string | null;
 }
 
 export interface IModalProps {

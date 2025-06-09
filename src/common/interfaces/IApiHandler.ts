@@ -13,6 +13,7 @@ export interface IApiHandler<Req> {
 }
 
 export enum ApiCalls {
+  PING = '/ping',
   AUTH = '/auth/login',
   REGISTER = '/auth/signup',
   PROTECTED = '/auth/protected',

@@ -41,7 +41,7 @@ const Home = (): JSX.Element => {
         <S.DescriptionWrapper>
           <S.DescriptionText>
             Just try! Complete a simple
-            <S.RegisterLink onClick={clickHandler} $isLoggedIn={isLoggedIn}>
+            <S.RegisterLink onClick={clickHandler}>
               &nbsp;registration&nbsp;
             </S.RegisterLink>
             and start manage your tasks!

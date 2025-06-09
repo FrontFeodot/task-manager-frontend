@@ -1,4 +1,5 @@
 import { MOBILE } from '@common/utils/mediaHelper';
+import { Text } from '@components/text/TextCommon.styled';
 import styled, { keyframes } from 'styled-components';
 
 export const LoaderWrapper = styled.div<{
@@ -13,6 +14,7 @@ export const LoaderWrapper = styled.div<{
   z-index: 101;
 
   ${(props) => props.theme.flexbox};
+  flex-direction: column;
   width: 100%;
   height: 100%;
   background-color: rgba(
@@ -40,4 +42,9 @@ export const LoaderSpinner = styled.div<{ $size: 'sm' | 'lg' }>`
     width: 50px;
     height: 50px;
   }
+`;
+
+export const LoaderText = styled(Text)`
+  margin-top: 40px;
+  font-size: ${(props) => props.theme.fontLG};
 `;
