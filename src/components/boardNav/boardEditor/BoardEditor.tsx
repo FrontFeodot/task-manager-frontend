@@ -19,8 +19,15 @@ const BoardEditor = ({
   newField,
   setUpdatedData,
 }: IBoardEditor): JSX.Element => {
-  const { title, columns, createdAt, boardId, doneColumn, ownerEmail } =
-    editorData;
+  const {
+    title,
+    columns,
+    createdAt,
+    boardId,
+    doneColumn,
+    ownerEmail,
+    members,
+  } = editorData;
   const isOwner = isBoardOwner(ownerEmail);
 
   const {
@@ -28,7 +35,7 @@ const BoardEditor = ({
     isSelectModeActive,
     handleListClick,
     saveButtonHandler,
-    onBoardDelete,
+    onButtonsAction,
     closeEditMode,
     toggleSelectMode,
   } = useBoardEditorHandlers({
@@ -107,6 +114,22 @@ const BoardEditor = ({
           closeEditMode={closeEditMode}
         />
       ) : null}
+
+      {members?.length ? (
+        <S.BoardMembersList>
+          <S.MemberListTitle>Members list</S.MemberListTitle>
+          {map(members, (member) => (
+            <S.MemberlistItem>
+              <S.MemberListEmail> {member} </S.MemberListEmail>
+              {isOwner ? <StyledButton
+                label={`Kick user`}
+                buttonColor={IButtonColor.RED}
+                onClick={() => onButtonsAction('kick')}
+              /> : null}
+            </S.MemberlistItem>
+          ))}
+        </S.BoardMembersList>
+      ) : null}
       {!isOwner && newField !== 'board' ? (
         <S.BoardOwnerField>Board owner: {ownerEmail} </S.BoardOwnerField>
       ) : null}
@@ -114,12 +137,12 @@ const BoardEditor = ({
         <S.CreatedAtBoard>{`Created at: ${formatDate(createdAt, DATE_UP_TO_MINUTES)}`}</S.CreatedAtBoard>
       ) : null}
 
-      {newField !== 'board' && isOwner ? (
+      {newField !== 'board' ? (
         <S.DeleteBoardButton>
           <StyledButton
-            label="Delete board"
+            label={`${isOwner ? 'Delete' : 'Leave'} the board`}
             buttonColor={IButtonColor.RED}
-            onClick={onBoardDelete}
+            onClick={() => onButtonsAction(isOwner ? 'delete' : 'leave')}
           />
         </S.DeleteBoardButton>
       ) : null}

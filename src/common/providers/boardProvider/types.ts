@@ -15,6 +15,7 @@ export interface IBoard {
   tasks: ITask[];
   doneColumn: string | null;
   ownerEmail: string;
+  members: string[];
   createdAt: Date;
 }
 

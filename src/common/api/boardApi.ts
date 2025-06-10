@@ -163,3 +163,32 @@ export const shareBoard = async (
     return err as ICustomResponse;
   }
 };
+
+export const boardMemberApi = async (
+  type: 'leave' | 'kick',
+  boardId: string,
+  memberId?: string
+) => {
+  try {
+    const payload = {
+      boardId,
+      ...(type !== 'leave'
+        ? {
+            memberId,
+          }
+        : {}),
+    };
+    const response = await apiHandler({
+      method: IApiMethod.POST,
+      url: `${ApiCalls.BOARD_MEMBERS}/${type}` as ApiCalls,
+      withAuth: true,
+      payload,
+    });
+    if (!response || response.isError) {
+      throw response;
+    }
+    return response as ICustomResponse;
+  } catch (err) {
+    return err as ICustomResponse;
+  }
+};

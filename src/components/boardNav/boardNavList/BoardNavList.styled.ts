@@ -45,6 +45,7 @@ export const ListItemLabel = styled(Text)<{ $isExpanded: boolean }>`
   ${({ theme, $isExpanded }) => ($isExpanded ? theme.collapsedText : '')};
 
   transition: all 0.3s ease-in;
+  ${(props) => props.theme.collapsedText};
 
   & span {
     ${({ $isExpanded }) => ($isExpanded ? 'padding-right: 24px;' : '')};

@@ -14,7 +14,7 @@ const StyledButton = ({
   disabled,
 }: IStyledButton): JSX.Element => {
   return (
-    <S.Wrapper>
+    <S.Wrapper className="button_wrapper">
       <S.Button
         className={`${className || ''}`}
         $buttonColor={buttonColor}

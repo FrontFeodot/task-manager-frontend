@@ -16,7 +16,7 @@ export const BoardNavWrapper = styled.div<{ $isExpanded: boolean }>`
 
   @media (${TABLET_DESKTOP}) {
     position: relative;
-    width: ${({ $isExpanded }) => ($isExpanded ? '20%' : '80px')};
+    width: ${({ $isExpanded }) => ($isExpanded ? '25%' : '80px')};
     min-width: ${({ $isExpanded }) => ($isExpanded ? '248px' : '80px')};
   }
 
@@ -78,7 +78,7 @@ export const BoardNavLabel = styled(Text)`
 
   color: ${({ theme }) => theme.textPrimary};
   font-size: ${(props) => props.theme.fontXL};
-  height: 30px;
+  min-height: 30px;
 `;
 
 export const BoardList = styled.div`

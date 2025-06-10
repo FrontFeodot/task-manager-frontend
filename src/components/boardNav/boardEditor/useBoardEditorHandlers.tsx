@@ -1,6 +1,7 @@
 import { ICustomResponse } from '@common/interfaces/IApiHandler';
 import { ISaveButtonHandler, IUseBoardHandlers } from './BoardEditor.types';
 import {
+  boardMemberApi,
   createBoard,
   deleteBoard,
   shareBoard,
@@ -10,7 +11,7 @@ import {
 import { setCurrentBoardAction } from '@common/helpers/boardHelper';
 import { createColumnHelper, getColumn } from '@common/helpers/columnHelper';
 import { updateColumn } from '@common/api/columnApi';
-import { Dispatch, useState } from 'react';
+import { useState } from 'react';
 import {
   closeEditor,
   openEditor,
@@ -116,35 +117,68 @@ export const useBoardEditorHandlers = ({
     return { isError: 1, message: 'Unhandled' } as ICustomResponse;
   };
 
-  const deleteBoardCallback = async (
+  const getMembersActionData = (
+    type: 'leave' | 'kick' | 'delete',
     boardId: string,
-    setUpdatedData: Dispatch<React.SetStateAction<string | null>>
+    memberEmail?: string
+  ) => {
+    switch (type) {
+      case 'leave':
+        return {
+          title: 'Are you sure you want to leave this board?',
+          message: 'You will no longer be able to interact with this board.',
+          args: [type, boardId],
+          callback: membersCallback,
+        };
+      case 'kick':
+        return {
+          title: 'Are you sure you want to kick this member?',
+          message:
+            'This member will no longer be able to interact with this board.',
+          args: [type, boardId, memberEmail],
+          callback: membersCallback,
+        };
+      case 'delete':
+        return {
+          title: 'Delete the board?',
+          message: 'Tasks and columns from this board will be removed too',
+          args: [type, boardId],
+          callback: membersCallback,
+        };
+    }
+  };
+
+  const membersCallback = async (
+    type: 'leave' | 'kick' | 'delete',
+    boardId: string,
+    memberEmail?: string
   ) => {
     try {
-      const response = await deleteBoard(boardId);
-      if (response.isError) {
+      const response =
+        type === 'delete'
+          ? deleteBoard(boardId)
+          : await boardMemberApi(type, boardId, memberEmail);
+      if (!response) {
         throw response;
       }
-      if (setUpdatedData) {
-        setUpdatedData(null);
+
+      if (type === 'leave' || type === 'delete') {
+        setUpdatedData!(null);
+        closeEditor();
       }
-      closeEditor();
     } catch (err) {
       return err;
     }
   };
 
-  const onBoardDelete = () => {
-    if (!setUpdatedData) return;
+  const onButtonsAction = (type: 'leave' | 'kick' | 'delete'): void => {
+    if (type === 'delete' && !setUpdatedData) return;
+
+    const data = getMembersActionData(type, boardId);
 
     openModal({
       name: IModal.CONFIRM_MODAL,
-      data: {
-        title: 'Delete the board?',
-        message: 'Tasks and columns from this board will be removed too',
-        args: [boardId, setUpdatedData],
-        callback: deleteBoardCallback,
-      },
+      data,
     });
   };
 
@@ -155,10 +189,10 @@ export const useBoardEditorHandlers = ({
   return {
     loading,
     isSelectModeActive,
+    onButtonsAction,
     handleListClick,
     toggleSelectMode,
     saveButtonHandler,
-    onBoardDelete,
     closeEditMode,
   };
 };

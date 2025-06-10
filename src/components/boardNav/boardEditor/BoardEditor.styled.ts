@@ -10,6 +10,7 @@ export const BoardEditorWrapper = styled.div`
   width: 100%;
   height: 100%;
   padding: 16px 0 24px;
+  overflow-y: auto;
 
   @media (${MOBILE}) {
     min-height: 100%;
@@ -20,7 +21,7 @@ export const BoardEditorWrapper = styled.div`
 export const BoardEditorFieldsList = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 24px 0;
+  margin: 24px 8px;
   gap: 36px;
 
   @media (${TABLET_DESKTOP}) {
@@ -74,7 +75,6 @@ export const ColumnList = styled.div<{
   display: flex;
   flex-direction: column;
   height: auto;
-
   gap: 16px;
 
   .settings-column-item[data-value=${(props) => props.$doneColumn}] {
@@ -116,18 +116,61 @@ export const CreatedAtBoard = styled(Text)`
 
   ${(props) => props.theme.collapsedText};
 
-  margin-bottom: 16px;
+  margin: 8px 8px 16px;
   min-height: 30px;
 `;
 
-export const DeleteBoardButton = styled.div`
+export const BoardMembersList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  border: ${(props) => props.theme.borderCommon};
+  margin: 8px;
+  padding: 8px;
+`;
+
+export const MemberListTitle = styled(Text)`
   width: 100%;
-  min-height: 36px;
+  text-align: center;
+  font-size: ${(props) => props.theme.fontLG};
+  margin-bottom: 16px;
+`;
+
+export const MemberlistItem = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: ${(props) => props.theme.bgGradient};
+    padding: 8px;
+    height: 40px;
+
+  & .button_wrapper {
+    min-width: 120px;
+    max-width: 120px;
+  }
+`;
+
+export const MemberListEmail = styled(Text)`
+  font-size: ${(props) => props.theme.fontMD};
+  ${(props) => props.theme.collapsedText};
+`;
+
+export const KickMemberButton = styled.div`
+  width: 160px;
+  min-height: 24px;
 `;
 
 export const BoardOwnerField = styled(Text)`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin-bottom: 8px;
+  margin: 16px 8px;
+`;
+
+export const DeleteBoardButton = styled.div`
+  width: 100%;
+  min-height: 36px;
+  margin: 0;
 `;
