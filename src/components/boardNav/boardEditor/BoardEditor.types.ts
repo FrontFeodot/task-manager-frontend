@@ -1,11 +1,12 @@
 import { Dispatch, SetStateAction } from 'react';
 
 import { IBoard } from '@common/providers/boardProvider/types';
+import { ICustomResponse } from '@common/interfaces/IApiHandler';
 
 export interface IBoardEditor {
   editorData: IBoard;
   newField?: 'board' | 'column';
-  setUpdatedData?: Dispatch<SetStateAction<string | null>>;
+  result?: ICustomResponse | null;
 }
 
 export interface ISaveButtonHandler {
@@ -21,5 +22,4 @@ export interface ISaveButtonHandler {
 export interface IUseBoardHandlers {
   boardId: string;
   editorData: IBoard;
-  setUpdatedData?: Dispatch<SetStateAction<string | null>>;
 }

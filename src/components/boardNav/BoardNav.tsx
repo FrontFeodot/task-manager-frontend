@@ -17,17 +17,11 @@ import BoardEditor from './boardEditor/BoardEditor';
 const BoardNav = ({ boardList }: IBoardNav): JSX.Element => {
   const isDesktop = isDesktopView();
   const [isExpanded, toggleNav] = useState(isDesktop);
-  const [newBoardTitle, setNewBoardTitle] = useState<string | null>(null);
   const openedEditor = useBoardState((s) => s.openedEditor);
   const boardNavText = openedEditor ? 'Settings' : 'Boards List';
-
   const editorData =
-    find(
-      boardList,
-      (board) =>
-        board.title === newBoardTitle ||
-        board.boardId === openedEditor?.data.boardId
-    ) || openedEditor?.data;
+    find(boardList, (board) => board.boardId === openedEditor?.data.boardId) ||
+    openedEditor?.data;
 
   useEffect(() => {
     if (openedEditor) {
@@ -64,7 +58,7 @@ const BoardNav = ({ boardList }: IBoardNav): JSX.Element => {
         <BoardEditor
           editorData={editorData as IBoard}
           newField={openedEditor.newField}
-          setUpdatedData={setNewBoardTitle}
+          result={openedEditor.result}
         />
       ) : (
         <BoardNavList boardList={boardList} isExpanded={isExpanded} />

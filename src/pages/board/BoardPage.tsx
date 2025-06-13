@@ -8,15 +8,34 @@ import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 import { useUserState } from '@common/providers/userProvider/useUserState';
 
 import * as S from './BoardPage.styled';
+import {
+  connectSocket,
+  disconnectSocket,
+  joinBoard,
+} from '@common/api/socket/socket';
 
 const BoardPage = (): JSX.Element => {
   const boardList = useBoardState((s) => s.boardList);
   const boardLoading = useBoardState((s) => s.loading);
   const selectedBoardId = useBoardState((s) => s.currentBoardId) || '';
   const userLoading = useUserState((s) => s.loading);
-
+  const selectedBoardData = useBoardState(
+    (s) => s.boardList?.[selectedBoardId]
+  );
   const loading = userLoading || boardLoading;
 
+  useEffect(() => {
+    connectSocket();
+    return () => {
+      disconnectSocket();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (selectedBoardId) {
+      joinBoard(selectedBoardId);
+    }
+  }, [selectedBoardId]);
   useEffect(() => {
     getBoards();
   }, []);
@@ -25,10 +44,7 @@ const BoardPage = (): JSX.Element => {
     <S.Wrapper>
       <BoardNav boardList={boardList} />
 
-      <BoardWrapper
-        boardData={boardList?.[selectedBoardId]}
-        loading={loading}
-      />
+      <BoardWrapper boardData={selectedBoardData} loading={loading} />
     </S.Wrapper>
   );
 };

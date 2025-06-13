@@ -11,12 +11,16 @@ import { IBoard, IColumn } from '@common/providers/boardProvider/types';
 import { IBoardProps } from './BoardWrapper.types';
 import BoardComponent from './boardComponent/BoardComponent';
 import useAppParams from '@common/hooks/useAppParams';
+import {
+  connectSocket,
+  disconnectSocket,
+  joinBoard,
+} from '@common/api/socket/socket';
 
 const BoardWrapper = ({ boardData, loading }: IBoardProps): JSX.Element => {
   const [virtualBoard, setVirtualBoard] = useState<IBoard | null | undefined>(
     boardData
   );
-
   useAppParams();
 
   useEffect(() => {

@@ -143,8 +143,8 @@ export const MemberlistItem = styled.div`
   align-items: center;
   justify-content: space-between;
   background: ${(props) => props.theme.bgGradient};
-    padding: 8px;
-    height: 40px;
+  padding: 8px;
+  height: 40px;
 
   & .button_wrapper {
     min-width: 120px;
@@ -173,4 +173,20 @@ export const DeleteBoardButton = styled.div`
   width: 100%;
   min-height: 36px;
   margin: 0;
+`;
+
+export const ResultContainer = styled(Text)<{ $isSuccess: boolean }>`
+  position: absolute;
+  bottom: 0;
+  ${(props) => props.theme.flexbox};
+  align-self: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+
+  background-color: ${({ $isSuccess, theme }) =>
+    $isSuccess ? theme.successBg : theme.errorBg};
+  color: ${(props) => props.theme.errorText};
+  box-sizing: border-box;
 `;

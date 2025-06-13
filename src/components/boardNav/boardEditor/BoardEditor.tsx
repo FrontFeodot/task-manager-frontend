@@ -13,11 +13,17 @@ import * as S from './BoardEditor.styled';
 import { IBoardEditor } from './BoardEditor.types';
 import { useBoardEditorHandlers } from './useBoardEditorHandlers';
 import { isBoardOwner } from '@common/helpers/boardHelper';
+import { useEffect, useState } from 'react';
+import {
+  openEditor,
+  setBoardEditorResult,
+} from '@common/providers/boardProvider/useBoardState';
+import { useUserState } from '@common/providers/userProvider/useUserState';
 
 const BoardEditor = ({
   editorData,
   newField,
-  setUpdatedData,
+  result,
 }: IBoardEditor): JSX.Element => {
   const {
     title,
@@ -30,22 +36,43 @@ const BoardEditor = ({
   } = editorData;
   const isOwner = isBoardOwner(ownerEmail);
 
+  const doneColumnTitle =
+    find(columns, (column) => column.columnId === doneColumn)?.title.replace(
+      / /g,
+      '_'
+    ) || null;
+
+  const [editableField, setEditableField] = useState<string | null>(
+    'title_create'
+  );
+
   const {
-    loading,
     isSelectModeActive,
     handleListClick,
-    saveButtonHandler,
     onButtonsAction,
-    closeEditMode,
     toggleSelectMode,
   } = useBoardEditorHandlers({
-    setUpdatedData,
     boardId,
     editorData,
   });
 
-  const doneColumnTitle =
-    find(columns, (column) => column.columnId === doneColumn)?.title || null;
+  useEffect(() => {
+    if (!!result) {
+      if (result.isSuccess) {
+        setEditableField(null);
+      }
+      setTimeout(() => {
+        if (!!result) {
+          setBoardEditorResult(null);
+        }
+      }, 5000);
+    }
+  }, [result]);
+
+  const onDeleteOrLeaveButton = () => {
+    const email = isOwner ? undefined : useUserState.getState().data?.email;
+    onButtonsAction(isOwner ? 'delete' : 'leave', isOwner ? undefined : email);
+  };
 
   return (
     <S.BoardEditorWrapper>
@@ -53,10 +80,11 @@ const BoardEditor = ({
         <S.TitleWrapper>
           <S.FieldLabel $isTitle>Title</S.FieldLabel>
           <BoardEditorInput
-            saveButtonHandler={saveButtonHandler}
+            editableField={editableField}
+            setEditableField={setEditableField}
+            result={result}
             fieldName={`title_${newField === 'board' ? 'create' : 'update'}`}
             currentValue={title}
-            closeEditMode={closeEditMode}
           />
         </S.TitleWrapper>
         {columns.length > 1 ? (
@@ -78,40 +106,43 @@ const BoardEditor = ({
             onClick={handleListClick}
             className="settings-column-list"
             $isSelectModeActive={isSelectModeActive}
-            $doneColumn={loading ? null : doneColumnTitle}
+            $doneColumn={doneColumnTitle}
           >
             <S.FieldLabel>Columns</S.FieldLabel>
             {columns?.length
               ? map(columns, ({ title, columnId }, index) => {
                   return (
                     <BoardEditorInput
-                      saveButtonHandler={saveButtonHandler}
+                      editableField={editableField}
+                      setEditableField={setEditableField}
+                      result={result}
                       fieldName={`column_${index + 1}`}
                       currentValue={title}
                       key={index}
                       columnId={columnId}
                       boardId={boardId}
-                      closeEditMode={closeEditMode}
                     />
                   );
                 })
               : null}
             <BoardEditorInput
-              saveButtonHandler={saveButtonHandler}
+              editableField={editableField}
+              setEditableField={setEditableField}
+              result={result}
               fieldName="column_create"
               boardId={boardId}
               autofocus={newField === 'column'}
-              closeEditMode={closeEditMode}
             />
           </S.ColumnList>
         ) : null}
       </S.BoardEditorFieldsList>
       {isOwner && newField !== 'board' ? (
         <BoardEditorInput
-          saveButtonHandler={saveButtonHandler}
+          editableField={editableField}
+          setEditableField={setEditableField}
+          result={result}
           fieldName="share_board"
           boardId={boardId}
-          closeEditMode={closeEditMode}
         />
       ) : null}
 
@@ -119,13 +150,15 @@ const BoardEditor = ({
         <S.BoardMembersList>
           <S.MemberListTitle>Members list</S.MemberListTitle>
           {map(members, (member) => (
-            <S.MemberlistItem>
+            <S.MemberlistItem key={member}>
               <S.MemberListEmail> {member} </S.MemberListEmail>
-              {isOwner ? <StyledButton
-                label={`Kick user`}
-                buttonColor={IButtonColor.RED}
-                onClick={() => onButtonsAction('kick')}
-              /> : null}
+              {isOwner ? (
+                <StyledButton
+                  label={`Kick user`}
+                  buttonColor={IButtonColor.RED}
+                  onClick={() => onButtonsAction('kick', member)}
+                />
+              ) : null}
             </S.MemberlistItem>
           ))}
         </S.BoardMembersList>
@@ -142,9 +175,14 @@ const BoardEditor = ({
           <StyledButton
             label={`${isOwner ? 'Delete' : 'Leave'} the board`}
             buttonColor={IButtonColor.RED}
-            onClick={() => onButtonsAction(isOwner ? 'delete' : 'leave')}
+            onClick={onDeleteOrLeaveButton}
           />
         </S.DeleteBoardButton>
+      ) : null}
+      {result ? (
+        <S.ResultContainer $isSuccess={!!result.isSuccess}>
+          {result.message}
+        </S.ResultContainer>
       ) : null}
     </S.BoardEditorWrapper>
   );

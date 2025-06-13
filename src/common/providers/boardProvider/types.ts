@@ -1,3 +1,4 @@
+import { ICustomResponse } from '@common/interfaces/IApiHandler';
 import { IBoardList } from '@common/interfaces/IBoard';
 import { ITask } from '@common/interfaces/ITask';
 
@@ -27,5 +28,6 @@ export interface IColumn {
 
 export interface IOpenedEditor {
   newField?: 'board' | 'column';
+  result?: ICustomResponse | null;
   data: IBoard;
 }

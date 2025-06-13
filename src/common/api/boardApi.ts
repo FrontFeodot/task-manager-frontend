@@ -18,6 +18,7 @@ import {
   setCurrentBoardAction,
 } from '@common/helpers/boardHelper';
 import { IBoardList } from '@common/interfaces/IBoard';
+import { IBoard } from '@common/providers/boardProvider/types';
 
 export const getBoards = async (): Promise<ICustomResponse<
   IBoardList | undefined
@@ -53,9 +54,9 @@ export const getBoards = async (): Promise<ICustomResponse<
 
 export const createBoard = async (
   title: string
-): Promise<ICustomResponse<string | undefined>> => {
+): Promise<ICustomResponse<IBoard | undefined>> => {
   try {
-    const response = await apiHandler<string, { title: string }>({
+    const response = await apiHandler<IBoard, { title: string }>({
       method: IApiMethod.POST,
       url: ApiCalls.BOARD_CREATE,
       withAuth: true,
@@ -66,7 +67,7 @@ export const createBoard = async (
     }
     await getBoards();
 
-    return response as ICustomResponse<string>;
+    return response as ICustomResponse<IBoard>;
   } catch (err) {
     return err as ICustomResponse;
   }
@@ -92,7 +93,8 @@ export const updateBoardTitle = async (payload: {
     return err as ICustomResponse;
   }
 };
-export const deleteBoard = async (
+
+export const deleteBoardApi = async (
   boardId: string
 ): Promise<ICustomResponse> => {
   try {

@@ -8,30 +8,30 @@ import Icon from '@common/icons/Icon';
 
 import { IBoardEditorInput } from './BoardEditorInput.types';
 import * as S from './BoardEditorInput.styled';
+import { ICustomResponse } from '@common/interfaces/IApiHandler';
+import { setBoardEditorResult } from '@common/providers/boardProvider/useBoardState';
+import { onEditorInputSubmit } from '@common/helpers/boardEditorHelper';
+import { manageColumnEvent } from '@common/api/socket/socket';
 
 const BoardEditorInput = ({
   fieldName,
   currentValue,
-  saveButtonHandler,
   columnId,
   boardId,
   autofocus,
-  closeEditMode,
+  result,
+  editableField,
+  setEditableField,
 }: IBoardEditorInput): JSX.Element => {
   const [fieldValue, setFieldValue] = useState(currentValue);
   const isBoardCreate = fieldName === 'title_create';
   const isBoardUpdate = fieldName === 'title_update';
   const isShareBoard = fieldName === 'share_board';
-
-  const isColumnUpdate = /\d/.test(fieldName);
   const isColumnCreate = fieldName === 'column_create';
+  const isColumnUpdate = /\d/.test(fieldName);
 
-  const [isEdit, setIsEdit] = useState<boolean | null>(isBoardCreate);
+  const isEdit = editableField === fieldName;
 
-  const [result, setResult] = useState<{
-    status: number;
-    message: string;
-  } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const hasCancelButton = !isBoardCreate;
@@ -50,33 +50,42 @@ const BoardEditorInput = ({
 
   const handleEditMode = () => {
     if (isColumnCreate || isShareBoard) {
-      setIsEdit(true);
+      setEditableField(fieldName);
       setFieldValue('');
+    }
+    if (result) {
+      setBoardEditorResult(null);
     }
   };
 
   const onChangeHandler = (e: SyntheticEvent<HTMLInputElement>): void => {
-    if (!!result) {
-      setResult(null);
+    if (result) {
+      setBoardEditorResult(null);
     }
     setFieldValue(e.currentTarget.value);
   };
 
   const onCancelHandler = () => {
     setFieldValue(currentValue);
-    setIsEdit(false);
-    closeEditMode();
+    setEditableField(null);
+    if (!!result) {
+      setBoardEditorResult(null);
+    }
   };
 
   const onSubmit = async (): Promise<void> => {
     if (!fieldValue) {
-      return setResult({ status: 0, message: 'Field is empty' });
+      return setBoardEditorResult({
+        isError: 1,
+        isSuccess: 0,
+        message: 'Field is empty',
+      });
     }
     if (isColumnCreate) {
-      setIsEdit(false);
+      setEditableField(null);
     }
 
-    const { isSuccess, message } = await saveButtonHandler({
+    onEditorInputSubmit({
       fieldValue,
       isBoardCreate,
       isBoardUpdate,
@@ -84,28 +93,13 @@ const BoardEditorInput = ({
       isColumnUpdate,
       isShareBoard,
       columnId,
+      boardId,
     });
-
-    if (isColumnCreate && isSuccess) {
-      closeEditMode();
-      return;
-    }
-    setResult({ status: isSuccess, message });
-    setTimeout(() => {
-      setResult(null);
-      if (isSuccess) {
-        closeEditMode();
-        setIsEdit(false);
-      }
-    }, 5000);
   };
 
-  const onDelete = async (): Promise<void> => {
+  const onColumnDelete = async (): Promise<void> => {
     if (columnId && boardId) {
-      const response = await deleteColumnHelper({ columnId, boardId });
-      if (response && response.isError) {
-        setResult({ status: 0, message: response.message });
-      }
+      manageColumnEvent({ columnId, boardId, isDelete: true });
     }
   };
 
@@ -119,30 +113,23 @@ const BoardEditorInput = ({
             </S.ShareBoardTitle>
           ) : null}
           <S.StyledInput
-            disabled={!!result?.status}
+            disabled={!!result?.isSuccess}
             ref={inputRef}
             name={fieldName}
             value={fieldValue}
             onChange={onChangeHandler}
             autoFocus
           />
-          {result ? (
-            <S.ResultContainer $isSuccess={!!result.status}>
-              {result.message}
-            </S.ResultContainer>
-          ) : null}
 
-          {!result?.status ? (
+          {!result ? (
             <S.ButtonContainer $hasCancelButton={hasCancelButton}>
               <StyledButton
-                disabled={!!result?.status}
                 onClick={onSubmit}
                 label={isShareBoard ? 'Send' : 'Save'}
                 buttonColor={IButtonColor.GREEN}
               />
               {hasCancelButton ? (
                 <StyledButton
-                  disabled={!!result?.status}
                   label="Cancel"
                   buttonColor={IButtonColor.RED}
                   onClick={onCancelHandler}
@@ -154,7 +141,7 @@ const BoardEditorInput = ({
       ) : (
         <S.PresentationWrapper
           className={isColumnCreate ? '' : 'settings-column-item'}
-          data-value={fieldValue}
+          data-value={fieldValue?.replace(/ /g, '_')}
           $isColumn={isColumnCreate || isColumnUpdate}
           $isColumnCreate={isColumnCreate}
           onClick={handleEditMode}
@@ -171,10 +158,17 @@ const BoardEditorInput = ({
           {isColumnUpdate || isBoardUpdate ? (
             <S.PresentationButtons>
               <S.PresentationButtonWrapper>
-                <Icon name="edit" size={16} onClick={() => setIsEdit(true)} />
+                <Icon
+                  name="edit"
+                  size={16}
+                  onClick={() => setEditableField(fieldName)}
+                />
               </S.PresentationButtonWrapper>
               {isColumnUpdate ? (
-                <S.PresentationButtonWrapper $isRedButton onClick={onDelete}>
+                <S.PresentationButtonWrapper
+                  $isRedButton
+                  onClick={onColumnDelete}
+                >
                   <Icon name="trash" size={20} />
                 </S.PresentationButtonWrapper>
               ) : null}

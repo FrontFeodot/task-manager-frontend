@@ -9,6 +9,7 @@ import { IModal } from '@common/providers/appProvider/types';
 
 import { getBoardById, getCurrentBoardData } from './boardHelper';
 import { getLastOrderByType, getTasksForColumn } from './taskHelper';
+import { IManageColumn } from '@common/api/socket/socket';
 
 export const getColumns = (): IColumn[] | undefined => {
   const currentBoardData = getCurrentBoardData();
@@ -43,20 +44,6 @@ export const getColumn = ({
     }
     return undefined;
   }) as IColumn | undefined;
-};
-
-export const createColumnHelper = async (
-  title: string,
-  boardId: string
-): Promise<ICustomResponse> => {
-  const lastColumnOrder = getLastOrderByType({ type: 'columns', boardId });
-  const columnPayload = { title, boardId, order: lastColumnOrder + 1 };
-  const response = await createColumnApi(columnPayload);
-  if (response.isError) {
-    return response;
-  }
-  await getBoards();
-  return response;
 };
 
 interface IDeleteColumnHelper {
