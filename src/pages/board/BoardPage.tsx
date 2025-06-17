@@ -1,18 +1,18 @@
 import { useEffect } from 'react';
 
-import BoardWrapper from '@components/board/BoardWrapper';
-import BoardNav from '@components/boardNav/BoardNav';
-
 import { getBoards } from '@common/api/boardApi';
-import { useBoardState } from '@common/providers/boardProvider/useBoardState';
-import { useUserState } from '@common/providers/userProvider/useUserState';
-
-import * as S from './BoardPage.styled';
 import {
   connectSocket,
   disconnectSocket,
   joinBoard,
 } from '@common/api/socket/socket';
+import { useBoardState } from '@common/providers/boardProvider/useBoardState';
+import { useUserState } from '@common/providers/userProvider/useUserState';
+
+import BoardWrapper from '@components/board/BoardWrapper';
+import BoardNav from '@components/boardNav/BoardNav';
+
+import * as S from './BoardPage.styled';
 
 const BoardPage = (): JSX.Element => {
   const boardList = useBoardState((s) => s.boardList);

@@ -1,21 +1,21 @@
+import find from 'lodash/find';
 import { useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import find from 'lodash/find';
+
+import { getCurrentBoardId } from '@common/helpers/boardHelper';
+import { getColumnTitles } from '@common/helpers/columnHelper';
+import { closeTaskModal } from '@common/helpers/taskHelper';
+import { IModal } from '@common/providers/appProvider/types';
+import { openModal } from '@common/providers/appProvider/useAppState';
+import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 
 import EmptyLayout from '@components/layouts/emptyLayout/EmptyLayout';
 import { IEmptyLayoutType } from '@components/layouts/emptyLayout/EmptyLayout.types';
-import TaskComponent from '@components/task/taskComponent/TaskComponent';
+import Loader from '@components/layouts/loader/Loader';
 import CloseModalIcon from '@components/modals/closeModalIcon/CloseModalIcon';
-
-import { getCurrentBoardId } from '@common/helpers/boardHelper';
-import { useBoardState } from '@common/providers/boardProvider/useBoardState';
-import { getColumnTitles } from '@common/helpers/columnHelper';
-import { closeTaskModal } from '@common/helpers/taskHelper';
+import TaskComponent from '@components/task/taskComponent/TaskComponent';
 
 import * as S from './TaskModal.styled';
-import Loader from '@components/layouts/loader/Loader';
-import { openModal } from '@common/providers/appProvider/useAppState';
-import { IModal } from '@common/providers/appProvider/types';
 
 const TaskModal = (): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);

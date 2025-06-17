@@ -1,6 +1,8 @@
-import { MOBILE, TABLET } from '@common/utils/mediaHelper';
-import { Text, TextInline } from '@components/text/TextCommon.styled';
 import styled from 'styled-components';
+
+import { MOBILE, TABLET } from '@common/utils/mediaHelper';
+
+import { Text, TextInline } from '@components/text/TextCommon.styled';
 
 export const Wrapper = styled.div`
   display: flex;

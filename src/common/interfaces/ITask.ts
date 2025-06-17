@@ -1,4 +1,3 @@
-import { UniqueIdentifier } from '@dnd-kit/core';
 import { InputHTMLAttributes, SyntheticEvent } from 'react';
 import { RawDraftContentState } from 'react-draft-wysiwyg';
 import {
@@ -7,6 +6,8 @@ import {
   UseFormSetValue,
   UseFormWatch,
 } from 'react-hook-form';
+
+import { UniqueIdentifier } from '@dnd-kit/core';
 
 export interface ITask {
   taskId: number;

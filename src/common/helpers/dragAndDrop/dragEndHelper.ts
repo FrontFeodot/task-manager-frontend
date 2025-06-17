@@ -1,13 +1,14 @@
 import map from 'lodash/map';
-import { Over } from '@dnd-kit/core';
 
 import {
   updateColumnOrder,
   updateTaskOrder,
 } from '@common/api/updateTaskOrder';
+import { IUpdateTaskOrder } from '@common/interfaces/IDnd';
 import { ITask } from '@common/interfaces/ITask';
 import { IColumn } from '@common/providers/boardProvider/types';
-import { IUpdateTaskOrder } from '@common/interfaces/IDnd';
+
+import { Over } from '@dnd-kit/core';
 
 export const taskDragEnd = async (
   over: Over,

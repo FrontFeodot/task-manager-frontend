@@ -1,13 +1,13 @@
 import map from 'lodash/map';
+
+import TaskCard from './tasks/TaskCard';
+import * as S from './TasksSection.styled';
+import { ITasksSection } from './TasksSection.types';
+import { useDroppable } from '@dnd-kit/core';
 import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { useDroppable } from '@dnd-kit/core';
-
-import * as S from './TasksSection.styled';
-import { ITasksSection } from './TasksSection.types';
-import TaskCard from './tasks/TaskCard';
 
 const TasksSection = ({
   taskSection,

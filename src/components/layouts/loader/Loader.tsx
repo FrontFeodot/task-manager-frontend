@@ -1,4 +1,5 @@
 import { useAppState } from '@common/providers/appProvider/useAppState';
+
 import * as S from './Loader.styled';
 
 interface ILoader {

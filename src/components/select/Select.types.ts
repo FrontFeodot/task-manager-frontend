@@ -1,9 +1,9 @@
 import { RefObject } from 'react';
 import { UseFormSetValue } from 'react-hook-form';
 
-import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';
-
 import { ISchema } from '@common/utils/tasdDetailsConfig';
+
+import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';
 
 export interface ISelect {
   items: ISchema | string[];

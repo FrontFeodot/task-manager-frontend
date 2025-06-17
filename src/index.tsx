@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from '@theme/theme';
 
 import App from './App';
+
 import './index.css';
 
 const rootElement = document.getElementById('root');

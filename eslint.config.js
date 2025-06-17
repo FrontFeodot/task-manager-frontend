@@ -6,6 +6,8 @@ import jsxRuntimePlugin from 'eslint-plugin-react/configs/jsx-runtime.js';
 import prettierConfig from 'eslint-config-prettier';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import eslintPluginImport from 'eslint-plugin-import';
+import sortPlugin from 'eslint-plugin-simple-import-sort';
+import unusedImports from 'eslint-plugin-unused-imports';
 
 export default [
   {
@@ -23,9 +25,7 @@ export default [
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
+        ecmaFeatures: { jsx: true },
         project: './tsconfig.json',
       },
       ecmaVersion: 'latest',
@@ -37,88 +37,60 @@ export default [
       },
     },
     plugins: {
+      'unused-imports': unusedImports,
       'react-refresh': reactRefresh,
       '@typescript-eslint': tsPlugin,
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,
       import: eslintPluginImport,
+      'simple-import-sort': sortPlugin,
     },
-    settings: {
-      react: {
-        version: 'detect',
-      },
-    },
+    settings: { react: { version: 'detect' } },
     rules: {
+      // Import sorting: libraries, @common, @components, @pages, then relatives
+      'simple-import-sort/imports': [
+        'error',
+        {
+          groups: [
+            ['^[^@./]'],
+            ['^@common'],
+            ['^@components'],
+            ['^@pages'],
+            ['^@theme'],
+            ['^\.'],
+            ['^.+\\.css$'],
+          ],
+        },
+      ],
+      'simple-import-sort/exports': 'error',
+      // Disable conflicting import/order rule
+      'import/order': 'off',
+
+      // Existing style rules
       indent: 'off',
       semi: 'off',
       quotes: 'off',
-
-      // TypeScript rules
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
-        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
-      ],
       '@typescript-eslint/no-empty-function': 'warn',
       '@typescript-eslint/ban-ts-comment': 'warn',
-
-      // React rules
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'off',
       'react/prop-types': 'off',
       'react/display-name': 'off',
-
-      // Best practices
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'no-var': 'error',
       'prefer-const': 'warn',
       eqeqeq: ['error', 'always'],
-
-      ...reactHooksPlugin.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
-      'import/order': [
+      'no-unused-vars': 'off', // or "@typescript-eslint/no-unused-vars": "off",
+      'unused-imports/no-unused-imports': 'error',
+      'unused-imports/no-unused-vars': [
         'warn',
         {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            'parent',
-            'sibling',
-            'index',
-          ],
-          pathGroups: [
-            {
-              pattern: 'react',
-              group: 'external',
-              position: 'before',
-            },
-            {
-              pattern: 'react-dom',
-              group: 'external',
-              position: 'before',
-            },
-            {
-              pattern: 'react*',
-              group: 'external',
-              position: 'before',
-            },
-            {
-              pattern: '@/**',
-              group: 'internal',
-              position: 'after',
-            },
-          ],
-          pathGroupsExcludedImportTypes: ['react'],
-          'newlines-between': 'always',
-          alphabetize: {
-            order: 'asc',
-            caseInsensitive: true,
-          },
+          vars: 'all',
+          varsIgnorePattern: '^_',
+          args: 'after-used',
+          argsIgnorePattern: '^_',
         },
       ],
     },

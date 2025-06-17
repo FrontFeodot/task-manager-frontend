@@ -1,5 +1,5 @@
-import reduce from 'lodash/reduce';
 import assign from 'lodash/assign';
+import reduce from 'lodash/reduce';
 
 import { getStoriesList } from '@common/helpers/taskHelper';
 import { ITaskPriority, ITaskType } from '@common/interfaces/ITask';

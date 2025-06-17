@@ -1,6 +1,8 @@
-import { MOBILE } from '@common/utils/mediaHelper';
-import { Text } from '@components/text/TextCommon.styled';
 import styled, { keyframes } from 'styled-components';
+
+import { MOBILE } from '@common/utils/mediaHelper';
+
+import { Text } from '@components/text/TextCommon.styled';
 
 export const LoaderWrapper = styled.div<{
   $isTransparent: boolean;

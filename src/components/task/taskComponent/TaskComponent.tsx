@@ -1,31 +1,31 @@
 import pick from 'lodash/pick';
-import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-import TaskTitle from '@components/inputs/taskTitleInput/TaskTitle';
-import TaskFormSelect from '@components/select/taskFormSelect/TaskFormSelect';
-import StyledButton from '@components/styledButton/StyledButton';
-import { IButtonColor } from '@components/styledButton/StyledButton.types';
-import TaskDescriptionInput from '@components/inputs/taskDescription/TaskDescription';
-
+import { getBoards } from '@common/api/boardApi';
+import { deleteTask, updateTask } from '@common/api/taskApi';
+import { getColumn } from '@common/helpers/columnHelper';
+import { formatDate } from '@common/helpers/dateHelper';
+import { getParentTask } from '@common/helpers/taskHelper';
+import { ITask } from '@common/interfaces/ITask';
+import { IModal } from '@common/providers/appProvider/types';
+import { openModal } from '@common/providers/appProvider/useAppState';
+import { IColumn } from '@common/providers/boardProvider/types';
+import { DATE_UP_TO_MINUTES } from '@common/utils/dateFormats';
 import {
   getStorySchema,
   taskPrioritySchema,
   taskTypesSchema,
 } from '@common/utils/tasdDetailsConfig';
-import { deleteTask, updateTask } from '@common/api/taskApi';
-import { getBoards } from '@common/api/boardApi';
-import { getColumn } from '@common/helpers/columnHelper';
-import { IColumn } from '@common/providers/boardProvider/types';
-import { getParentTask } from '@common/helpers/taskHelper';
-import { formatDate } from '@common/helpers/dateHelper';
-import { DATE_UP_TO_MINUTES } from '@common/utils/dateFormats';
+
+import TaskDescriptionInput from '@components/inputs/taskDescription/TaskDescription';
+import TaskTitle from '@components/inputs/taskTitleInput/TaskTitle';
+import TaskFormSelect from '@components/select/taskFormSelect/TaskFormSelect';
+import StyledButton from '@components/styledButton/StyledButton';
+import { IButtonColor } from '@components/styledButton/StyledButton.types';
 
 import * as S from './TaskComponent.styled';
 import { ITaskComponent, ITaskFormValues } from './TaskComponent.types';
-import { openModal } from '@common/providers/appProvider/useAppState';
-import { IModal } from '@common/providers/appProvider/types';
-import { ITask } from '@common/interfaces/ITask';
 
 const TaskComponent = ({
   task,

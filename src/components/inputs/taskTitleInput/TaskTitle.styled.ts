@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { Text } from '@components/text/TextCommon.styled';
 
 export const TaskInputContainer = styled.div<{}>`

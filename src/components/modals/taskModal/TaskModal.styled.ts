@@ -1,10 +1,11 @@
+import styled from 'styled-components';
+
 import {
   DESKTOP,
   MOBILE,
   TABLET,
   TABLET_DESKTOP,
 } from '@common/utils/mediaHelper';
-import styled from 'styled-components';
 
 export const TaskModalWrapper = styled.div`
   padding: 36px 16px 16px;

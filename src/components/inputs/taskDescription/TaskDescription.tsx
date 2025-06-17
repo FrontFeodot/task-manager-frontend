@@ -1,21 +1,17 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useTheme } from 'styled-components';
 import {
-  EditorState,
-  RawDraftContentState,
+  ContentState,
   convertFromRaw,
   convertToRaw,
-  ContentState,
+  EditorState,
   Modifier,
+  RawDraftContentState,
   SelectionState,
 } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
-import { Editor } from 'react-draft-wysiwyg';
 import isObject from 'lodash/isObject';
-
-import StyledButton from '@components/styledButton/StyledButton';
-import { IButtonColor } from '@components/styledButton/StyledButton.types';
-import { TextInline } from '@components/text/TextCommon.styled';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Editor } from 'react-draft-wysiwyg';
+import { useTheme } from 'styled-components';
 
 import {
   getRawDescriptionContent,
@@ -23,13 +19,16 @@ import {
 } from '@common/helpers/taskHelper';
 import Icon from '@common/icons/Icon';
 
+import StyledButton from '@components/styledButton/StyledButton';
+import { IButtonColor } from '@components/styledButton/StyledButton.types';
+import { TextInline } from '@components/text/TextCommon.styled';
+
+import { generateToolbarConfig, toolbarOptions } from './editorConfig';
+import useToolbarStyling from './hooks/useToolbarStyling';
+import * as S from './TaskDescription.styled';
 import { IEditorRef, ITaskDescription } from './TaskDescription.types';
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-
-import * as S from './TaskDescription.styled';
-import useToolbarStyling from './hooks/useToolbarStyling';
-import { generateToolbarConfig, toolbarOptions } from './editorConfig';
 
 const TaskDescriptionInput = ({
   setValue,

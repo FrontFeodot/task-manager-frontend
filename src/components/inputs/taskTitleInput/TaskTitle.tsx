@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
 import upperFirst from 'lodash/upperFirst';
+import { useRef, useState } from 'react';
 
 import * as S from './TaskTitle.styled';
 import { ITaskInput } from './TaskTitle.types';

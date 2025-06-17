@@ -1,3 +1,6 @@
+import Cookies from 'js-cookie';
+import { io, Socket } from 'socket.io-client';
+
 import { ICustomResponse } from '@common/interfaces/IApiHandler';
 import { IBoard } from '@common/providers/boardProvider/types';
 import {
@@ -5,9 +8,7 @@ import {
   setBoardEditorResult,
 } from '@common/providers/boardProvider/useBoardState';
 import { AUTH_TOKEN } from '@common/utils/cookies';
-import Cookies from 'js-cookie';
-import { SetStateAction } from 'react';
-import { io, Socket } from 'socket.io-client';
+
 import { getBoards } from '../boardApi';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;

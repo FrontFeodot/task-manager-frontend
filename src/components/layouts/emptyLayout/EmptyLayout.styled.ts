@@ -1,5 +1,6 @@
-import { Text, TextInline } from '@components/text/TextCommon.styled';
 import styled from 'styled-components';
+
+import { Text, TextInline } from '@components/text/TextCommon.styled';
 
 export const EmptyLayoutWrapper = styled.div`
   ${(props) => props.theme.flexbox};

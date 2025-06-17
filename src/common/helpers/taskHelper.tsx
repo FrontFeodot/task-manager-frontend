@@ -1,10 +1,10 @@
-import { SetURLSearchParams } from 'react-router-dom';
-
+import { RawDraftContentState } from 'draft-js';
 import filter from 'lodash/filter';
 import find from 'lodash/find';
 import maxBy from 'lodash/maxBy';
-import { RawDraftContentState } from 'draft-js';
+import { SetURLSearchParams } from 'react-router-dom';
 
+import Icon from '@common/icons/Icon';
 import {
   IRawForCompare,
   ITask,
@@ -15,10 +15,9 @@ import { IColumn } from '@common/providers/boardProvider/types';
 
 import {
   getBoardById,
-  getCurrentBoardId,
   getCurrentBoardData,
+  getCurrentBoardId,
 } from './boardHelper';
-import Icon from '@common/icons/Icon';
 
 export const getPriorityIcon = (
   priority?: ITaskPriority,
@@ -111,7 +110,8 @@ export const prepareRawForCompare = (
   raw: RawDraftContentState
 ): IRawForCompare => ({
   entityMap: raw.entityMap,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
+  // eslint-disable-next-line unused-imports/no-unused-vars
   blocks: raw.blocks.map(({ key, ...rest }) => rest),
 });
 

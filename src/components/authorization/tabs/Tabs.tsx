@@ -1,8 +1,8 @@
+import { keys } from 'lodash';
 import map from 'lodash/map';
 
 import * as S from './Tabs.styled';
 import { ITabsProps } from './Tabs.types';
-import { keys } from 'lodash';
 
 const Tabs = ({ currentTab, setCurrentTab, tabs }: ITabsProps): JSX.Element => {
   return (

@@ -1,32 +1,22 @@
-import { ICustomResponse } from '@common/interfaces/IApiHandler';
-import { ISaveButtonHandler, IUseBoardHandlers } from './BoardEditor.types';
+import { useState } from 'react';
+import { SyntheticEvent } from 'react-draft-wysiwyg';
+
 import {
-  boardMemberApi,
-  createBoard,
   deleteBoardApi,
   getBoards,
-  shareBoard,
-  updateBoardTitle,
-  updateDoneColumn,
 } from '@common/api/boardApi';
-import { setCurrentBoardAction } from '@common/helpers/boardHelper';
-import { getColumn } from '@common/helpers/columnHelper';
-import { updateColumn } from '@common/api/columnApi';
-import { useState } from 'react';
 import {
-  closeEditor,
-  openEditor,
-  setBoardEditorResult,
-} from '@common/providers/boardProvider/useBoardState';
-import { openModal } from '@common/providers/appProvider/useAppState';
-import { IModal } from '@common/providers/appProvider/types';
-import { SyntheticEvent } from 'react-draft-wysiwyg';
-import {
-  manageColumnEvent,
   manageMembersEvent,
   updateBoardData,
 } from '@common/api/socket/socket';
-import { IBoard } from '@common/providers/boardProvider/types';
+import { getColumn } from '@common/helpers/columnHelper';
+import { IModal } from '@common/providers/appProvider/types';
+import { openModal } from '@common/providers/appProvider/useAppState';
+import {
+  closeEditor,
+} from '@common/providers/boardProvider/useBoardState';
+
+import { IUseBoardHandlers } from './BoardEditor.types';
 
 const SELECT_COLUMN_TITLE = 'Select column as "done" column?';
 const SELECT_COLUMN_MESSAGE =

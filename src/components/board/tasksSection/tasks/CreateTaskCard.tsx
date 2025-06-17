@@ -1,8 +1,9 @@
-import { openModal } from '@common/providers/appProvider/useAppState';
+import { useSearchParams } from 'react-router-dom';
+
 import { IModal } from '@common/providers/appProvider/types';
+import { openModal } from '@common/providers/appProvider/useAppState';
 
 import * as S from './TaskCard.styled';
-import { useSearchParams } from 'react-router-dom';
 
 const CreateTask = ({ columnName }: { columnName: string }): JSX.Element => {
   const [_, setSearchParams] = useSearchParams();

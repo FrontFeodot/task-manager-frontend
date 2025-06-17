@@ -1,5 +1,6 @@
-import { MOBILE, TABLET_DESKTOP } from '@common/utils/mediaHelper';
 import styled from 'styled-components';
+
+import { MOBILE, TABLET_DESKTOP } from '@common/utils/mediaHelper';
 
 export const Wrapper = styled.div`
   ${(props) => props.theme.flexbox};

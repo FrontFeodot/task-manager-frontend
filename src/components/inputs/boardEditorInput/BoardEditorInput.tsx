@@ -1,17 +1,15 @@
 import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 
+import { manageColumnEvent } from '@common/api/socket/socket';
+import { onEditorInputSubmit } from '@common/helpers/boardEditorHelper';
+import Icon from '@common/icons/Icon';
+import { setBoardEditorResult } from '@common/providers/boardProvider/useBoardState';
+
 import StyledButton from '@components/styledButton/StyledButton';
 import { IButtonColor } from '@components/styledButton/StyledButton.types';
 
-import { deleteColumnHelper } from '@common/helpers/columnHelper';
-import Icon from '@common/icons/Icon';
-
-import { IBoardEditorInput } from './BoardEditorInput.types';
 import * as S from './BoardEditorInput.styled';
-import { ICustomResponse } from '@common/interfaces/IApiHandler';
-import { setBoardEditorResult } from '@common/providers/boardProvider/useBoardState';
-import { onEditorInputSubmit } from '@common/helpers/boardEditorHelper';
-import { manageColumnEvent } from '@common/api/socket/socket';
+import { IBoardEditorInput } from './BoardEditorInput.types';
 
 const BoardEditorInput = ({
   fieldName,

@@ -1,4 +1,5 @@
 import { Dispatch } from 'react';
+
 import { ITask, ITaskPriority, ITaskType } from '@common/interfaces/ITask';
 
 export interface ITaskComponent {

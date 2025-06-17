@@ -1,10 +1,11 @@
-import { openEditor } from '@common/providers/boardProvider/useBoardState';
-import { IEmptyLayoutType, IGetEmptyLayoutData } from './EmptyLayout.types';
-import { IBoard } from '@common/providers/boardProvider/types';
-import { emptyBoard } from '@common/utils/boardEditorConfig';
 import { getCurrentBoardData } from '@common/helpers/boardHelper';
 import { IModal } from '@common/providers/appProvider/types';
 import { openModal } from '@common/providers/appProvider/useAppState';
+import { IBoard } from '@common/providers/boardProvider/types';
+import { openEditor } from '@common/providers/boardProvider/useBoardState';
+import { emptyBoard } from '@common/utils/boardEditorConfig';
+
+import { IEmptyLayoutType, IGetEmptyLayoutData } from './EmptyLayout.types';
 
 export const getEmptyLayoutContent = (
   type: IEmptyLayoutType

@@ -1,6 +1,7 @@
 import styled, { DefaultTheme } from 'styled-components';
 
 import { MOBILE, TABLET_DESKTOP } from '@common/utils/mediaHelper';
+
 import { Text, TextInline } from '@components/text/TextCommon.styled';
 
 export const BoardEditorWrapper = styled.div`

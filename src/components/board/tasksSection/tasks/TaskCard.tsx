@@ -1,17 +1,17 @@
-import { useSearchParams } from 'react-router-dom';
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 import draftToHtml from 'draftjs-to-html';
+import { useSearchParams } from 'react-router-dom';
 
-import TaskGradientBar from '@components/taskGradientBar/TaskGradientBar';
-
-import { ITask } from '@common/interfaces/ITask';
 import {
   getPriorityIcon,
   getRawDescriptionContent,
 } from '@common/helpers/taskHelper';
+import { ITask } from '@common/interfaces/ITask';
+
+import TaskGradientBar from '@components/taskGradientBar/TaskGradientBar';
 
 import * as S from './TaskCard.styled';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 const TaskCard = ({
   title,

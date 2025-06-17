@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
+import { ICustomResponse } from '@common/interfaces/IApiHandler';
+
 import defaultState from './state';
 import { IBoard, IBoardState, IOpenedEditor } from './types';
-import { assign, omit } from 'lodash';
-import { ICustomResponse } from '@common/interfaces/IApiHandler';
 
 export const useBoardState = create<IBoardState>()(immer((_) => defaultState));
 

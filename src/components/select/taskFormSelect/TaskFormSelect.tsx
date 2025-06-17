@@ -1,9 +1,9 @@
-import { useRef } from 'react';
 import upperFirst from 'lodash/upperFirst';
+import { useRef } from 'react';
 
+import CustomSelect from '../Select';
 import * as S from './TaskFormSelect.styled';
 import { IStorySelect } from './TaskFormSelect.types';
-import CustomSelect from '../Select';
 
 const TaskFormSelect = ({
   name,

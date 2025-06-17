@@ -6,15 +6,15 @@ import {
   IApiMethod,
   ICustomResponse,
 } from '@common/interfaces/IApiHandler';
-import { AUTH_TOKEN } from '@common/utils/cookies';
+import { IPostLogin, IPostLoginResponse } from '@common/interfaces/IAuth';
+import { resetBoardList } from '@common/providers/boardProvider/useBoardState';
+import { IUserData } from '@common/providers/userProvider/types';
 import {
   setLoginUser,
   setUserData,
   setUserLoading,
 } from '@common/providers/userProvider/useUserState';
-import { IPostLogin, IPostLoginResponse } from '@common/interfaces/IAuth';
-import { resetBoardList } from '@common/providers/boardProvider/useBoardState';
-import { IUserData } from '@common/providers/userProvider/types';
+import { AUTH_TOKEN } from '@common/utils/cookies';
 
 export const postLogin = async (
   payload: IPostLogin

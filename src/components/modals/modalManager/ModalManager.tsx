@@ -1,14 +1,13 @@
 import React from 'react';
 
+import { IModal, IModalProps } from '@common/providers/appProvider/types';
+import { useAppState } from '@common/providers/appProvider/useAppState';
+
 import CreateTaskModal from '@components/modals/createTaskModal/CreateTaskModal';
 import TaskModal from '@components/modals/taskModal/TaskModal';
 
-import { useAppState } from '@common/providers/appProvider/useAppState';
-import { IModal, IModalProps } from '@common/providers/appProvider/types';
-
-import DeleteColumnModal from '../deleteColumnConfirm/DeleteColumnModal';
 import ConfirmModal from '../confirmModal/ConfirmModal';
-
+import DeleteColumnModal from '../deleteColumnConfirm/DeleteColumnModal';
 import * as S from './ModalManager.styled';
 
 const ModalRouter = ({ name }: { name: IModal }): JSX.Element | null => {

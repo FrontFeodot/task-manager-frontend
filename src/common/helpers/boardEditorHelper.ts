@@ -1,19 +1,18 @@
 import { createBoard } from '@common/api/boardApi';
-import { ICustomResponse } from '@common/interfaces/IApiHandler';
-import { setCurrentBoardAction } from './boardHelper';
 import {
   IManageColumn,
   manageColumnEvent,
   manageMembersEvent,
   updateBoardData,
 } from '@common/api/socket/socket';
-import { getLastOrderByType } from './taskHelper';
+import { ICustomResponse } from '@common/interfaces/IApiHandler';
 import {
   openEditor,
   setBoardEditorResult,
 } from '@common/providers/boardProvider/useBoardState';
-import { emptyBoard } from '@common/utils/boardEditorConfig';
-import { IBoard } from '@common/providers/boardProvider/types';
+
+import { setCurrentBoardAction } from './boardHelper';
+import { getLastOrderByType } from './taskHelper';
 
 export interface IEditorInputSubmit {
   fieldValue: string;

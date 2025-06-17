@@ -1,12 +1,15 @@
-import { closeModal } from '@common/providers/appProvider/useAppState';
-import * as S from './ConfirmModal.styled';
-import { IButtonColor } from '@components/styledButton/StyledButton.types';
-import StyledButton from '@components/styledButton/StyledButton';
-import useOutsideClick from '@common/hooks/useOutSideClick';
 import { useRef } from 'react';
-import { IConfirmModal } from './ConfirmModalProps.types';
-import { IModal } from '@common/providers/appProvider/types';
+
 import { getCurrentModal } from '@common/helpers/appHelper';
+import useOutsideClick from '@common/hooks/useOutSideClick';
+import { IModal } from '@common/providers/appProvider/types';
+import { closeModal } from '@common/providers/appProvider/useAppState';
+
+import StyledButton from '@components/styledButton/StyledButton';
+import { IButtonColor } from '@components/styledButton/StyledButton.types';
+
+import * as S from './ConfirmModal.styled';
+import { IConfirmModal } from './ConfirmModalProps.types';
 
 const ConfirmModal = (): JSX.Element => {
   const modalRef = useRef(null);

@@ -1,5 +1,6 @@
-import { ITaskPriority } from '@common/interfaces/ITask';
 import styled, { keyframes } from 'styled-components';
+
+import { ITaskPriority } from '@common/interfaces/ITask';
 
 const gradientFlow = keyframes`
   0% {

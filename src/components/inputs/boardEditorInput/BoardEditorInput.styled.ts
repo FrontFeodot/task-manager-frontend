@@ -1,5 +1,6 @@
-import { Text } from '@components/text/TextCommon.styled';
 import styled, { DefaultTheme } from 'styled-components';
+
+import { Text } from '@components/text/TextCommon.styled';
 
 export const EditorInputWrapper = styled.div`
   display: flex;

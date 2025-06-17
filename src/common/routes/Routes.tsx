@@ -1,13 +1,13 @@
-import { Routes, Route } from 'react-router-dom';
-import map from 'lodash/map';
 import Cookies from 'js-cookie';
+import map from 'lodash/map';
+import { Route,Routes } from 'react-router-dom';
+
+import { useAppState } from '@common/providers/appProvider/useAppState';
+import { useUserState } from '@common/providers/userProvider/useUserState';
+import { AUTH_TOKEN } from '@common/utils/cookies';
+import { commonRoutes, userRoutes } from '@common/utils/routeList';
 
 import Loader from '@components/layouts/loader/Loader';
-
-import { useUserState } from '@common/providers/userProvider/useUserState';
-import { commonRoutes, userRoutes } from '@common/utils/routeList';
-import { AUTH_TOKEN } from '@common/utils/cookies';
-import { useAppState } from '@common/providers/appProvider/useAppState';
 
 const AppRouter = () => {
   const isLoggedIn =

@@ -2,23 +2,23 @@ import Cookies from 'js-cookie';
 import { keys } from 'lodash';
 
 import apiHandler from '@common/api/apiHandler';
-import { SELECTED_BOARD } from '@common/utils/cookies';
 import {
-  setBoardLoading,
-  setBoardsList,
-  setCurrentBoard,
-} from '@common/providers/boardProvider/useBoardState';
+  getCurrentBoardId,
+  setCurrentBoardAction,
+} from '@common/helpers/boardHelper';
 import {
   ApiCalls,
   IApiMethod,
   ICustomResponse,
 } from '@common/interfaces/IApiHandler';
-import {
-  getCurrentBoardId,
-  setCurrentBoardAction,
-} from '@common/helpers/boardHelper';
 import { IBoardList } from '@common/interfaces/IBoard';
 import { IBoard } from '@common/providers/boardProvider/types';
+import {
+  setBoardLoading,
+  setBoardsList,
+  setCurrentBoard,
+} from '@common/providers/boardProvider/useBoardState';
+import { SELECTED_BOARD } from '@common/utils/cookies';
 
 export const getBoards = async (): Promise<ICustomResponse<
   IBoardList | undefined

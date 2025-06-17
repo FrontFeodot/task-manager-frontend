@@ -1,13 +1,13 @@
 import Cookies from 'js-cookie';
+import { find } from 'lodash';
 
-import { SELECTED_BOARD } from '@common/utils/cookies';
+import { IBoard } from '@common/providers/boardProvider/types';
 import {
   setCurrentBoard,
   useBoardState,
 } from '@common/providers/boardProvider/useBoardState';
-import { IBoard } from '@common/providers/boardProvider/types';
-import { find } from 'lodash';
 import { useUserState } from '@common/providers/userProvider/useUserState';
+import { SELECTED_BOARD } from '@common/utils/cookies';
 
 export const getBoardById = (boardId: string): IBoard | undefined => {
   const { boardList } = useBoardState.getState();

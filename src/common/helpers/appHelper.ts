@@ -1,6 +1,7 @@
+import { find } from 'lodash';
+
 import { IModal, IModalProps } from '@common/providers/appProvider/types';
 import { useAppState } from '@common/providers/appProvider/useAppState';
-import { find } from 'lodash';
 
 export const getCurrentModal = (modalName: IModal): IModalProps | undefined => {
   const modals = useAppState.getState().modals;

@@ -1,6 +1,8 @@
-import { MOBILE, TABLET_DESKTOP } from '@common/utils/mediaHelper';
-import { Text } from '@components/text/TextCommon.styled';
 import styled from 'styled-components';
+
+import { MOBILE, TABLET_DESKTOP } from '@common/utils/mediaHelper';
+
+import { Text } from '@components/text/TextCommon.styled';
 
 export const BoardNavWrapper = styled.div<{ $isExpanded: boolean }>`
   display: flex;

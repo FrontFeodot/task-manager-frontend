@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+
 import * as S from './NotFound.styled';
 
 const NotFound = (): JSX.Element => {

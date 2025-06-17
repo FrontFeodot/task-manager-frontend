@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+import { some } from 'lodash';
 import { useEffect } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -8,9 +10,7 @@ import {
   useAppState,
 } from '@common/providers/appProvider/useAppState';
 import { useUserState } from '@common/providers/userProvider/useUserState';
-import Cookies from 'js-cookie';
 import { AUTH_TOKEN } from '@common/utils/cookies';
-import { some } from 'lodash';
 
 const useAppParams = (): void => {
   const { pathname } = useLocation();

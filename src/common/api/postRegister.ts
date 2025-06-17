@@ -7,11 +7,11 @@ import {
   ICustomResponse,
 } from '@common/interfaces/IApiHandler';
 import { IPostRegister, IPostRegisterResponse } from '@common/interfaces/IAuth';
-import { AUTH_TOKEN } from '@common/utils/cookies';
 import {
   setUserData,
   setUserLoading,
 } from '@common/providers/userProvider/useUserState';
+import { AUTH_TOKEN } from '@common/utils/cookies';
 
 const postRegister = async (
   payload: IPostRegister

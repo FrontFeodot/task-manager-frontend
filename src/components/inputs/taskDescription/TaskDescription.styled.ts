@@ -1,7 +1,9 @@
-import styled from 'styled-components';
-import { Text } from '@components/text/TextCommon.styled';
 import { darken, lighten } from 'polished';
+import styled from 'styled-components';
+
 import { MOBILE } from '@common/utils/mediaHelper';
+
+import { Text } from '@components/text/TextCommon.styled';
 
 export const Container = styled.div<{ $isCreateTask?: boolean }>`
   display: flex;

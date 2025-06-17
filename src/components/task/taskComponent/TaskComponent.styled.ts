@@ -1,6 +1,8 @@
-import { TaskFlexBoxView } from '@common/utils/mediaHelper';
-import { TextInline } from '@components/text/TextCommon.styled';
 import styled from 'styled-components';
+
+import { TaskFlexBoxView } from '@common/utils/mediaHelper';
+
+import { TextInline } from '@components/text/TextCommon.styled';
 
 export const TaskFormWrapper = styled.form`
   background-color: ${(props) => props.theme.modalBg};

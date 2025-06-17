@@ -1,14 +1,14 @@
 import map from 'lodash/map';
-import { Active, Over, UniqueIdentifier } from '@dnd-kit/core';
 
 import { ITask } from '@common/interfaces/ITask';
 import { IColumn } from '@common/providers/boardProvider/types';
 
+import { getTasksForColumn } from '../taskHelper';
 import {
   handleMoveBetweenColumns,
   handleReorderWithinColumn,
 } from './dndHelper';
-import { getTasksForColumn } from '../taskHelper';
+import { Active, Over, UniqueIdentifier } from '@dnd-kit/core';
 
 const taskDragOver = (
   activeId: UniqueIdentifier,

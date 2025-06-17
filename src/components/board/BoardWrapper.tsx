@@ -1,21 +1,16 @@
-import { useEffect, useState } from 'react';
 import unionBy from 'lodash/unionBy';
+import { useEffect, useState } from 'react';
+
+import useAppParams from '@common/hooks/useAppParams';
+import { ITask } from '@common/interfaces/ITask';
+import { IBoard, IColumn } from '@common/providers/boardProvider/types';
 
 import EmptyLayout from '@components/layouts/emptyLayout/EmptyLayout';
 import { IEmptyLayoutType } from '@components/layouts/emptyLayout/EmptyLayout.types';
 import Loader from '@components/layouts/loader/Loader';
 
-import { ITask } from '@common/interfaces/ITask';
-import { IBoard, IColumn } from '@common/providers/boardProvider/types';
-
-import { IBoardProps } from './BoardWrapper.types';
 import BoardComponent from './boardComponent/BoardComponent';
-import useAppParams from '@common/hooks/useAppParams';
-import {
-  connectSocket,
-  disconnectSocket,
-  joinBoard,
-} from '@common/api/socket/socket';
+import { IBoardProps } from './BoardWrapper.types';
 
 const BoardWrapper = ({ boardData, loading }: IBoardProps): JSX.Element => {
   const [virtualBoard, setVirtualBoard] = useState<IBoard | null | undefined>(

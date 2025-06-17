@@ -1,27 +1,27 @@
+import { convertToRaw,EditorState } from 'draft-js';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
-import { useState } from 'react';
-import { EditorState, convertToRaw } from 'draft-js';
 
-import CustomSelect from '@components/select/Select';
-import StyledButton from '@components/styledButton/StyledButton';
-import TaskTitle from '@components/inputs/taskTitleInput/TaskTitle';
-import TaskDescriptionInput from '@components/inputs/taskDescription/TaskDescription';
-import ErrorTooltip from '@components/error/ErrorTooltip.styled';
+import { getColumnTitles } from '@common/helpers/columnHelper';
+import { createTaskHandler } from '@common/helpers/taskApiHelper';
 import { ITaskPriority, ITaskType } from '@common/interfaces/ITask';
-
+import { IModal } from '@common/providers/appProvider/types';
+import { closeModal } from '@common/providers/appProvider/useAppState';
 import {
   getStorySchema,
   taskPrioritySchema,
   taskTypesSchema,
 } from '@common/utils/tasdDetailsConfig';
-import { closeModal } from '@common/providers/appProvider/useAppState';
-import { createTaskHandler } from '@common/helpers/taskApiHelper';
-import { getColumnTitles } from '@common/helpers/columnHelper';
 
-import * as S from './CreateTaskComponent.styled';
+import ErrorTooltip from '@components/error/ErrorTooltip.styled';
+import TaskDescriptionInput from '@components/inputs/taskDescription/TaskDescription';
+import TaskTitle from '@components/inputs/taskTitleInput/TaskTitle';
+import CustomSelect from '@components/select/Select';
+import StyledButton from '@components/styledButton/StyledButton';
+
 import { ITaskFormValues } from '../taskComponent/TaskComponent.types';
-import { IModal } from '@common/providers/appProvider/types';
+import * as S from './CreateTaskComponent.styled';
 
 const getDefaultDescription = () =>
   JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent()));

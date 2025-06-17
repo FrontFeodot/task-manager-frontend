@@ -1,18 +1,19 @@
 import toUpper from 'lodash/toUpper';
-import { DragOverlay } from '@dnd-kit/core';
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+import { useTheme } from 'styled-components';
 
-import TasksSection from '@components/board/tasksSection/TasksSection';
-import TaskCard from '@components/board/tasksSection/tasks/TaskCard';
+import { getCurrentBoardData } from '@common/helpers/boardHelper';
+import { IBoard } from '@common/providers/boardProvider/types';
+import { openEditor } from '@common/providers/boardProvider/useBoardState';
+
 import CreateTask from '@components/board/tasksSection/tasks/CreateTaskCard';
+import TaskCard from '@components/board/tasksSection/tasks/TaskCard';
+import TasksSection from '@components/board/tasksSection/TasksSection';
 
 import * as S from './Column.styled';
 import { IColumnProps } from './Column.types';
-import { openEditor } from '@common/providers/boardProvider/useBoardState';
-import { getCurrentBoardData } from '@common/helpers/boardHelper';
-import { IBoard } from '@common/providers/boardProvider/types';
-import { useTheme } from 'styled-components';
+import { DragOverlay } from '@dnd-kit/core';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 const Column = ({
   column,

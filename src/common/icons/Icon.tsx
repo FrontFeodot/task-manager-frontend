@@ -1,4 +1,5 @@
 import { map } from 'lodash';
+
 import { IIcon, IIconList } from './Icon.types';
 import iconList from './iconList.json';
 

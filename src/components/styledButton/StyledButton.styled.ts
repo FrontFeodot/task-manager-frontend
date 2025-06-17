@@ -1,9 +1,9 @@
-import styled from 'styled-components';
 import { darken, lighten } from 'polished';
-
-import { ITheme } from '@theme/theme';
+import styled from 'styled-components';
 
 import { Text } from '@components/text/TextCommon.styled';
+
+import { ITheme } from '@theme/theme';
 
 import { IButtonColor } from './StyledButton.types';
 

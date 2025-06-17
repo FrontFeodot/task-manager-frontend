@@ -1,5 +1,5 @@
-import Cookies from 'js-cookie';
 import { AxiosError, AxiosResponse } from 'axios';
+import Cookies from 'js-cookie';
 
 import axios from '@common/api/axios';
 import { IApiHandler, ICustomResponse } from '@common/interfaces/IApiHandler';

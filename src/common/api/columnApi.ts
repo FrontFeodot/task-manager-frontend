@@ -1,11 +1,11 @@
+import { getCurrentBoardId } from '@common/helpers/boardHelper';
 import {
   ApiCalls,
   IApiMethod,
   ICustomResponse,
 } from '@common/interfaces/IApiHandler';
-import { getCurrentBoardId } from '@common/helpers/boardHelper';
-import { IColumn } from '@common/providers/boardProvider/types';
 import { IDeleteTask } from '@common/interfaces/IColumn';
+import { IColumn } from '@common/providers/boardProvider/types';
 
 import apiHandler from './apiHandler';
 import { getBoards } from './boardApi';

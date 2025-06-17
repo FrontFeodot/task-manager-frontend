@@ -1,4 +1,5 @@
 import { ApiCalls, IApiMethod } from '@common/interfaces/IApiHandler';
+
 import apiHandler from './apiHandler';
 
 const pingApi = async (): Promise<string> => {

@@ -1,6 +1,7 @@
-import { MOBILE, TABLET } from '@common/utils/mediaHelper';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { MOBILE, TABLET } from '@common/utils/mediaHelper';
 
 export const NavWrapper = styled.div`
   position: fixed;

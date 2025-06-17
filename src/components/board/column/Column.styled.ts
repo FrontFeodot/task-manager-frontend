@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
-import { Text } from '@components/text/TextCommon.styled';
-import { TABLET } from '@common/utils/mediaHelper';
 import Icon from '@common/icons/Icon';
+import { TABLET } from '@common/utils/mediaHelper';
+
+import { Text } from '@components/text/TextCommon.styled';
 
 export const ColumnWrapper = styled.div<{ $isDone: boolean }>`
   display: flex;

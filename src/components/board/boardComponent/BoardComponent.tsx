@@ -1,9 +1,20 @@
-import { useState } from 'react';
-import map from 'lodash/map';
 import find from 'lodash/find';
+import map from 'lodash/map';
+import { useState } from 'react';
 
-import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
-import { restrictToWindowEdges } from '@dnd-kit/modifiers';
+import {
+  columnDragEnd,
+  taskDragEnd,
+} from '@common/helpers/dragAndDrop/dragEndHelper';
+import { handleDragOverHelper } from '@common/helpers/dragAndDrop/dragOverHelper';
+import { getTaskById, getTasksForColumn } from '@common/helpers/taskHelper';
+import { ITask } from '@common/interfaces/ITask';
+import { IColumn } from '@common/providers/boardProvider/types';
+
+import Column from '@components/board/column/Column';
+
+import * as S from './BoardComponent.styled';
+import { IBoardComponent } from './BoardComponent.types';
 import {
   DndContext,
   DragEndEvent,
@@ -18,20 +29,8 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-
-import Column from '@components/board/column/Column';
-
-import { getTaskById, getTasksForColumn } from '@common/helpers/taskHelper';
-import { ITask } from '@common/interfaces/ITask';
-import { IColumn } from '@common/providers/boardProvider/types';
-import { handleDragOverHelper } from '@common/helpers/dragAndDrop/dragOverHelper';
-import {
-  columnDragEnd,
-  taskDragEnd,
-} from '@common/helpers/dragAndDrop/dragEndHelper';
-
-import * as S from './BoardComponent.styled';
-import { IBoardComponent } from './BoardComponent.types';
+import { restrictToWindowEdges } from '@dnd-kit/modifiers';
+import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 
 const BoardComponent = ({
   boardData,

@@ -1,10 +1,11 @@
+import styled from 'styled-components';
+
 import {
   DESKTOP,
-  TABLET,
   MOBILE,
+  TABLET,
   TABLET_DESKTOP,
 } from '@common/utils/mediaHelper';
-import styled from 'styled-components';
 
 export const CreateTaskModal = styled.div`
   position: relative;

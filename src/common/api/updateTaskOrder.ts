@@ -1,12 +1,12 @@
 import apiHandler from '@common/api/apiHandler';
-import { setBoardsList } from '@common/providers/boardProvider/useBoardState';
 import {
   ApiCalls,
   IApiMethod,
   ICustomResponse,
 } from '@common/interfaces/IApiHandler';
-import { IUpdateColumnOrder, IUpdateTaskOrder } from '@common/interfaces/IDnd';
 import { IBoardList } from '@common/interfaces/IBoard';
+import { IUpdateColumnOrder, IUpdateTaskOrder } from '@common/interfaces/IDnd';
+import { setBoardsList } from '@common/providers/boardProvider/useBoardState';
 
 export const updateTaskOrder = async (
   tasksToUpdate: IUpdateTaskOrder[]

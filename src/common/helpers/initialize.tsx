@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 import { getProtected } from '@common/api/auth';
 import pingApi from '@common/api/ping';
 import {
@@ -6,7 +8,6 @@ import {
 } from '@common/providers/appProvider/useAppState';
 import { setCurrentBoard } from '@common/providers/boardProvider/useBoardState';
 import { SELECTED_BOARD } from '@common/utils/cookies';
-import Cookies from 'js-cookie';
 
 const pingPong = async () => {
   toggleAppLoading(true);

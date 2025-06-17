@@ -1,7 +1,8 @@
+import { filter } from 'lodash';
 import { create } from 'zustand';
+
 import defaultState from './state';
 import { IAppState, IModalProps } from './types';
-import { filter } from 'lodash';
 
 export const useAppState = create<IAppState>(() => defaultState);
 

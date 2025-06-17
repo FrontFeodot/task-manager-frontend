@@ -1,24 +1,23 @@
-import map from 'lodash/map';
 import find from 'lodash/find';
+import map from 'lodash/map';
+import { useEffect, useState } from 'react';
 
-import StyledButton from '@components/styledButton/StyledButton';
-import { IButtonColor } from '@components/styledButton/StyledButton.types';
-import BoardEditorInput from '@components/inputs/boardEditorInput/BoardEditorInput';
-
-import { DATE_UP_TO_MINUTES } from '@common/utils/dateFormats';
+import { isBoardOwner } from '@common/helpers/boardHelper';
 import { formatDate } from '@common/helpers/dateHelper';
 import Icon from '@common/icons/Icon';
+import {
+  setBoardEditorResult,
+} from '@common/providers/boardProvider/useBoardState';
+import { useUserState } from '@common/providers/userProvider/useUserState';
+import { DATE_UP_TO_MINUTES } from '@common/utils/dateFormats';
+
+import BoardEditorInput from '@components/inputs/boardEditorInput/BoardEditorInput';
+import StyledButton from '@components/styledButton/StyledButton';
+import { IButtonColor } from '@components/styledButton/StyledButton.types';
 
 import * as S from './BoardEditor.styled';
 import { IBoardEditor } from './BoardEditor.types';
 import { useBoardEditorHandlers } from './useBoardEditorHandlers';
-import { isBoardOwner } from '@common/helpers/boardHelper';
-import { useEffect, useState } from 'react';
-import {
-  openEditor,
-  setBoardEditorResult,
-} from '@common/providers/boardProvider/useBoardState';
-import { useUserState } from '@common/providers/userProvider/useUserState';
 
 const BoardEditor = ({
   editorData,

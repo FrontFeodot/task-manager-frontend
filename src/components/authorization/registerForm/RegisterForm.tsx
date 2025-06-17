@@ -1,14 +1,14 @@
+import get from 'lodash/get';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import get from 'lodash/get';
-
-import AuthInput from '@components/inputs/authInput/AuthInput';
-import StyledButton from '@components/styledButton/StyledButton';
-import ErrorTooltip from '@components/error/ErrorTooltip.styled';
 
 import postRegister from '@common/api/postRegister';
 import { IPostRegister } from '@common/interfaces/IAuth';
 import { setLoginUser } from '@common/providers/userProvider/useUserState';
+
+import ErrorTooltip from '@components/error/ErrorTooltip.styled';
+import AuthInput from '@components/inputs/authInput/AuthInput';
+import StyledButton from '@components/styledButton/StyledButton';
 
 import {
   AuthWrapper,

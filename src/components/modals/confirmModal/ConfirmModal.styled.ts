@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-import { Text } from '@components/text/TextCommon.styled';
-
 import { MOBILE, TABLET_DESKTOP } from '@common/utils/mediaHelper';
+
+import { Text } from '@components/text/TextCommon.styled';
 
 export const ConfirmModalWrapper = styled.div`
   display: flex;

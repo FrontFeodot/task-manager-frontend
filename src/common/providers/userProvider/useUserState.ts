@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
-import { IUser, IUserData } from './types';
 import defaultState from './state';
+import { IUser, IUserData } from './types';
 
 export const useUserState = create<IUser>(() => defaultState);
 

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import Tabs from '@components/authorization/tabs/Tabs';
+import { useUserState } from '@common/providers/userProvider/useUserState';
+
 import LoginForm from '@components/authorization/loginForm/LoginForm';
 import RegisterForm from '@components/authorization/registerForm/RegisterForm';
-
-import { useUserState } from '@common/providers/userProvider/useUserState';
+import Tabs from '@components/authorization/tabs/Tabs';
 
 import * as S from './Login.styled';
 import { authTabsSchema } from './tabsConfig';

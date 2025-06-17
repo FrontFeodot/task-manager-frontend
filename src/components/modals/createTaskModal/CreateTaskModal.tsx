@@ -1,12 +1,13 @@
 import { useEffect, useRef } from 'react';
+
+import { removeSearchParam } from '@common/helpers/searchParamsHelper';
 import useOutsideClick from '@common/hooks/useOutSideClick';
+import { IModal } from '@common/providers/appProvider/types';
 import { closeModal } from '@common/providers/appProvider/useAppState';
 
 import CreateTaskComponent from '../../task/createTaskComponent/CreateTaskComponent';
-import * as S from './CreateTaskModal.styled';
-import { removeSearchParam } from '@common/helpers/searchParamsHelper';
 import CloseModalIcon from '../closeModalIcon/CloseModalIcon';
-import { IModal } from '@common/providers/appProvider/types';
+import * as S from './CreateTaskModal.styled';
 
 const CreateTaskModal = (): JSX.Element => {
   const ref = useRef(null);

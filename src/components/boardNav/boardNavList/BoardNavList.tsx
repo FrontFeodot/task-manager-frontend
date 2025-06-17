@@ -1,21 +1,21 @@
+import { keys, upperCase } from 'lodash';
 import map from 'lodash/map';
 import { useTheme } from 'styled-components';
 
-import { TextInline } from '@components/text/TextCommon.styled';
-
-import { emptyBoard } from '@common/utils/boardEditorConfig';
-import { IBoard } from '@common/providers/boardProvider/types';
 import {
   getCurrentBoardId,
   isBoardOwner,
   setCurrentBoardAction,
 } from '@common/helpers/boardHelper';
-import { openEditor } from '@common/providers/boardProvider/useBoardState';
 import Icon from '@common/icons/Icon';
+import { IBoard } from '@common/providers/boardProvider/types';
+import { openEditor } from '@common/providers/boardProvider/useBoardState';
+import { emptyBoard } from '@common/utils/boardEditorConfig';
+
+import { TextInline } from '@components/text/TextCommon.styled';
 
 import * as S from './BoardNavList.styled';
 import { IBoardNavList } from './BoardNavList.types';
-import { keys, upperCase } from 'lodash';
 
 const BoardNavList = ({
   boardList,

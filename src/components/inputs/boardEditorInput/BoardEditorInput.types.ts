@@ -1,6 +1,5 @@
-import { ISaveButtonHandler } from '@components/boardNav/boardEditor/BoardEditor.types';
-
 import { ICustomResponse } from '@common/interfaces/IApiHandler';
+
 
 export interface IBoardEditorInput {
   fieldName: string;
