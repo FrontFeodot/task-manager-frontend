@@ -55,7 +55,6 @@ export const setBoardData = (boardData: Partial<IBoard>) => {
     const currentBoard = state!.boardList![boardId];
 
     state!.boardList![boardId] = { ...currentBoard, ...boardData };
-    console.log('new data setted => ', { ...currentBoard, ...boardData });
   });
 };
 

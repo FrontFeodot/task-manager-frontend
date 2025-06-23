@@ -59,7 +59,6 @@ export const handleMoveBetweenColumns = (
     updatedTargetTasks.map((task) => {
       if (task.order >= taskToMove.order) {
         const copiedTask = { ...task };
-        console.log('task, taskToMove', task, taskToMove);
         copiedTask.order += 1;
         return copiedTask;
       }

@@ -26,7 +26,6 @@ const taskDragOver = (
     tasks
   ) as ITask[];
   const targetColumnTasks = getTasksForColumn(targetColumnId, tasks) as ITask[];
-  console.log(targetColumnTasks);
   // Find the specific tasks involved
   const activeTask = initialColumnTasks.find(
     (task) => task.taskId === activeId

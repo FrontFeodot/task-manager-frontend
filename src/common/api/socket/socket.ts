@@ -49,26 +49,31 @@ export const joinBoard = (boardId: string) => {
 };
 
 export const updateBoardData = (boardData: Partial<IBoard>): void => {
-  console.log('boardData', boardData);
   socket.emit('updateBoardData', boardData, (ack: ICustomResponse) => {
-    console.log('updateBoardData ack => ', ack);
     setBoardEditorResult(ack);
+    if (ack.payload) {
+      setBoardData(ack.payload);
+    }
   });
 };
 
 export const manageColumnEvent = (columnData: IManageColumn) => {
   socket.emit('manageColumn', columnData, (ack: ICustomResponse) => {
-    console.log('manageColumn ack => ', ack);
     setBoardEditorResult(ack);
+    if (ack.payload) {
+      setBoardData(ack.payload);
+    }
   });
 };
 
 export const manageMembersEvent = (membersData: IManageMembers) => {
   socket.emit('manageMembers', membersData, (ack: ICustomResponse) => {
-    console.log('manageMembers ack => ', ack);
     setBoardEditorResult(ack);
     if (membersData.type === 'leave') {
-      getBoards();
+      return getBoards();
+    }
+    if (ack.payload) {
+      setBoardData(ack.payload);
     }
   });
 };
@@ -82,14 +87,15 @@ export const updateMultiplyTasksEvent = (
     boardId,
     tasksToUpdate,
     (ack: ICustomResponse) => {
-      console.log('manageMembers ack => ', ack);
       setEventResult(ack);
+      if (ack.payload) {
+        setMultiplyTasks(ack.payload);
+      }
     }
   );
 };
 export const boardListeners = () => {
   socket.on('boardDataUpdated', (boardData: Partial<IBoard>) => {
-    console.log('boardDataUpdated => ', boardData);
     setBoardData(boardData);
   });
 };
@@ -98,7 +104,6 @@ export const tasksListeners = () => {
   socket.on(
     'multiplyTasksUpdated',
     (taskUpdatedData: ICustomResponse<ITasksUpdated>) => {
-      console.log('tasksUpdated => ', taskUpdatedData);
       if (taskUpdatedData.payload) {
         setMultiplyTasks(taskUpdatedData.payload);
       }
@@ -106,7 +111,6 @@ export const tasksListeners = () => {
   );
 
   socket.on('taskUpdated', (taskUpdatedData: ICustomResponse<ITask>) => {
-    console.log('tasksUpdated => ', taskUpdatedData);
     if (taskUpdatedData.payload) {
       setUpdatedTask(taskUpdatedData.payload);
     }
@@ -115,7 +119,6 @@ export const tasksListeners = () => {
   socket.on(
     'taskDeleted',
     (taskDeletedData: ICustomResponse<{ taskId: number; boardId: string }>) => {
-      console.log('taskDeleted => ', taskDeletedData);
       if (!taskDeletedData.payload) {
         return console.error('Payload missing in delete task event');
       }
