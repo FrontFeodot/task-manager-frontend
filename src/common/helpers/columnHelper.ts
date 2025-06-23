@@ -1,6 +1,6 @@
 import { find, map } from 'lodash';
 
-import { manageColumnEvent } from '@common/api/socket/socket';
+import { manageColumnEvent } from '@common/api/socket/socketEvents/boardEvents';
 import { IModal } from '@common/providers/appProvider/types';
 import { openModal } from '@common/providers/appProvider/useAppState';
 import { IBoard, IColumn } from '@common/providers/boardProvider/types';

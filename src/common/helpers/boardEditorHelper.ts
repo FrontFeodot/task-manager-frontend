@@ -2,8 +2,8 @@ import { createBoard } from '@common/api/boardApi';
 import {
   manageColumnEvent,
   manageMembersEvent,
-  updateBoardData,
-} from '@common/api/socket/socket';
+  updateBoardDataEvent,
+} from '@common/api/socket/socketEvents/boardEvents';
 import { ICustomResponse } from '@common/interfaces/IApiHandler';
 import { IManageColumn } from '@common/interfaces/ISocketEvents';
 import {
@@ -50,7 +50,7 @@ export const onEditorInputSubmit = async ({
   }
 
   if (isBoardUpdate && boardId) {
-    updateBoardData({ boardId, title: fieldValue });
+    updateBoardDataEvent({ boardId, title: fieldValue });
     return;
   }
 

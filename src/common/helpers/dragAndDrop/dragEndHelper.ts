@@ -1,10 +1,8 @@
 import { filter } from 'lodash';
 import map from 'lodash/map';
 
-import {
-  updateBoardData,
-  updateMultiplyTasksEvent,
-} from '@common/api/socket/socket';
+import { updateBoardDataEvent } from '@common/api/socket/socketEvents/boardEvents';
+import { updateMultiplyTasksEvent } from '@common/api/socket/socketEvents/taskEvents';
 import { ITask } from '@common/interfaces/ITask';
 import { IColumn } from '@common/providers/boardProvider/types';
 
@@ -43,7 +41,7 @@ export const taskDragEnd = async (
 };
 
 export const columnDragEnd = async (boardId: string, columns: IColumn[]) => {
-  updateBoardData({
+  updateBoardDataEvent({
     boardId,
     columns,
   });

@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { SyntheticEvent } from 'react-draft-wysiwyg';
 
 import { deleteBoardApi, getBoards } from '@common/api/boardApi';
-import { manageMembersEvent, updateBoardData } from '@common/api/socket/socket';
+import {
+  manageMembersEvent,
+  updateBoardDataEvent,
+} from '@common/api/socket/socketEvents/boardEvents';
 import { getColumn } from '@common/helpers/columnHelper';
 import { IModal } from '@common/providers/appProvider/types';
 import { openModal } from '@common/providers/appProvider/useAppState';
@@ -52,7 +55,7 @@ export const useBoardEditorHandlers = ({
         title: isDoneColumn ? UNSELECT_COLUMN_TITLE : SELECT_COLUMN_TITLE,
         message: isDoneColumn ? UNSELECT_COLUMN_MESSAGE : SELECT_COLUMN_MESSAGE,
         args: [{ boardId, doneColumn: isDoneColumn ? null : column.columnId }],
-        callback: updateBoardData,
+        callback: updateBoardDataEvent,
       },
     });
   };

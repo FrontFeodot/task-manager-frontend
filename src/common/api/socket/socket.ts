@@ -1,132 +1,47 @@
 import Cookies from 'js-cookie';
 import { io, Socket } from 'socket.io-client';
 
-import { ICustomResponse } from '@common/interfaces/IApiHandler';
-import {
-  IManageColumn,
-  IManageMembers,
-  ITasksUpdated,
-} from '@common/interfaces/ISocketEvents';
-import { ITask } from '@common/interfaces/ITask';
-import { IBoard } from '@common/providers/boardProvider/types';
-import {
-  removeDeletedTask,
-  setBoardData,
-  setBoardEditorResult,
-  setEventResult,
-  setMultiplyTasks,
-  setUpdatedTask,
-} from '@common/providers/boardProvider/useBoardState';
 import { AUTH_TOKEN } from '@common/utils/cookies';
 
-import { getBoards } from '../boardApi';
+import boardListeners from './socketListeners/boardListeners';
+import tasksListeners from './socketListeners/taskEvents';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export const socket: Socket = io(BASE_URL, {
-  transports: ['websocket'],
-  autoConnect: false,
-});
+let socketInstance: Socket | null = null;
 
-export const connectSocket = () => {
-  const token = Cookies.get(AUTH_TOKEN);
-  socket.auth = { token };
-  socket.connect();
-  boardListeners();
-  tasksListeners();
+export const getSocket = () => {
+  if (!socketInstance) {
+    const token = Cookies.get(AUTH_TOKEN);
+
+    socketInstance = io(BASE_URL, {
+      transports: ['websocket'],
+      autoConnect: false,
+      forceNew: true,
+      reconnection: true,
+      reconnectionAttempts: Infinity,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 10000,
+      randomizationFactor: 0.5,
+      auth: { token },
+    });
+  }
+  return socketInstance;
 };
 
-export const disconnectSocket = () => {
-  if (socket.connected) {
-    socket.disconnect();
+export const connectSocket = () => {
+  const socket = getSocket();
+  if (!socket.connected) {
+    socket.connect();
+    boardListeners();
+    tasksListeners();
   }
 };
 
-export const joinBoard = (boardId: string) => {
-  socket.emit('joinBoard', boardId, (ack: ICustomResponse) => {
-    console.log('joinBoard ack => ', ack);
-  });
-};
+export const disconnectSocket = () => {
+  const socket = getSocket();
 
-export const updateBoardData = (boardData: Partial<IBoard>): void => {
-  socket.emit('updateBoardData', boardData, (ack: ICustomResponse) => {
-    setBoardEditorResult(ack);
-    if (ack.payload) {
-      setBoardData(ack.payload);
-    }
-  });
-};
-
-export const manageColumnEvent = (columnData: IManageColumn) => {
-  socket.emit('manageColumn', columnData, (ack: ICustomResponse) => {
-    setBoardEditorResult(ack);
-    if (ack.payload) {
-      setBoardData(ack.payload);
-    }
-  });
-};
-
-export const manageMembersEvent = (membersData: IManageMembers) => {
-  socket.emit('manageMembers', membersData, (ack: ICustomResponse) => {
-    setBoardEditorResult(ack);
-    if (membersData.type === 'leave') {
-      return getBoards();
-    }
-    if (ack.payload) {
-      setBoardData(ack.payload);
-    }
-  });
-};
-
-export const updateMultiplyTasksEvent = (
-  boardId: string,
-  tasksToUpdate: Partial<ITask>[]
-) => {
-  socket.emit(
-    'updateMultiplyTasks',
-    boardId,
-    tasksToUpdate,
-    (ack: ICustomResponse) => {
-      setEventResult(ack);
-      if (ack.payload) {
-        setMultiplyTasks(ack.payload);
-      }
-    }
-  );
-};
-export const boardListeners = () => {
-  socket.on('boardDataUpdated', (boardData: Partial<IBoard>) => {
-    setBoardData(boardData);
-  });
-};
-
-export const tasksListeners = () => {
-  socket.on(
-    'multiplyTasksUpdated',
-    (taskUpdatedData: ICustomResponse<ITasksUpdated>) => {
-      if (taskUpdatedData.payload) {
-        setMultiplyTasks(taskUpdatedData.payload);
-      }
-    }
-  );
-
-  socket.on('taskUpdated', (taskUpdatedData: ICustomResponse<ITask>) => {
-    if (taskUpdatedData.payload) {
-      setUpdatedTask(taskUpdatedData.payload);
-    }
-  });
-
-  socket.on(
-    'taskDeleted',
-    (taskDeletedData: ICustomResponse<{ taskId: number; boardId: string }>) => {
-      if (!taskDeletedData.payload) {
-        return console.error('Payload missing in delete task event');
-      }
-      const { taskId, boardId } = taskDeletedData.payload;
-      if (!taskId || !boardId) {
-        return console.error('Wrong data from delete task event');
-      }
-      removeDeletedTask(taskId, boardId);
-    }
-  );
+  if (socket.connected) {
+    socket.disconnect();
+  }
 };

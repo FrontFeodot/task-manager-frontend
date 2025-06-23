@@ -1,11 +1,8 @@
 import { useEffect } from 'react';
 
 import { getBoards } from '@common/api/boardApi';
-import {
-  connectSocket,
-  disconnectSocket,
-  joinBoard,
-} from '@common/api/socket/socket';
+import { connectSocket, disconnectSocket } from '@common/api/socket/socket';
+import { joinBoard } from '@common/api/socket/socketEvents/boardEvents';
 import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 import { useUserState } from '@common/providers/userProvider/useUserState';
 
