@@ -1,6 +1,5 @@
 import { ICustomResponse } from '@common/interfaces/IApiHandler';
 
-
 export interface IBoardEditorInput {
   fieldName: string;
   currentValue?: string;

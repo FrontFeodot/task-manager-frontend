@@ -73,27 +73,6 @@ export const createBoard = async (
   }
 };
 
-export const updateBoardTitle = async (payload: {
-  boardId: string;
-  title: string;
-}): Promise<ICustomResponse> => {
-  try {
-    const response = await apiHandler({
-      method: IApiMethod.PUT,
-      url: ApiCalls.BOARD_UPDATE_TITLE,
-      withAuth: true,
-      payload,
-    });
-    if (response.isError) {
-      throw response;
-    }
-    await getBoards();
-    return response as ICustomResponse;
-  } catch (err) {
-    return err as ICustomResponse;
-  }
-};
-
 export const deleteBoardApi = async (
   boardId: string
 ): Promise<ICustomResponse> => {
@@ -115,80 +94,6 @@ export const deleteBoardApi = async (
 
     setCurrentBoard(null);
     await getBoards();
-    return response as ICustomResponse;
-  } catch (err) {
-    return err as ICustomResponse;
-  }
-};
-
-export const updateDoneColumn = async (
-  doneColumn: string | null
-): Promise<ICustomResponse<IBoardList>> => {
-  const boardId = getCurrentBoardId() as string;
-
-  try {
-    const response = await apiHandler<
-      IBoardList,
-      { boardId: string; doneColumn: string | null }
-    >({
-      method: IApiMethod.PUT,
-      url: ApiCalls.BOARD_UPDATE_DONE_COLUMN,
-      withAuth: true,
-      payload: { boardId, doneColumn },
-    });
-    if (response.isError || !response.payload) {
-      throw response;
-    }
-    setBoardsList(response.payload);
-    return response;
-  } catch (err) {
-    return err as ICustomResponse<IBoardList>;
-  }
-};
-
-export const shareBoard = async (
-  boardId: string,
-  invitedUserEmail: string
-): Promise<ICustomResponse> => {
-  try {
-    const response = await apiHandler({
-      method: IApiMethod.POST,
-      url: ApiCalls.BOARD_SHARE,
-      withAuth: true,
-      payload: { boardId, invitedUserEmail },
-    });
-    if (!response || response.isError) {
-      throw response;
-    }
-    return response as ICustomResponse;
-  } catch (err) {
-    return err as ICustomResponse;
-  }
-};
-
-export const boardMemberApi = async (
-  type: 'leave' | 'kick',
-  boardId: string,
-  memberId?: string
-) => {
-  try {
-    const payload = {
-      boardId,
-      ...(type !== 'leave'
-        ? {
-            memberId,
-          }
-        : {}),
-    };
-    const response = await apiHandler({
-      method: IApiMethod.POST,
-      url: `${ApiCalls.BOARD_MEMBERS}/${type}` as ApiCalls,
-      withAuth: true,
-      payload,
-    });
-    if (!response || response.isError) {
-      throw response;
-    }
     return response as ICustomResponse;
   } catch (err) {
     return err as ICustomResponse;

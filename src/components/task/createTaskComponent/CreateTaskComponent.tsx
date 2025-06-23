@@ -1,4 +1,4 @@
-import { convertToRaw,EditorState } from 'draft-js';
+import { convertToRaw, EditorState } from 'draft-js';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';

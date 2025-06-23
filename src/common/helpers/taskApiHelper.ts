@@ -1,9 +1,7 @@
 import { omit } from 'lodash';
 
-import { getBoards } from '@common/api/boardApi';
-import { createTaskApi, deleteTask } from '@common/api/taskApi';
+import { createTaskApi } from '@common/api/taskApi';
 import { ICustomResponse } from '@common/interfaces/IApiHandler';
-import { ITask } from '@common/interfaces/ITask';
 
 import { ITaskFormValues } from '@components/task/taskComponent/TaskComponent.types';
 
@@ -27,26 +25,7 @@ export const createTaskHandler = async (
     if (response instanceof Error || response.isError) {
       throw response;
     }
-    await getBoards();
-
     return response;
-  } catch (err) {
-    return err as ICustomResponse;
-  }
-};
-
-export const deleteTaskHandler = async (
-  data: Pick<ITask, 'taskId' | 'boardId'>
-): Promise<ICustomResponse> => {
-  try {
-    const response = await deleteTask(data);
-    if (response.isError) {
-      throw response;
-    }
-    if (response.isSuccess) {
-      await getBoards();
-    }
-    return response as ICustomResponse;
   } catch (err) {
     return err as ICustomResponse;
   }

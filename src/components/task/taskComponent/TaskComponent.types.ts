@@ -5,7 +5,7 @@ import { ITask, ITaskPriority, ITaskType } from '@common/interfaces/ITask';
 export interface ITaskComponent {
   task: ITask;
   columnList: string[];
-  closeTask: () => void;
+  closeTask: (force?: boolean) => void;
   setHasUnsavedChanges: Dispatch<React.SetStateAction<boolean>>;
 }
 

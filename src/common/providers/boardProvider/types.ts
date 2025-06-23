@@ -7,6 +7,7 @@ export interface IBoardState {
   loading: boolean;
   currentBoardId: string | null;
   openedEditor: IOpenedEditor | null;
+  eventResult: ICustomResponse | null;
 }
 
 export interface IBoard {

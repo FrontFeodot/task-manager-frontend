@@ -103,7 +103,13 @@ const BoardComponent = ({
       setHasChanges(false);
       if (activeItem === 'tasks') {
         const initialColumnId = activeTask?.columnId;
-        taskDragEnd(over, boardData.tasks, doneColumn, initialColumnId);
+        taskDragEnd(
+          over,
+          boardData.tasks,
+          doneColumn,
+          boardData.boardId,
+          initialColumnId
+        );
       }
       if (activeItem === 'columns') {
         await columnDragEnd(boardData.boardId, columns);

@@ -33,8 +33,8 @@ const TaskModal = (): JSX.Element => {
     (task) => task.taskId === taskId
   );
 
-  const handleClose = () => {
-    if (!hasUnsavedChanges) {
+  const handleClose = (force?: boolean) => {
+    if (!hasUnsavedChanges || force) {
       closeTaskModal(setSearchParams);
       return;
     }
@@ -57,7 +57,7 @@ const TaskModal = (): JSX.Element => {
 
   return (
     <S.TaskModalWrapper ref={ref}>
-      <CloseModalIcon closeHandler={handleClose} />
+      <CloseModalIcon closeHandler={() => handleClose()} />
       {!currentTask || !selectedBoard ? (
         <EmptyLayout type={IEmptyLayoutType.TASK} />
       ) : (

@@ -1,10 +1,10 @@
+import { filter } from 'lodash';
 import map from 'lodash/map';
 
 import {
-  updateColumnOrder,
-  updateTaskOrder,
-} from '@common/api/updateTaskOrder';
-import { IUpdateTaskOrder } from '@common/interfaces/IDnd';
+  updateBoardData,
+  updateMultiplyTasksEvent,
+} from '@common/api/socket/socket';
 import { ITask } from '@common/interfaces/ITask';
 import { IColumn } from '@common/providers/boardProvider/types';
 
@@ -14,14 +14,15 @@ export const taskDragEnd = async (
   over: Over,
   tasks: ITask[],
   doneColumn: string | null,
+  boardId: string,
   initialColumnId?: string
 ) => {
   const targetColumnId = over.data.current?.sortable?.containerId || over.id;
 
   if (!targetColumnId) return;
 
-  const tasksInInitial = tasks.filter((t) => t.columnId === initialColumnId);
-  const tasksInTarget = tasks.filter((t) => t.columnId === targetColumnId);
+  const tasksInInitial = filter(tasks, (t) => t.columnId === initialColumnId);
+  const tasksInTarget = filter(tasks, (t) => t.columnId === targetColumnId);
 
   const tasksToUpdate =
     initialColumnId === targetColumnId
@@ -38,22 +39,12 @@ export const taskDragEnd = async (
     })
   );
 
-  try {
-    const response = await updateTaskOrder(payload as IUpdateTaskOrder[]);
-    if (response.isError) {
-      throw response;
-    }
-  } catch {}
+  updateMultiplyTasksEvent(boardId, payload);
 };
 
 export const columnDragEnd = async (boardId: string, columns: IColumn[]) => {
-  try {
-    const response = await updateColumnOrder({
-      boardId,
-      columns,
-    });
-    if (response.isError) {
-      throw response;
-    }
-  } catch {}
+  updateBoardData({
+    boardId,
+    columns,
+  });
 };

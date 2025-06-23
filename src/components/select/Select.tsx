@@ -2,7 +2,7 @@ import isArray from 'lodash/isArray';
 import keys from 'lodash/keys';
 import map from 'lodash/map';
 import upperFirst from 'lodash/upperFirst';
-import { useEffect, useRef,useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import useOutsideClick from '@common/hooks/useOutSideClick';
 

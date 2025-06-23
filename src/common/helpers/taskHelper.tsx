@@ -110,7 +110,7 @@ export const prepareRawForCompare = (
   raw: RawDraftContentState
 ): IRawForCompare => ({
   entityMap: raw.entityMap,
-   
+
   // eslint-disable-next-line unused-imports/no-unused-vars
   blocks: raw.blocks.map(({ key, ...rest }) => rest),
 });

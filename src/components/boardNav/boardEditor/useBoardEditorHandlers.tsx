@@ -1,20 +1,12 @@
 import { useState } from 'react';
 import { SyntheticEvent } from 'react-draft-wysiwyg';
 
-import {
-  deleteBoardApi,
-  getBoards,
-} from '@common/api/boardApi';
-import {
-  manageMembersEvent,
-  updateBoardData,
-} from '@common/api/socket/socket';
+import { deleteBoardApi, getBoards } from '@common/api/boardApi';
+import { manageMembersEvent, updateBoardData } from '@common/api/socket/socket';
 import { getColumn } from '@common/helpers/columnHelper';
 import { IModal } from '@common/providers/appProvider/types';
 import { openModal } from '@common/providers/appProvider/useAppState';
-import {
-  closeEditor,
-} from '@common/providers/boardProvider/useBoardState';
+import { closeEditor } from '@common/providers/boardProvider/useBoardState';
 
 import { IUseBoardHandlers } from './BoardEditor.types';
 

@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import map from 'lodash/map';
-import { Route,Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { useAppState } from '@common/providers/appProvider/useAppState';
 import { useUserState } from '@common/providers/userProvider/useUserState';

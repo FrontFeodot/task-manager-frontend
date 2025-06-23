@@ -48,7 +48,7 @@ export const updateTask = async (
       ? oldTask.order
       : getLastOrderByType({ type: 'tasks', columnId, boardId });
   const updatedTask = {
-    ...assign(oldTask, parsedFormFields),
+    ...assign({ ...oldTask }, parsedFormFields),
     order,
     boardId,
     columnId,
@@ -84,7 +84,6 @@ export const deleteTask = async (
     if (response.isError) {
       throw response;
     }
-
     return response as ICustomResponse;
   } catch (err) {
     return err as ICustomResponse;

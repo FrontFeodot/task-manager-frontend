@@ -1,3 +1,5 @@
+import { filter, map } from 'lodash';
+
 import { ITask } from '@common/interfaces/ITask';
 
 export const handleReorderWithinColumn = (
@@ -5,7 +7,7 @@ export const handleReorderWithinColumn = (
   activeTask: ITask,
   replacedTask?: ITask
 ) => {
-  const updatedTasks = columnTasks.map((task) => {
+  const updatedTasks = map(columnTasks, (task) => {
     // Skip changing tasks not affected by the reordering
     if (
       task.taskId !== activeTask.taskId &&
@@ -38,9 +40,10 @@ export const handleMoveBetweenColumns = (
   replacedTask?: ITask
 ) => {
   // Remove task from source column
-  const updatedSourceTasks = sourceColumnTasks
-    .filter((task) => task.taskId !== activeTask.taskId)
-    .map((task, index) => ({ ...task, order: index + 1 }));
+  const updatedSourceTasks = map(
+    filter(sourceColumnTasks, (task) => task.taskId !== activeTask.taskId),
+    (task, index) => ({ ...task, order: index + 1 })
+  );
 
   // Prepare the task for insertion into target column
   const taskToMove = {
@@ -53,9 +56,12 @@ export const handleMoveBetweenColumns = (
   const updatedTargetTasks = [...targetColumnTasks];
   if (replacedTask) {
     // Insert at specific position and adjust orders
-    updatedTargetTasks.forEach((task) => {
+    updatedTargetTasks.map((task) => {
       if (task.order >= taskToMove.order) {
-        task.order += 1;
+        const copiedTask = { ...task };
+        console.log('task, taskToMove', task, taskToMove);
+        copiedTask.order += 1;
+        return copiedTask;
       }
     });
   }

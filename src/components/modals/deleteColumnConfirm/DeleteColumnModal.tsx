@@ -2,7 +2,6 @@ import findIndex from 'lodash/findIndex';
 import map from 'lodash/map';
 import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 
-import { getBoards } from '@common/api/boardApi';
 import { getCurrentModal } from '@common/helpers/appHelper';
 import { getBoardById } from '@common/helpers/boardHelper';
 import { deleteColumnHelper, getColumn } from '@common/helpers/columnHelper';
@@ -71,20 +70,13 @@ const DeleteColumnModal = (): JSX.Element => {
       const selectedColumnId =
         getColumn({ columnTitle: selectValue })?.columnId || inputValue;
       const tasksPath = isDelete ? inputValue : selectedColumnId;
-      try {
-        const response = await deleteColumnHelper({
-          columnId,
-          boardId,
-          tasksPath,
-        });
-        if (!response || (response && response.isError)) {
-          throw response;
-        }
-        getBoards();
-        handleClose();
-      } catch (err) {
-        return err;
-      }
+      deleteColumnHelper({
+        columnId,
+        boardId,
+        tasksPath,
+      });
+
+      handleClose();
     }
   };
 

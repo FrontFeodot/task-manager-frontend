@@ -2,10 +2,20 @@ import Cookies from 'js-cookie';
 import { io, Socket } from 'socket.io-client';
 
 import { ICustomResponse } from '@common/interfaces/IApiHandler';
+import {
+  IManageColumn,
+  IManageMembers,
+  ITasksUpdated,
+} from '@common/interfaces/ISocketEvents';
+import { ITask } from '@common/interfaces/ITask';
 import { IBoard } from '@common/providers/boardProvider/types';
 import {
+  removeDeletedTask,
   setBoardData,
   setBoardEditorResult,
+  setEventResult,
+  setMultiplyTasks,
+  setUpdatedTask,
 } from '@common/providers/boardProvider/useBoardState';
 import { AUTH_TOKEN } from '@common/utils/cookies';
 
@@ -23,6 +33,7 @@ export const connectSocket = () => {
   socket.auth = { token };
   socket.connect();
   boardListeners();
+  tasksListeners();
 };
 
 export const disconnectSocket = () => {
@@ -38,19 +49,12 @@ export const joinBoard = (boardId: string) => {
 };
 
 export const updateBoardData = (boardData: Partial<IBoard>): void => {
+  console.log('boardData', boardData);
   socket.emit('updateBoardData', boardData, (ack: ICustomResponse) => {
     console.log('updateBoardData ack => ', ack);
     setBoardEditorResult(ack);
   });
 };
-
-export interface IManageColumn {
-  boardId: string;
-  title?: string;
-  order?: number;
-  columnId?: string;
-  isDelete?: boolean;
-}
 
 export const manageColumnEvent = (columnData: IManageColumn) => {
   socket.emit('manageColumn', columnData, (ack: ICustomResponse) => {
@@ -58,12 +62,6 @@ export const manageColumnEvent = (columnData: IManageColumn) => {
     setBoardEditorResult(ack);
   });
 };
-
-export interface IManageMembers {
-  type: 'share' | 'leave' | 'kick';
-  boardId: string;
-  memberEmail: string;
-}
 
 export const manageMembersEvent = (membersData: IManageMembers) => {
   socket.emit('manageMembers', membersData, (ack: ICustomResponse) => {
@@ -75,9 +73,57 @@ export const manageMembersEvent = (membersData: IManageMembers) => {
   });
 };
 
+export const updateMultiplyTasksEvent = (
+  boardId: string,
+  tasksToUpdate: Partial<ITask>[]
+) => {
+  socket.emit(
+    'updateMultiplyTasks',
+    boardId,
+    tasksToUpdate,
+    (ack: ICustomResponse) => {
+      console.log('manageMembers ack => ', ack);
+      setEventResult(ack);
+    }
+  );
+};
 export const boardListeners = () => {
   socket.on('boardDataUpdated', (boardData: Partial<IBoard>) => {
     console.log('boardDataUpdated => ', boardData);
     setBoardData(boardData);
   });
+};
+
+export const tasksListeners = () => {
+  socket.on(
+    'multiplyTasksUpdated',
+    (taskUpdatedData: ICustomResponse<ITasksUpdated>) => {
+      console.log('tasksUpdated => ', taskUpdatedData);
+      if (taskUpdatedData.payload) {
+        setMultiplyTasks(taskUpdatedData.payload);
+      }
+    }
+  );
+
+  socket.on('taskUpdated', (taskUpdatedData: ICustomResponse<ITask>) => {
+    console.log('tasksUpdated => ', taskUpdatedData);
+    if (taskUpdatedData.payload) {
+      setUpdatedTask(taskUpdatedData.payload);
+    }
+  });
+
+  socket.on(
+    'taskDeleted',
+    (taskDeletedData: ICustomResponse<{ taskId: number; boardId: string }>) => {
+      console.log('taskDeleted => ', taskDeletedData);
+      if (!taskDeletedData.payload) {
+        return console.error('Payload missing in delete task event');
+      }
+      const { taskId, boardId } = taskDeletedData.payload;
+      if (!taskId || !boardId) {
+        return console.error('Wrong data from delete task event');
+      }
+      removeDeletedTask(taskId, boardId);
+    }
+  );
 };

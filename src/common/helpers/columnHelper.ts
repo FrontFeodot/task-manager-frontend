@@ -1,7 +1,6 @@
 import { find, map } from 'lodash';
 
-import { deleteColumn } from '@common/api/columnApi';
-import { ICustomResponse } from '@common/interfaces/IApiHandler';
+import { manageColumnEvent } from '@common/api/socket/socket';
 import { IModal } from '@common/providers/appProvider/types';
 import { openModal } from '@common/providers/appProvider/useAppState';
 import { IBoard, IColumn } from '@common/providers/boardProvider/types';
@@ -29,6 +28,7 @@ export const getColumn = ({
   columnId?: string;
 }): IColumn | undefined => {
   const columns = getColumns();
+
   if (!columns) {
     return undefined;
   }
@@ -50,11 +50,11 @@ interface IDeleteColumnHelper {
   boardId: string;
 }
 
-export const deleteColumnHelper = async ({
+export const deleteColumnHelper = ({
   columnId,
   tasksPath,
   boardId,
-}: IDeleteColumnHelper): Promise<ICustomResponse | void> => {
+}: IDeleteColumnHelper): void => {
   const { tasks } = getBoardById(boardId) as IBoard;
   const tasksInColumn = getTasksForColumn(columnId, tasks);
   const hasTasks = !!tasksInColumn.length;
@@ -66,17 +66,5 @@ export const deleteColumnHelper = async ({
     return;
   }
 
-  try {
-    const resposne = await deleteColumn({
-      boardId,
-      columnId,
-      ...(tasksPath ? { tasksPath } : {}),
-    });
-    if (resposne.isError) {
-      throw resposne;
-    }
-    return resposne;
-  } catch (err) {
-    return err as ICustomResponse;
-  }
+  manageColumnEvent({ columnId, boardId, isDelete: true, tasksPath });
 };

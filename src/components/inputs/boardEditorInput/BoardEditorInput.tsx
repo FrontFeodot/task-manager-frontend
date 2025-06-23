@@ -1,7 +1,7 @@
 import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 
-import { manageColumnEvent } from '@common/api/socket/socket';
 import { onEditorInputSubmit } from '@common/helpers/boardEditorHelper';
+import { deleteColumnHelper } from '@common/helpers/columnHelper';
 import Icon from '@common/icons/Icon';
 import { setBoardEditorResult } from '@common/providers/boardProvider/useBoardState';
 
@@ -97,7 +97,7 @@ const BoardEditorInput = ({
 
   const onColumnDelete = async (): Promise<void> => {
     if (columnId && boardId) {
-      manageColumnEvent({ columnId, boardId, isDelete: true });
+      deleteColumnHelper({ columnId, boardId });
     }
   };
 

@@ -1,4 +1,3 @@
-
 import { ICustomResponse } from '@common/interfaces/IApiHandler';
 import { IBoard } from '@common/providers/boardProvider/types';
 

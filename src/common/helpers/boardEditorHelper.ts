@@ -1,11 +1,11 @@
 import { createBoard } from '@common/api/boardApi';
 import {
-  IManageColumn,
   manageColumnEvent,
   manageMembersEvent,
   updateBoardData,
 } from '@common/api/socket/socket';
 import { ICustomResponse } from '@common/interfaces/IApiHandler';
+import { IManageColumn } from '@common/interfaces/ISocketEvents';
 import {
   openEditor,
   setBoardEditorResult,

@@ -2,7 +2,6 @@ import pick from 'lodash/pick';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { getBoards } from '@common/api/boardApi';
 import { deleteTask, updateTask } from '@common/api/taskApi';
 import { getColumn } from '@common/helpers/columnHelper';
 import { formatDate } from '@common/helpers/dateHelper';
@@ -82,8 +81,7 @@ const TaskComponent = ({
   const onSubmit = async (data: ITaskFormValues) => {
     const response = await updateTask(task, data);
     if (response?.isSuccess) {
-      getBoards();
-      closeTask();
+      closeTask(true);
     }
   };
 
@@ -102,7 +100,6 @@ const TaskComponent = ({
   const onTaskDelete = async (payload: Pick<ITask, 'taskId' | 'boardId'>) => {
     const response = await deleteTask(payload);
     if (response?.isSuccess) {
-      getBoards();
       closeTask();
     }
   };

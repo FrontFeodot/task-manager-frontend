@@ -5,9 +5,7 @@ import { useEffect, useState } from 'react';
 import { isBoardOwner } from '@common/helpers/boardHelper';
 import { formatDate } from '@common/helpers/dateHelper';
 import Icon from '@common/icons/Icon';
-import {
-  setBoardEditorResult,
-} from '@common/providers/boardProvider/useBoardState';
+import { setBoardEditorResult } from '@common/providers/boardProvider/useBoardState';
 import { useUserState } from '@common/providers/userProvider/useUserState';
 import { DATE_UP_TO_MINUTES } from '@common/utils/dateFormats';
 
@@ -84,6 +82,7 @@ const BoardEditor = ({
             result={result}
             fieldName={`title_${newField === 'board' ? 'create' : 'update'}`}
             currentValue={title}
+            boardId={boardId}
           />
         </S.TitleWrapper>
         {columns.length > 1 ? (
