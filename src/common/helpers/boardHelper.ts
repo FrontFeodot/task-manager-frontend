@@ -1,6 +1,8 @@
 import Cookies from 'js-cookie';
 import { find } from 'lodash';
 
+import { getSingleBoard } from '@common/api/boardApi';
+import { joinBoard } from '@common/api/socket/socketEvents/boardEvents';
 import { IBoard } from '@common/providers/boardProvider/types';
 import {
   setCurrentBoard,
@@ -34,9 +36,16 @@ export const getCurrentBoardTitle = (): string => {
   return currentBoard?.title as string;
 };
 
-export const setCurrentBoardAction = (boardId: string): void => {
+export const setCurrentBoardAction = async (
+  boardId: string,
+  fetchData = false
+): Promise<void> => {
+  joinBoard(boardId);
   setCurrentBoard(boardId);
   Cookies.set(SELECTED_BOARD, boardId);
+  if (fetchData) {
+    await getSingleBoard(boardId);
+  }
 };
 
 export const isBoardOwner = (ownerEmail: string): boolean => {

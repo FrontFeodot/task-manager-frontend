@@ -4,5 +4,4 @@ export interface ITabsProps {
   currentTab: string;
   setCurrentTab: Dispatch<SetStateAction<string>>;
   tabs: Record<string, string>;
-  //values: string[]
 }

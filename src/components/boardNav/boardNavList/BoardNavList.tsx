@@ -1,57 +1,33 @@
-import { keys, upperCase } from 'lodash';
+import { keys } from 'lodash';
 import map from 'lodash/map';
-import { useTheme } from 'styled-components';
 
-import {
-  getCurrentBoardId,
-  isBoardOwner,
-  setCurrentBoardAction,
-} from '@common/helpers/boardHelper';
 import Icon from '@common/icons/Icon';
 import { IBoard } from '@common/providers/boardProvider/types';
-import { openEditor } from '@common/providers/boardProvider/useBoardState';
+import {
+  openEditor,
+  useBoardState,
+} from '@common/providers/boardProvider/useBoardState';
 import { emptyBoard } from '@common/utils/boardEditorConfig';
 
-import { TextInline } from '@components/text/TextCommon.styled';
-
+import BoardNavItem from './BoardNavItem';
 import * as S from './BoardNavList.styled';
 import { IBoardNavList } from './BoardNavList.types';
 
-const BoardNavList = ({
-  boardList,
-  isExpanded,
-}: IBoardNavList): JSX.Element => {
-  const { iconColor } = useTheme();
-  const currentBoardId = getCurrentBoardId();
+const BoardNavList = ({ isExpanded }: IBoardNavList): JSX.Element => {
+  const currentBoardId = useBoardState((state) => state.currentBoardId);
+  const boardList = useBoardState((s) => s.boardList);
 
   return (
     <S.BoardList>
       {boardList
-        ? map(keys(boardList), (boardId, index) => {
-            const currentBoard = boardList[boardId];
-            const isOwner = isBoardOwner(currentBoard.ownerEmail);
-
-            const title = isExpanded
-              ? currentBoard.title
-              : upperCase(Array.from(currentBoard.title)[0]);
-            return (
-              <S.BoardListItem
-                $isExpanded={isExpanded}
-                $isSelected={currentBoardId === currentBoard.boardId}
-                key={index}
-                onClick={(): void => setCurrentBoardAction(boardId)}
-              >
-                <S.ListItemLabel $isExpanded={isExpanded}>
-                  <TextInline>{`${title}${!isOwner ? ` (${currentBoard.ownerEmail})` : ''}`}</TextInline>
-                </S.ListItemLabel>
-                <S.BoardSettingWrapper
-                  onClick={() => openEditor({ data: currentBoard })}
-                >
-                  <Icon name="settings" color={iconColor} size={16} />
-                </S.BoardSettingWrapper>
-              </S.BoardListItem>
-            );
-          })
+        ? map(keys(boardList), (boardId, index) => (
+            <BoardNavItem
+              board={boardList[boardId]}
+              isExpanded={isExpanded}
+              currentBoardId={currentBoardId}
+              key={index}
+            />
+          ))
         : null}
       <S.BoardListItem
         $isExpanded={isExpanded}

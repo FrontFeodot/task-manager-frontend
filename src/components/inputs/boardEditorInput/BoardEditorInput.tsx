@@ -1,7 +1,7 @@
 import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 
 import { onEditorInputSubmit } from '@common/helpers/boardEditorHelper';
-import { deleteColumnHelper } from '@common/helpers/columnHelper';
+import { deleteColumnHelper, isDoneColumn } from '@common/helpers/columnHelper';
 import Icon from '@common/icons/Icon';
 import { setBoardEditorResult } from '@common/providers/boardProvider/useBoardState';
 
@@ -139,7 +139,8 @@ const BoardEditorInput = ({
       ) : (
         <S.PresentationWrapper
           className={isColumnCreate ? '' : 'settings-column-item'}
-          data-value={fieldValue?.replace(/ /g, '_')}
+          data-value={fieldValue?.replace(/ /g, '_').toString()}
+          $isDoneColumn={isDoneColumn(columnId)}
           $isColumn={isColumnCreate || isColumnUpdate}
           $isColumnCreate={isColumnCreate}
           onClick={handleEditMode}

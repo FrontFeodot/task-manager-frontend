@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { IModal } from '@common/providers/appProvider/types';
@@ -9,11 +10,11 @@ const CreateTask = ({ columnName }: { columnName: string }): JSX.Element => {
   const [_, setSearchParams] = useSearchParams();
   const newSearchParams = new URLSearchParams();
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     newSearchParams.set('columnName', columnName);
     setSearchParams(newSearchParams);
     openModal({ name: IModal.CREATE_TASK });
-  };
+  }, [setSearchParams, newSearchParams, columnName]);
 
   return (
     <S.TaskWrapper onClick={handleClick}>

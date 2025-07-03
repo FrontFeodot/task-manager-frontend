@@ -1,12 +1,11 @@
-import { IColumn } from '@common/providers/boardProvider/types';
+import { IDraggingItemType } from '@common/providers/dndProvider/types';
 
-export interface IUpdateTaskOrder {
-  taskId: number;
-  order: number;
-  columnId: string;
-}
+import { UniqueIdentifier } from '@dnd-kit/core';
 
-export interface IUpdateColumnOrder {
-  columns: IColumn[];
-  boardId: string;
+export interface IDragOverHelper {
+  type: IDraggingItemType;
+  sourceId: UniqueIdentifier | number;
+  targetId: UniqueIdentifier | number | string;
+  sourceTaskColumnId?: string;
+  targetTaskColumnId?: string;
 }

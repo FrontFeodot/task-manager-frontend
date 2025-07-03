@@ -1,4 +1,3 @@
-import { assign, remove } from 'lodash';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
@@ -15,9 +14,14 @@ export const setBoardsList = (boardList: Record<string, IBoard>): void =>
   useBoardState.setState(() => ({
     boardList,
   }));
-export const setCurrentBoard = (currentBoardTitle: string | null): void =>
+export const setSingleBoard = (board: IBoard): void =>
+  useBoardState.setState((state) => {
+    if (state.boardList?.[board.boardId])
+      state.boardList[board.boardId!] = board;
+  });
+export const setCurrentBoard = (currentBoardId: string | null): void =>
   useBoardState.setState(() => ({
-    currentBoardId: currentBoardTitle,
+    currentBoardId,
   }));
 export const openEditor = (openedEditor: IOpenedEditor): void =>
   useBoardState.setState(() => ({
@@ -30,11 +34,15 @@ export const closeEditor = (): void =>
 export const resetBoardList = (): void =>
   useBoardState.setState(() => defaultState);
 export const setBoardLoading = (loading: boolean): void =>
-  useBoardState.setState(() => ({
-    loading,
-  }));
+  useBoardState.setState((state) => {
+    if (state) {
+      state.loading = loading;
+    }
+  });
 
-export const setBoardEditorResult = (result: ICustomResponse | null) =>
+export const setBoardEditorResult = (
+  result: ICustomResponse<Partial<IBoard>> | null
+) =>
   useBoardState.setState((state) => {
     if (!state.openedEditor) return;
 
@@ -60,39 +68,31 @@ export const setBoardData = (boardData: Partial<IBoard>) => {
 
 export const setMultiplyTasks = ({ boardId, updatedTasks }: ITasksUpdated) => {
   useBoardState.setState((state) => {
-    const currentBoard = state.boardList![boardId];
-    if (!currentBoard) return;
+    const currentBoardTasks = state.boardList![boardId].tasks;
+    if (!currentBoardTasks) return;
     updatedTasks.forEach((upd) => {
-      const idx = currentBoard.tasks.findIndex(
-        (task) => task.taskId === upd.taskId
-      );
-      if (idx !== -1) {
-        Object.assign(currentBoard.tasks[idx], upd);
-      }
+      currentBoardTasks[upd.taskId!] = {
+        ...currentBoardTasks[upd.taskId!],
+        ...upd,
+      };
     });
   });
 };
 export const setUpdatedTask = (updatedTask: ITask) => {
   useBoardState.setState((state) => {
-    const currentBoard = state.boardList![updatedTask.boardId];
-    const idx = currentBoard.tasks.findIndex(
-      (task) => task.taskId === updatedTask.taskId
-    );
-    if (idx !== -1) {
-      assign(currentBoard.tasks[idx], updatedTask);
-      return;
-    }
-    currentBoard.tasks.push(updatedTask);
+    const currentBoardTasks = state.boardList![updatedTask.boardId].tasks;
+    const currentTask = currentBoardTasks[updatedTask.taskId];
+    currentBoardTasks[updatedTask.taskId] = {
+      ...(currentTask ? { ...currentTask } : {}),
+      ...updatedTask,
+    };
   });
 };
 
 export const removeDeletedTask = (taskId: number, boardId: string) => {
   useBoardState.setState((state) => {
-    const currentBoard = state.boardList![boardId];
-    const idx = currentBoard.tasks.findIndex((task) => task.taskId === taskId);
+    const currentBoardTasks = state.boardList![boardId].tasks;
 
-    if (idx !== -1) {
-      remove(currentBoard.tasks, { taskId });
-    }
+    delete currentBoardTasks[taskId];
   });
 };

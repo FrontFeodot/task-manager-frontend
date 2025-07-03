@@ -1,5 +1,6 @@
 import React from 'react';
 
+import useAppParams from '@common/hooks/useAppParams';
 import { IModal, IModalProps } from '@common/providers/appProvider/types';
 import { useAppState } from '@common/providers/appProvider/useAppState';
 
@@ -38,6 +39,8 @@ const ModalItem = React.memo(
 
 const ModalManager = (): JSX.Element | null => {
   const modals = useAppState((s) => s.modals);
+
+  useAppParams();
 
   if (!modals.length) {
     return null;

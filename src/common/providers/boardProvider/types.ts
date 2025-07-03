@@ -11,10 +11,10 @@ export interface IBoardState {
 }
 
 export interface IBoard {
-  columns: IColumn[];
+  columns: Record<string, IColumn>;
   boardId: string;
   title: string;
-  tasks: ITask[];
+  tasks: Record<number, ITask>;
   doneColumn: string | null;
   ownerEmail: string;
   members: string[];
@@ -29,6 +29,6 @@ export interface IColumn {
 
 export interface IOpenedEditor {
   newField?: 'board' | 'column';
-  result?: ICustomResponse | null;
+  result?: ICustomResponse<Partial<IBoard>> | null;
   data: IBoard;
 }

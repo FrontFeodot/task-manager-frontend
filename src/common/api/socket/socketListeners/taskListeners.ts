@@ -6,6 +6,7 @@ import {
   setMultiplyTasks,
   setUpdatedTask,
 } from '@common/providers/boardProvider/useBoardState';
+import { updateDndTasks } from '@common/providers/dndProvider/useDndState';
 
 import { getSocket } from '../socket';
 
@@ -16,6 +17,9 @@ const tasksListeners = () => {
     (taskUpdatedData: ICustomResponse<ITasksUpdated>) => {
       if (taskUpdatedData.payload) {
         setMultiplyTasks(taskUpdatedData.payload);
+        updateDndTasks({
+          tasks: taskUpdatedData.payload.updatedTasks,
+        });
       }
     }
   );
@@ -23,6 +27,9 @@ const tasksListeners = () => {
   socket.on('taskUpdated', (taskUpdatedData: ICustomResponse<ITask>) => {
     if (taskUpdatedData.payload) {
       setUpdatedTask(taskUpdatedData.payload);
+      updateDndTasks({
+        tasks: [taskUpdatedData.payload],
+      });
     }
   });
 
@@ -37,6 +44,10 @@ const tasksListeners = () => {
         return console.error('Wrong data from delete task event');
       }
       removeDeletedTask(taskId, boardId);
+      updateDndTasks({
+        tasks: [taskDeletedData.payload],
+        isDelete: true,
+      });
     }
   );
 };

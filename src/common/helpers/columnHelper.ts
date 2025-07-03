@@ -1,23 +1,30 @@
-import { find, map } from 'lodash';
+import find from 'lodash/find';
+import map from 'lodash/map';
+import values from 'lodash/values';
 
 import { manageColumnEvent } from '@common/api/socket/socketEvents/boardEvents';
 import { IModal } from '@common/providers/appProvider/types';
 import { openModal } from '@common/providers/appProvider/useAppState';
 import { IBoard, IColumn } from '@common/providers/boardProvider/types';
+import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 
-import { getBoardById, getCurrentBoardData } from './boardHelper';
+import {
+  getBoardById,
+  getCurrentBoardData,
+  getCurrentBoardId,
+} from './boardHelper';
 import { getTasksForColumn } from './taskHelper';
 
-export const getColumns = (): IColumn[] | undefined => {
+export const getColumns = (): Record<string, IColumn> | undefined => {
   const currentBoardData = getCurrentBoardData();
   if (currentBoardData) {
-    return currentBoardData.columns as IColumn[];
+    return currentBoardData.columns;
   }
 };
 
 export const getColumnTitles = (): string[] => {
   const columns = getColumns();
-  return map(columns, (column) => column.title);
+  return map(values(columns), (column) => column.title);
 };
 
 export const getColumn = ({
@@ -32,16 +39,23 @@ export const getColumn = ({
   if (!columns) {
     return undefined;
   }
+  if (columnId) {
+    return columns[columnId];
+  }
+  if (columnTitle) {
+    return find(columns, (column) => column.title === columnTitle);
+  }
 
-  return find(columns, (column) => {
-    if (columnTitle) {
-      return column.title === columnTitle;
-    }
-    if (columnId) {
-      return column.columnId === columnId;
-    }
-    return undefined;
-  }) as IColumn | undefined;
+  return undefined;
+};
+
+export const isDoneColumn = (columnId?: string): boolean => {
+  const boardId = getCurrentBoardId() as string;
+
+  return (
+    useBoardState.getState().boardList![boardId].doneColumn === columnId ||
+    false
+  );
 };
 
 interface IDeleteColumnHelper {

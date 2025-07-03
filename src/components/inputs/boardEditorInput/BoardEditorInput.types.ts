@@ -1,4 +1,5 @@
 import { ICustomResponse } from '@common/interfaces/IApiHandler';
+import { IBoard } from '@common/providers/boardProvider/types';
 
 export interface IBoardEditorInput {
   fieldName: string;
@@ -6,7 +7,7 @@ export interface IBoardEditorInput {
   columnId?: string;
   boardId?: string;
   autofocus?: boolean;
-  result?: ICustomResponse | null;
+  result?: ICustomResponse<Partial<IBoard>> | null;
   editableField: string | null;
   setEditableField: React.Dispatch<React.SetStateAction<string | null>>;
 }

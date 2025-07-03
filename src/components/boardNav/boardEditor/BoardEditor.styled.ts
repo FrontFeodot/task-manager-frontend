@@ -71,16 +71,11 @@ const getSelectModeStyles = (theme: DefaultTheme): string => `
 
 export const ColumnList = styled.div<{
   $isSelectModeActive: boolean;
-  $doneColumn: string | null;
 }>`
   display: flex;
   flex-direction: column;
   height: auto;
   gap: 16px;
-
-  .settings-column-item[data-value=${(props) => props.$doneColumn}] {
-    box-shadow: 0 0 10px 2px ${(props) => props.theme.textSecondary};
-  }
 
   ${({ $isSelectModeActive, theme }) =>
     $isSelectModeActive ? getSelectModeStyles(theme) : ''};

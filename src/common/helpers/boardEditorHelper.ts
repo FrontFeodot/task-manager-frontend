@@ -6,6 +6,7 @@ import {
 } from '@common/api/socket/socketEvents/boardEvents';
 import { ICustomResponse } from '@common/interfaces/IApiHandler';
 import { IManageColumn } from '@common/interfaces/ISocketEvents';
+import { IBoard } from '@common/providers/boardProvider/types';
 import {
   openEditor,
   setBoardEditorResult,
@@ -70,5 +71,7 @@ export const onEditorInputSubmit = async ({
     return;
   }
 
-  setBoardEditorResult({ isError: 1, message: 'Unhandled' } as ICustomResponse);
+  setBoardEditorResult({ isError: 1, message: 'Unhandled' } as ICustomResponse<
+    Partial<IBoard>
+  >);
 };

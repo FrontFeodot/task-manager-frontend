@@ -26,7 +26,7 @@ export const ColumnWrapper = styled.div<{ $isDone: boolean }>`
     $isDone ? '0 0 10px 2px #8ab4f8' : '0 0 8px 1px #3a3b3c'};
 `;
 
-export const ColumnLabel = styled.div<{ $hasItems?: boolean }>`
+export const ColumnLabel = styled.div`
   display: flex;
   padding: 24px 0px 8px;
   align-items: center;

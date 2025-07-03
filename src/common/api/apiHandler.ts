@@ -10,11 +10,13 @@ const apiHandler = async <Res, Req = undefined>({
   url,
   payload,
   withAuth,
+  params,
 }: IApiHandler<Req>): Promise<ICustomResponse<Res>> => {
   try {
     const response: AxiosResponse = await axios({
       method,
       url,
+      params,
       data: payload,
       ...(withAuth
         ? { headers: { authorization: Cookies.get(AUTH_TOKEN) } }

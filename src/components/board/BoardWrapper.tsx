@@ -1,57 +1,52 @@
-import unionBy from 'lodash/unionBy';
-import { useEffect, useState } from 'react';
+import isEmpty from 'lodash/isEmpty';
+import { useEffect } from 'react';
 
-import useAppParams from '@common/hooks/useAppParams';
-import { ITask } from '@common/interfaces/ITask';
-import { IBoard, IColumn } from '@common/providers/boardProvider/types';
+import { getBoardById } from '@common/helpers/boardHelper';
+import { useBoardState } from '@common/providers/boardProvider/useBoardState';
+import { setDndData } from '@common/providers/dndProvider/useDndState';
+import { useUserState } from '@common/providers/userProvider/useUserState';
 
 import EmptyLayout from '@components/layouts/emptyLayout/EmptyLayout';
 import { IEmptyLayoutType } from '@components/layouts/emptyLayout/EmptyLayout.types';
 import Loader from '@components/layouts/loader/Loader';
 
 import BoardComponent from './boardComponent/BoardComponent';
-import { IBoardProps } from './BoardWrapper.types';
+import useDndHandlers from './hooks/useDndHandlers';
 
-const BoardWrapper = ({ boardData, loading }: IBoardProps): JSX.Element => {
-  const [virtualBoard, setVirtualBoard] = useState<IBoard | null | undefined>(
-    boardData
+const BoardWrapper = (): JSX.Element => {
+  const boardId = useBoardState((state) => state.currentBoardId);
+  const boardLoading = useBoardState((s) => s.loading);
+  const userLoading = useUserState((s) => s.loading);
+  const { dndContext } = useDndHandlers();
+
+  const isEmptyBoards = useBoardState((s) => isEmpty(s.boardList));
+  const isEmptyColumns = useBoardState((s) =>
+    isEmpty(s.boardList?.[s.currentBoardId || '']?.columns)
   );
-  useAppParams();
 
   useEffect(() => {
-    setVirtualBoard(boardData || null);
-  }, [boardData]);
+    if (boardId && !boardLoading) {
+      const board = getBoardById(boardId);
+      if (board) {
+        setDndData(board);
+      }
+    }
+  }, [boardId, boardLoading]);
 
-  if (loading || (!!boardData && !virtualBoard)) {
-    return <Loader isOpaque isRelative />;
-  }
-
-  if (!virtualBoard) {
+  if (isEmptyBoards && !boardLoading) {
     return <EmptyLayout type={IEmptyLayoutType.BOARD} />;
   }
 
-  const updateBoardState = (
-    updatedData: ITask[] | IColumn[],
-    activeItem: 'tasks' | 'columns' | null
-  ): void => {
-    setVirtualBoard((prev) => {
-      if (prev) {
-        return {
-          ...prev,
-          ...(activeItem === 'tasks'
-            ? { tasks: unionBy(updatedData as ITask[], prev.tasks, 'taskId') }
-            : { columns: updatedData as IColumn[] }),
-        };
-      }
-    });
-  };
+  if (isEmptyColumns && !boardLoading) {
+    return <EmptyLayout type={IEmptyLayoutType.COLUMN} />;
+  }
+  const loading = userLoading || boardLoading;
 
-  return (
-    <BoardComponent
-      boardData={virtualBoard}
-      updateBoardState={updateBoardState}
-    />
-  );
+  if (loading) {
+    return <Loader isOpaque isRelative />;
+  }
+
+  return <BoardComponent dndContext={dndContext} />;
 };
 
 export default BoardWrapper;

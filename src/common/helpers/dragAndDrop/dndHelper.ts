@@ -1,75 +1,54 @@
-import { filter, map } from 'lodash';
+import { keys } from 'lodash';
 
-import { ITask } from '@common/interfaces/ITask';
+import { IBoard } from '@common/providers/boardProvider/types';
+import { IDndSchema, ITasksSchema } from '@common/providers/dndProvider/types';
 
-export const handleReorderWithinColumn = (
-  columnTasks: ITask[],
-  activeTask: ITask,
-  replacedTask?: ITask
-) => {
-  const updatedTasks = map(columnTasks, (task) => {
-    // Skip changing tasks not affected by the reordering
-    if (
-      task.taskId !== activeTask.taskId &&
-      task.taskId !== replacedTask?.taskId
-    ) {
-      return task;
-    }
+export const getBoardSchema = (board: IBoard) => {
+  const boardSchema: IDndSchema = {};
 
-    // Update the active task to take the replaced task's order
-    if (task.taskId === activeTask.taskId && replacedTask) {
-      return { ...task, order: replacedTask.order };
-    }
+  const columnSchema: string[] = [];
+  const tasksSchema: Record<string, Record<number, ITasksSchema>> = {};
 
-    // Update the replaced task to take the active task's order
-    if (task.taskId === replacedTask?.taskId) {
-      return { ...task, order: activeTask.order };
-    }
-
-    return task;
+  Object.keys(board.columns).forEach((columnId) => {
+    const order = board.columns[columnId].order;
+    boardSchema[columnId] = {
+      title: board.columns[columnId].title,
+      order,
+      columnId,
+      isDone: board.doneColumn === columnId,
+      boardId: board.boardId,
+      tasks: [],
+    };
+    tasksSchema[columnId] = {};
   });
 
-  return updatedTasks;
-};
-
-export const handleMoveBetweenColumns = (
-  sourceColumnTasks: ITask[],
-  targetColumnTasks: ITask[],
-  activeTask: ITask,
-  targetColumnId: string,
-  replacedTask?: ITask
-) => {
-  // Remove task from source column
-  const updatedSourceTasks = map(
-    filter(sourceColumnTasks, (task) => task.taskId !== activeTask.taskId),
-    (task, index) => ({ ...task, order: index + 1 })
+  columnSchema.push(
+    ...keys(boardSchema).sort(
+      (a, b) => boardSchema[a].order - boardSchema[b].order
+    )
   );
 
-  // Prepare the task for insertion into target column
-  const taskToMove = {
-    ...activeTask,
-    columnId: targetColumnId,
-    order: replacedTask?.order || targetColumnTasks.length + 1,
-  };
-
-  // Add task to target column and reorder
-  const updatedTargetTasks = [...targetColumnTasks];
-  if (replacedTask) {
-    // Insert at specific position and adjust orders
-    updatedTargetTasks.map((task) => {
-      if (task.order >= taskToMove.order) {
-        const copiedTask = { ...task };
-        copiedTask.order += 1;
-        return copiedTask;
-      }
+  Object.values(board.tasks).forEach(({ taskId, order, columnId, isDone }) => {
+    boardSchema[columnId]?.tasks.push({
+      taskId,
+      order,
+      columnId,
+      isDone,
     });
+  });
+
+  for (const { taskId, order, columnId, isDone } of Object.values(
+    board.tasks
+  )) {
+    if (tasksSchema[columnId]) {
+      tasksSchema[columnId][taskId] = {
+        taskId,
+        order,
+        columnId,
+        isDone,
+      };
+    }
   }
 
-  updatedTargetTasks.push(taskToMove);
-
-  // Sort by order to ensure consistency
-  updatedTargetTasks.sort((a, b) => a.order - b.order);
-
-  // Update board state with both column changes at once
-  return [...updatedSourceTasks, ...updatedTargetTasks];
+  return { boardSchema, columnSchema, tasksSchema };
 };

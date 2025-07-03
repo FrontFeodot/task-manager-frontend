@@ -56,6 +56,8 @@ export const TaskDescription = styled.div`
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 
+  color: ${(props) => props.theme.textPrimary};
+
   & p,
   ul {
     margin: 0;

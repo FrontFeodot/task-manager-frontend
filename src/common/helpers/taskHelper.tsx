@@ -2,6 +2,7 @@ import { RawDraftContentState } from 'draft-js';
 import filter from 'lodash/filter';
 import find from 'lodash/find';
 import maxBy from 'lodash/maxBy';
+import values from 'lodash/values';
 import { SetURLSearchParams } from 'react-router-dom';
 
 import Icon from '@common/icons/Icon';
@@ -43,8 +44,10 @@ export const getParentTask = (parentTaskId: number): ITask | undefined => {
   );
 };
 
-export const getTasksForColumn = (columnId: string, tasks: ITask[]) =>
-  filter(tasks, ['columnId', columnId]).sort((a, b) => a.order - b.order);
+export const getTasksForColumn = (
+  columnId: string,
+  tasks: Record<number, ITask>
+) => filter(tasks, ['columnId', columnId]).sort((a, b) => a.order - b.order);
 
 interface IGetLastOrderByType {
   type: 'columns' | 'tasks';
@@ -66,7 +69,7 @@ export const getLastOrderByType = ({
   const { columns, tasks } = board;
 
   if (type === 'columns') {
-    const lastOrderItem = maxBy(columns, 'order');
+    const lastOrderItem = maxBy(values(columns), 'order');
     return lastOrderItem?.order || 0;
   }
 

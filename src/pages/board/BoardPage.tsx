@@ -2,9 +2,7 @@ import { useEffect } from 'react';
 
 import { getBoards } from '@common/api/boardApi';
 import { connectSocket, disconnectSocket } from '@common/api/socket/socket';
-import { joinBoard } from '@common/api/socket/socketEvents/boardEvents';
-import { useBoardState } from '@common/providers/boardProvider/useBoardState';
-import { useUserState } from '@common/providers/userProvider/useUserState';
+import { resetBoardList } from '@common/providers/boardProvider/useBoardState';
 
 import BoardWrapper from '@components/board/BoardWrapper';
 import BoardNav from '@components/boardNav/BoardNav';
@@ -12,15 +10,6 @@ import BoardNav from '@components/boardNav/BoardNav';
 import * as S from './BoardPage.styled';
 
 const BoardPage = (): JSX.Element => {
-  const boardList = useBoardState((s) => s.boardList);
-  const boardLoading = useBoardState((s) => s.loading);
-  const selectedBoardId = useBoardState((s) => s.currentBoardId) || '';
-  const userLoading = useUserState((s) => s.loading);
-  const selectedBoardData = useBoardState(
-    (s) => s.boardList?.[selectedBoardId]
-  );
-  const loading = userLoading || boardLoading;
-
   useEffect(() => {
     connectSocket();
     return () => {
@@ -29,19 +18,17 @@ const BoardPage = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    if (selectedBoardId) {
-      joinBoard(selectedBoardId);
-    }
-  }, [selectedBoardId]);
-  useEffect(() => {
     getBoards();
+    return () => {
+      resetBoardList();
+    };
   }, []);
 
   return (
     <S.Wrapper>
-      <BoardNav boardList={boardList} />
+      <BoardNav />
 
-      <BoardWrapper boardData={selectedBoardData} loading={loading} />
+      <BoardWrapper />
     </S.Wrapper>
   );
 };

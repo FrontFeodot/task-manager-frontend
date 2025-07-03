@@ -15,7 +15,7 @@ import { IUseBoardHandlers } from './BoardEditor.types';
 
 const SELECT_COLUMN_TITLE = 'Select column as "done" column?';
 const SELECT_COLUMN_MESSAGE =
-  'All tasks in this column will be with "done" status';
+  'All tasks moved to this column will be with "done" status';
 const UNSELECT_COLUMN_TITLE = 'Remove "done" status from this column?';
 const UNSELECT_COLUMN_MESSAGE =
   'After this action, new tasks in this column will not have the "done" status';

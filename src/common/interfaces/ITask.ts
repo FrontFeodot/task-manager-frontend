@@ -7,8 +7,6 @@ import {
   UseFormWatch,
 } from 'react-hook-form';
 
-import { UniqueIdentifier } from '@dnd-kit/core';
-
 export interface ITask {
   taskId: number;
   title: string;
@@ -24,7 +22,6 @@ export interface ITask {
   createdAt: Date;
   updatedAt: Date;
   order: number;
-  id?: UniqueIdentifier; // for dnd
 }
 
 export enum ITaskPriority {

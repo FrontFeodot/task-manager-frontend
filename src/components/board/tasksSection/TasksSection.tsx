@@ -1,21 +1,24 @@
+import { values } from 'lodash';
 import map from 'lodash/map';
+import React, { useMemo } from 'react';
 
-import TaskCard from './tasks/TaskCard';
+import { useDndState } from '@common/providers/dndProvider/useDndState';
+
+import TaskCardWrapper from './tasks/TaskCardWrapper';
 import * as S from './TasksSection.styled';
 import { ITasksSection } from './TasksSection.types';
-import { useDroppable } from '@dnd-kit/core';
 import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 
-const TasksSection = ({
-  taskSection,
-  columnId,
-}: ITasksSection): JSX.Element => {
-  const { setNodeRef } = useDroppable({
-    id: columnId,
-  });
+const TasksSection = ({ columnId, boardId }: ITasksSection): JSX.Element => {
+  const tasks = useDndState((state) => state.orderedTasks?.[columnId]);
+
+  const taskSection = useMemo(
+    () => (tasks ? values(tasks).sort((a, b) => a.order - b.order) : []),
+    [tasks]
+  );
 
   return (
     <SortableContext
@@ -23,10 +26,17 @@ const TasksSection = ({
       items={map(taskSection, (task) => task.taskId)}
       strategy={verticalListSortingStrategy}
     >
-      <S.TasksSectionWrapper ref={setNodeRef}>
+      <S.TasksSectionWrapper>
         <S.TaskSection>
           {map(taskSection, (task) => {
-            return <TaskCard key={task.taskId} {...task} />;
+            return (
+              <TaskCardWrapper
+                key={task.taskId}
+                taskId={task.taskId as number}
+                sectionId={columnId}
+                boardId={boardId}
+              />
+            );
           })}
         </S.TaskSection>
       </S.TasksSectionWrapper>
@@ -34,4 +44,4 @@ const TasksSection = ({
   );
 };
 
-export default TasksSection;
+export default React.memo(TasksSection);

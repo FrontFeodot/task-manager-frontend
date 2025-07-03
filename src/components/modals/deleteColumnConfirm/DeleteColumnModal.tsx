@@ -1,4 +1,4 @@
-import findIndex from 'lodash/findIndex';
+import { omit } from 'lodash';
 import map from 'lodash/map';
 import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 
@@ -28,13 +28,8 @@ const DeleteColumnModal = (): JSX.Element => {
   const columnId = currentModal?.data?.columnId as string;
   const boardId = currentModal?.data?.boardId as string;
   const { columns } = getBoardById(boardId) as IBoard;
-  const removedColumn = findIndex(
-    columns,
-    (column) => column.columnId === columnId
-  );
 
-  const restColumns = [...columns];
-  restColumns.splice(removedColumn, 1);
+  const restColumns = omit({ ...columns }, columnId);
 
   const restColumnsTitles = map(restColumns, (column) => column.title);
 

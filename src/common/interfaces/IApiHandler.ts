@@ -10,6 +10,8 @@ export interface IApiHandler<Req> {
   url: ApiCalls;
   payload?: Req;
   withAuth?: boolean;
+  params?: Req;
+  signal?: AbortSignal;
 }
 
 export enum ApiCalls {
@@ -18,6 +20,7 @@ export enum ApiCalls {
   REGISTER = '/auth/signup',
   PROTECTED = '/auth/protected',
   BOARD = '/board/all',
+  SINGLE_BOARD = '/board/single',
   BOARD_CREATE = '/board/create',
   BOARD_DELETE = '/board/delete',
   TASK_CREATE = '/task/create',

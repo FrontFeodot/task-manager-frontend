@@ -1,11 +1,14 @@
-import find from 'lodash/find';
+import { keys } from 'lodash';
 import map from 'lodash/map';
 import { useEffect, useState } from 'react';
 
 import { isBoardOwner } from '@common/helpers/boardHelper';
 import { formatDate } from '@common/helpers/dateHelper';
 import Icon from '@common/icons/Icon';
-import { setBoardEditorResult } from '@common/providers/boardProvider/useBoardState';
+import {
+  setBoardEditorResult,
+  useBoardState,
+} from '@common/providers/boardProvider/useBoardState';
 import { useUserState } from '@common/providers/userProvider/useUserState';
 import { DATE_UP_TO_MINUTES } from '@common/utils/dateFormats';
 
@@ -18,10 +21,14 @@ import { IBoardEditor } from './BoardEditor.types';
 import { useBoardEditorHandlers } from './useBoardEditorHandlers';
 
 const BoardEditor = ({
-  editorData,
+  openedEditor,
   newField,
   result,
 }: IBoardEditor): JSX.Element => {
+  const editorData =
+    useBoardState((state) => state.boardList?.[openedEditor?.data.boardId]) ||
+    openedEditor?.data;
+
   const {
     title,
     columns,
@@ -33,11 +40,7 @@ const BoardEditor = ({
   } = editorData;
   const isOwner = isBoardOwner(ownerEmail);
 
-  const doneColumnTitle =
-    find(columns, (column) => column.columnId === doneColumn)?.title.replace(
-      / /g,
-      '_'
-    ) || null;
+  const columnIds = keys(columns);
 
   const [editableField, setEditableField] = useState<string | null>(
     'title_create'
@@ -85,7 +88,7 @@ const BoardEditor = ({
             boardId={boardId}
           />
         </S.TitleWrapper>
-        {columns.length > 1 ? (
+        {keys(columns).length > 1 ? (
           <S.DoneColumnWrapper>
             <S.DoneColumnContent>
               {doneColumn ? 'Select "Done" column' : 'Change "Done" column'}{' '}
@@ -104,18 +107,17 @@ const BoardEditor = ({
             onClick={handleListClick}
             className="settings-column-list"
             $isSelectModeActive={isSelectModeActive}
-            $doneColumn={doneColumnTitle}
           >
             <S.FieldLabel>Columns</S.FieldLabel>
-            {columns?.length
-              ? map(columns, ({ title, columnId }, index) => {
+            {columnIds?.length
+              ? map(columnIds, (columnId, index) => {
                   return (
                     <BoardEditorInput
                       editableField={editableField}
                       setEditableField={setEditableField}
                       result={result}
                       fieldName={`column_${index + 1}`}
-                      currentValue={title}
+                      currentValue={columns[columnId].title}
                       key={index}
                       columnId={columnId}
                       boardId={boardId}

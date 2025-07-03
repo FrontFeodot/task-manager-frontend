@@ -17,6 +17,8 @@ import {
   setBoardLoading,
   setBoardsList,
   setCurrentBoard,
+  setSingleBoard,
+  useBoardState,
 } from '@common/providers/boardProvider/useBoardState';
 import { SELECTED_BOARD } from '@common/utils/cookies';
 
@@ -44,11 +46,12 @@ export const getBoards = async (): Promise<ICustomResponse<
       const firstBoardId = boardList[keys(boardList)[0]].boardId;
       setCurrentBoardAction(firstBoardId);
     }
-    setBoardLoading(false);
   } catch (error) {
     setBoardLoading(false);
 
     return error as ICustomResponse;
+  } finally {
+    setBoardLoading(false);
   }
 };
 
@@ -97,5 +100,30 @@ export const deleteBoardApi = async (
     return response as ICustomResponse;
   } catch (err) {
     return err as ICustomResponse;
+  }
+};
+
+export const getSingleBoard = async (boardId: string) => {
+  const isLoading = useBoardState.getState().loading;
+  try {
+    if (isLoading) {
+      return;
+    }
+    setBoardLoading(true);
+    const response = await apiHandler<IBoard, { boardId: string }>({
+      method: IApiMethod.GET,
+      url: ApiCalls.SINGLE_BOARD,
+      withAuth: true,
+      params: { boardId },
+    });
+    if (response.isError || !response.payload) {
+      throw response;
+    }
+    setSingleBoard(response.payload);
+    return response as ICustomResponse<IBoard>;
+  } catch (err) {
+    return err as ICustomResponse;
+  } finally {
+    setBoardLoading(false);
   }
 };

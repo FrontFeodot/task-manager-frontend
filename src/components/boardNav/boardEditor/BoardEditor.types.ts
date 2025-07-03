@@ -1,10 +1,10 @@
 import { ICustomResponse } from '@common/interfaces/IApiHandler';
-import { IBoard } from '@common/providers/boardProvider/types';
+import { IBoard, IOpenedEditor } from '@common/providers/boardProvider/types';
 
 export interface IBoardEditor {
-  editorData: IBoard;
+  openedEditor: IOpenedEditor;
   newField?: 'board' | 'column';
-  result?: ICustomResponse | null;
+  result?: ICustomResponse<Partial<IBoard>> | null;
 }
 
 export interface ISaveButtonHandler {

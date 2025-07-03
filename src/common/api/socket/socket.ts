@@ -4,7 +4,7 @@ import { io, Socket } from 'socket.io-client';
 import { AUTH_TOKEN } from '@common/utils/cookies';
 
 import boardListeners from './socketListeners/boardListeners';
-import tasksListeners from './socketListeners/taskEvents';
+import tasksListeners from './socketListeners/taskListeners';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 

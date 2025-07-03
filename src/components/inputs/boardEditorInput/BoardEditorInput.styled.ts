@@ -24,6 +24,7 @@ const getColumnPresentationStyles = (theme: DefaultTheme) => `
 export const PresentationWrapper = styled.div<{
   $isColumn?: boolean;
   $isColumnCreate?: boolean;
+  $isDoneColumn?: boolean;
 }>`
   display: flex;
   flex-direction: row;
@@ -35,6 +36,9 @@ export const PresentationWrapper = styled.div<{
 
   ${({ $isColumn, theme }) =>
     $isColumn ? getColumnPresentationStyles(theme) : ''};
+
+  ${({ $isDoneColumn, theme }) =>
+    $isDoneColumn ? `box-shadow: 0 0 10px 2px ${theme.textSecondary};` : ''};
 `;
 
 export const PresentationButtons = styled.div`
