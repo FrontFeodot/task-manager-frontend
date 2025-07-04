@@ -1,4 +1,3 @@
-
 import { IBoard } from '@common/providers/boardProvider/types';
 import { setBoardData } from '@common/providers/boardProvider/useBoardState';
 import { updateDndColumns } from '@common/providers/dndProvider/useDndState';

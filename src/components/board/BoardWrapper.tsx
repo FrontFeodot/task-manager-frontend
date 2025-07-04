@@ -1,6 +1,7 @@
 import isEmpty from 'lodash/isEmpty';
 import { useEffect } from 'react';
 
+import { joinBoard } from '@common/api/socket/socketEvents/boardEvents';
 import { getBoardById } from '@common/helpers/boardHelper';
 import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 import { setDndData } from '@common/providers/dndProvider/useDndState';
@@ -32,6 +33,12 @@ const BoardWrapper = (): JSX.Element => {
       }
     }
   }, [boardId, boardLoading]);
+
+  useEffect(() => {
+    if (boardId) {
+      joinBoard(boardId);
+    }
+  }, [boardId]);
 
   if (isEmptyBoards && !boardLoading) {
     return <EmptyLayout type={IEmptyLayoutType.BOARD} />;

@@ -1,4 +1,3 @@
-
 import { getBoards } from '@common/api/boardApi';
 import { ICustomResponse } from '@common/interfaces/IApiHandler';
 import {

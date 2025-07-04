@@ -6,7 +6,6 @@ import { updateMultiplyTasksEvent } from '@common/api/socket/socketEvents/taskEv
 import { IColumn } from '@common/providers/boardProvider/types';
 import { useBoardState } from '@common/providers/boardProvider/useBoardState';
 import {
-  updateDoneTasks,
   useDndState,
 } from '@common/providers/dndProvider/useDndState';
 
@@ -30,20 +29,14 @@ export const taskDragEnd = async ({
       ? [...tasksInInitial]
       : [...tasksInInitial, ...tasksInTarget];
 
-  const payload = map(tasksToUpdate, ({ taskId, order, columnId, isDone }) => {
-    const isColumnDone = isDoneColumn(columnId);
-    if (isColumnDone && !isDone) {
-    }
+  const payload = map(tasksToUpdate, ({ taskId, order, columnId }) => {
     return {
       taskId: taskId as number,
       order,
       columnId,
-      isDone: isDoneColumn(columnId) || isDone,
+      isDone: isDoneColumn(columnId),
     };
   });
-  if (isDoneColumn(targetColumnId)) {
-    updateDoneTasks(payload);
-  }
 
   updateMultiplyTasksEvent(boardId, payload);
 };
