@@ -2,8 +2,6 @@ import styled from 'styled-components';
 
 import { MOBILE, TABLET_DESKTOP } from '@common/utils/mediaHelper';
 
-import { Text } from '@components/text/TextCommon.styled';
-
 export const AuthWrapper = styled.div`
   ${(props) => props.theme.flexbox};
   flex-direction: column;
@@ -45,13 +43,17 @@ export const Form = styled.form`
 `;
 
 export const Item = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   position: relative;
   width: 100%;
   transition: all ease-in 1s;
 `;
 
-export const Label = styled(Text)`
-  padding: 10px 0;
+export const Label = styled.label`
+  color: ${(props) => props.theme.textPrimary};
+  font-size: ${(props) => props.theme.fontMD};
   transition: all ease-in 1s;
 `;
 

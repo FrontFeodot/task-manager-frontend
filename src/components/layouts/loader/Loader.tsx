@@ -22,7 +22,11 @@ const Loader = ({
     'Trying to connect to the server. This may take up to a minute.';
 
   return (
-    <S.LoaderWrapper $isRelative={isRelative} $isTransparent={!isOpaque}>
+    <S.LoaderWrapper
+      $isAppLoading={isAppLoading}
+      $isRelative={isRelative}
+      $isTransparent={!isOpaque}
+    >
       {!isAppLoading || (isAppLoading && !appError) ? (
         <S.LoaderSpinner $size={size} />
       ) : null}

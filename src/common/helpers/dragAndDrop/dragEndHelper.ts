@@ -5,9 +5,7 @@ import { updateBoardDataEvent } from '@common/api/socket/socketEvents/boardEvent
 import { updateMultiplyTasksEvent } from '@common/api/socket/socketEvents/taskEvents';
 import { IColumn } from '@common/providers/boardProvider/types';
 import { useBoardState } from '@common/providers/boardProvider/useBoardState';
-import {
-  useDndState,
-} from '@common/providers/dndProvider/useDndState';
+import { useDndState } from '@common/providers/dndProvider/useDndState';
 
 import { isDoneColumn } from '../columnHelper';
 

@@ -25,22 +25,20 @@ import {
 
 const RegisterForm = (): JSX.Element => {
   const [error, setError] = useState<string | null>(null);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     getValues,
     clearErrors,
-  } = useForm<IPostRegister>({
-    mode: 'onBlur',
-  });
+  } = useForm<IPostRegister>({ mode: 'onBlur' });
+
   const onSubmit = async (data: IPostRegister) => {
     setError(null);
     const response = await postRegister(data);
-
     if (response?.isError) {
-      return setError(response.message);
+      setError(response.message);
+      return;
     }
     setLoginUser(true);
   };
@@ -51,51 +49,77 @@ const RegisterForm = (): JSX.Element => {
 
   return (
     <AuthWrapper className="register-container">
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Item>
-          <Label>Enter your E-mail</Label>
+          <Label htmlFor="email">E‑mail</Label>
           <AuthInput
-            onChange={() => {
-              clearErrors();
-            }}
+            id="email"
+            type="email"
             config={emailConfig}
+            autoComplete="email"
+            aria-invalid={errors.email ? 'true' : 'false'}
           />
           {errors.email && (
             <ErrorTooltip
+              role="alert"
               dangerouslySetInnerHTML={{
                 __html: `${get(errors, 'email.message')}`,
               }}
             />
           )}
         </Item>
+
         <Item>
-          <Label>Enter your password</Label>
-          <AuthInput config={passwordConfig} type="password" />
+          <Label htmlFor="password">Password</Label>
+          <AuthInput
+            id="password"
+            type="password"
+            config={passwordConfig}
+            autoComplete="new-password"
+            aria-invalid={errors.password ? 'true' : 'false'}
+          />
           {errors.password && (
             <ErrorTooltip
+              role="alert"
               dangerouslySetInnerHTML={{
                 __html: `${get(errors, 'password.message')}`,
               }}
             />
           )}
         </Item>
+
         <Item>
-          <Label>Confirm your password</Label>
-          <AuthInput config={confirmPasswordConfig} type="password" />
+          <Label htmlFor="confirmPassword">Confirm Password</Label>
+          <AuthInput
+            id="confirmPassword"
+            type="password"
+            config={confirmPasswordConfig}
+            autoComplete="new-password"
+            aria-invalid={errors.confirmPassword ? 'true' : 'false'}
+          />
           {errors.confirmPassword && (
             <ErrorTooltip
+              role="alert"
               dangerouslySetInnerHTML={{
                 __html: `${get(errors, 'confirmPassword.message')}`,
               }}
             />
           )}
         </Item>
+
         <Item>
           <SubmitButtonWrapper>
-            <StyledButton label="sign up" type="submit" />
+            <StyledButton label="Sign up" type="submit" />
           </SubmitButtonWrapper>
         </Item>
-        {error && <ErrorTooltip $isGlobal>{error}</ErrorTooltip>}
+
+        {error && (
+          <ErrorTooltip
+            $isGlobal
+            role="alert"
+            dangerouslySetInnerHTML={{ __html: `${error}` }}
+          />
+        )}
       </Form>
     </AuthWrapper>
   );

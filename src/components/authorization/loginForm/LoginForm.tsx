@@ -25,56 +25,70 @@ const LoginForm = (): JSX.Element => {
     handleSubmit,
     formState: { errors },
     clearErrors,
-  } = useForm<IPostLogin>({
-    mode: 'onChange',
-  });
-
-  const emailConfig = register('email', {
-    required: 'Email is required',
-    onChange: () => {
-      clearErrors();
-    },
-  });
-
-  const passwordConfig = register('password', {
-    required: 'Password is required',
-    onChange: () => {
-      clearErrors();
-    },
-  });
+  } = useForm<IPostLogin>({ mode: 'onChange' });
 
   const onSubmit = async (data: IPostLogin) => {
     setError(null);
     const response = await postLogin(data);
     if (!response?.isSuccess) {
-      return setError(response?.message || 'Something went wrong');
+      setError(response?.message || 'Something went wrong');
+      return;
     }
     setLoginUser(true);
   };
 
   return (
     <AuthWrapper className="login-container">
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Item>
-          <Label>Enter your E-Mail</Label>
-          <AuthInput config={emailConfig} type="email" />
+          <Label htmlFor="email">E‑mail</Label>
+          <AuthInput
+            id="email"
+            type="email"
+            config={register('email', {
+              required: 'Email is required',
+              onChange: () => clearErrors(),
+            })}
+            autoComplete="email"
+            aria-invalid={errors.email ? 'true' : 'false'}
+          />
           {errors.email && (
-            <ErrorTooltip>{`${get(errors, 'email.message')}`}</ErrorTooltip>
+            <ErrorTooltip role="alert">
+              {get(errors, 'email.message')}
+            </ErrorTooltip>
           )}
         </Item>
+
         <Item>
-          <Label>Enter your password</Label>
-          <AuthInput config={passwordConfig} type="password" />
+          <Label htmlFor="password">Password</Label>
+          <AuthInput
+            id="password"
+            type="password"
+            config={register('password', {
+              required: 'Password is required',
+              onChange: () => clearErrors(),
+            })}
+            autoComplete="current-password"
+            aria-invalid={errors.password ? 'true' : 'false'}
+          />
           {errors.password && (
-            <ErrorTooltip>{`${get(errors, 'password.message')}`}</ErrorTooltip>
+            <ErrorTooltip role="alert">
+              {get(errors, 'password.message')}
+            </ErrorTooltip>
           )}
         </Item>
+
         <Item>
           <SubmitButtonWrapper>
-            <StyledButton label="sign in" type="submit" />
+            <StyledButton label="Sign in" type="submit" />
           </SubmitButtonWrapper>
         </Item>
-        {error && <ErrorTooltip $isGlobal>{error}</ErrorTooltip>}
+
+        {error && (
+          <ErrorTooltip $isGlobal role="alert">
+            {error}
+          </ErrorTooltip>
+        )}
       </Form>
     </AuthWrapper>
   );

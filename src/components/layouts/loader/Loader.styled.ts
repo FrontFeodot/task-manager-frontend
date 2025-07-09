@@ -7,6 +7,7 @@ import { Text } from '@components/text/TextCommon.styled';
 export const LoaderWrapper = styled.div<{
   $isTransparent: boolean;
   $isRelative: boolean;
+  $isAppLoading: boolean;
 }>`
   position: ${({ $isRelative }) => ($isRelative ? 'relative' : 'absolute')};
   top: 0;
@@ -18,7 +19,7 @@ export const LoaderWrapper = styled.div<{
   ${(props) => props.theme.flexbox};
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: calc(100% - ${({ $isAppLoading }) => ($isAppLoading ? 60 : 0)}px);
   background-color: rgba(
     24,
     25,
@@ -47,6 +48,6 @@ export const LoaderSpinner = styled.div<{ $size: 'sm' | 'lg' }>`
 `;
 
 export const LoaderText = styled(Text)`
-  margin-top: 40px;
+  margin: 40px 16px 0;
   font-size: ${(props) => props.theme.fontLG};
 `;
